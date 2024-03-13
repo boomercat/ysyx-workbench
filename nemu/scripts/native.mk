@@ -35,7 +35,7 @@ run-env: $(BINARY) $(DIFF_REF_SO)
 
 run: run-env
 	$(call git_commit, "run NEMU")
-	$(NEMU_EXEC) || echo "Error running command" 
+	$(NEMU_EXEC) || echo "nemu quit" 
 
 
 
