@@ -13,7 +13,7 @@
 # See the Mulan PSL v2 for more details.
 #**************************************************************************************/
 
-include $(NEMU_HOME)/../Makefile
+-include $(NEMU_HOME)/../Makefile
 include $(NEMU_HOME)/scripts/build.mk
 
 include $(NEMU_HOME)/tools/difftest.mk
@@ -38,7 +38,7 @@ run: run-env
 	$(info BINARY=$(BINARY))
 	$(info ARGS=$(ARGS))
 	$(info IMG=$(IMG))
-	$(NEMU_EXEC)
+	-$(NEMU_EXEC)
 
 
 
