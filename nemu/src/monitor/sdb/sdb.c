@@ -64,8 +64,8 @@ static int cmd_info(char *args){
 static int cmd_x(char *args){
   char *num = strtok(args," ");
   char *addr = strtok(NULL," ");
-  int num_a =  *num;
-  printf("%d\n %d\n %d",*num,*addr,num_a);
+  int num_a = atoi(num) ;
+  printf("%c\n %c\n %d",*num,*addr,num_a);
   for (int i = 0; i < num_a; i++)
   {
     printf("%x:%08x\n",*addr,paddr_read(*addr,4));
