@@ -54,7 +54,12 @@ static int cmd_info(char *args){
   {
     isa_reg_display();
    }
-  else   printf("%s" ,ar);
+   /*
+  else if (*ar == 'w')
+  {
+    
+  }*/
+  printf("%s" ,ar);
   return 0;
 }
 
