@@ -19,6 +19,7 @@
 #include <readline/history.h>
 #include "sdb.h"
 
+
 static int is_batch_mode = false;
 
 void init_regex();
@@ -51,7 +52,7 @@ static int cmd_info(char *args){
   char *ar = strtok(args," ");
   if (*ar == 'r')
   {
-    void isa_reg_display(void);
+    isa_reg_display();
    }
   else   printf("%s" ,ar);
   return 0;
