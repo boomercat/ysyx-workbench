@@ -51,6 +51,7 @@ static int cmd_info(char *args){
   if (*args == 'r')
   {
     isa_reg_display();
+    printf("%s" ,args);
   }
   
   return 0;
