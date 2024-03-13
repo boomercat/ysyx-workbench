@@ -13,7 +13,7 @@
 # See the Mulan PSL v2 for more details.
 #**************************************************************************************/
 
--include $(NEMU_HOME)/../Makefile
+include $(NEMU_HOME)/../Makefile
 include $(NEMU_HOME)/scripts/build.mk
 
 include $(NEMU_HOME)/tools/difftest.mk
@@ -36,6 +36,10 @@ run-env: $(BINARY) $(DIFF_REF_SO)
 run: run-env
 	$(call git_commit, "run NEMU")
 	$(NEMU_EXEC)
+	$(info BINARY=$(BINARY))
+	$(info ARGS=$(ARGS))
+	$(info IMG=$(IMG))
+
 
 gdb: run-env
 	$(call git_commit, "gdb NEMU")
