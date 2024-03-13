@@ -102,7 +102,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   { "si", "execute N commands and suspend, default N = 1", cmd_si},
   { "info", "r is print the status of  monitor,w is print watchpoint's information",cmd_info},
-  { "x", "calculate the value of EXPR,and the result as the  start memory address,output permanet N 4bits in 0x",cmd_x},
+  { "x ", "calculate the value of EXPR,and the result as the  start memory address,output permanet N 4bits in 0x",cmd_x},
 
   /* TODO: Add more commands */
 
