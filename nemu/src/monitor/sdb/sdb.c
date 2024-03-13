@@ -62,13 +62,12 @@ static int cmd_info(char *args){
   return 0;
 }
 static int cmd_x(char *args){
-  char *num = strtok(args," ");
-  char *addr = strtok(NULL," ");
-  int num_a = atoi(num) ;
-  printf("%c\n %c\n %d",*num,*addr,num_a);
+  int num_a = atoi(strtok(args," "));
+  paddr_t addr = strtoul(strtok(NULL," "),NULL, 0); // 32位
+  printf("%c \n %d",addr,num_a);
   for (int i = 0; i < num_a; i++)
   {
-    printf("%x:%08x\n",*addr,paddr_read(*addr,4));
+    printf("%x:%08x\n",addr,paddr_read(addr,4));
     addr += 4;
   }
   return 0; 
