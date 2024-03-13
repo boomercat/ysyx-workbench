@@ -35,7 +35,7 @@ run-env: $(BINARY) $(DIFF_REF_SO)
 
 run: run-env
 	$(call git_commit, "run NEMU")
-	$(NEMU_HOME)/build/risv32-nemu-interpreter $(ARGS)  
+	$(NEMU_HOME)/build/riscv32-nemu-interpreter $(ARGS)  
 
 
 
