@@ -53,7 +53,7 @@ static int cmd_info(char *args){
   {
     void isa_reg_display(void);
    }
-  else   printf("%s" ,args);
+  else   printf("%s" ,ar);
   return 0;
 }
 
@@ -61,7 +61,7 @@ static int cmd_info(char *args){
 static int cmd_si(char *args){
  /* strtok(args," ");
   char* num = strtok(NULL," ");*/
-   int num_exe;
+  int num_exe;
   if (args == NULL)
   {
     num_exe = 1;
