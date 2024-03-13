@@ -19,7 +19,6 @@
 #include <readline/history.h>
 #include "sdb.h"
 
-
 static int is_batch_mode = false;
 
 void init_regex();
@@ -62,7 +61,17 @@ static int cmd_info(char *args){
   printf("%s" ,ar);
   return 0;
 }
-
+static int cmd_x(char *args){
+  char *num = strtok(args," ");
+  char *addr = strtok(NULL," ");
+  int num_a =  *num;
+  for (int i = 0; i < num_a; i++)
+  {
+    printf("%x:%08x\n",*addr,paddr_read(*addr,4));
+    addr += 4;
+  }
+  return 0; 
+}
 
 static int cmd_si(char *args){
  /* strtok(args," ");
@@ -92,6 +101,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   { "si", "execute N commands and suspend, default N = 1", cmd_si},
   { "info", "r is print the status of  monitor,w is print watchpoint's information",cmd_info},
+  { "x", "calculate the value of EXPR,and the result as the  start memory address,output permanet N 4bits in 0x",cmd_x},
 
   /* TODO: Add more commands */
 
