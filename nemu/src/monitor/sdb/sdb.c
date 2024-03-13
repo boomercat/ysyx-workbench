@@ -48,14 +48,14 @@ static int cmd_c(char *args) {
 }
 
 static int cmd_si(char *args){
-  strtok(args," ");
-  char* num = strtok(NULL," ");
+ /* strtok(args," ");
+  char* num = strtok(NULL," ");*/
   int num_exe;
-  if (num == NULL)
+  if (args == NULL)
   {
     num_exe = 1;
   }
-  else num_exe = atoi(num);
+  else num_exe = atoi(args);
   cpu_exec(num_exe);
   return 0;
 }
