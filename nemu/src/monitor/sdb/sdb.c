@@ -64,7 +64,7 @@ static int cmd_info(char *args){
 static int cmd_x(char *args){
   int num_a = atoi(strtok(args," "));
   paddr_t addr = strtoul(strtok(NULL," "),NULL, 0); // 32位
-  printf("%x \n %d this is a test",addr,num_a);
+  printf("%d \n %d this is a test",addr,num_a);
   for (int i = 0; i < num_a; i++)
   {
     printf("%x:%08x\n",addr,paddr_read(addr,4));
