@@ -48,7 +48,8 @@ static int cmd_c(char *args) {
 }
 
 static int cmd_info(char *args){
-  if (*args == 'r')
+  char *ar = strtok(args," ");
+  if (*ar == 'r')
   {
     void isa_reg_display(void);
    }
