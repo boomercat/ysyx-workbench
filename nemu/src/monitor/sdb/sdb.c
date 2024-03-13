@@ -59,7 +59,7 @@ static int cmd_c(char *args) {
 static int cmd_si(char *args){
  /* strtok(args," ");
   char* num = strtok(NULL," ");*/
-  printf("%s ",args);
+  printf("%s \n",args);
   int num_exe;
   if (args == NULL)
   {
