@@ -38,7 +38,7 @@ run: run-env
 	$(info BINARY=$(BINARY))
 	$(info ARGS=$(ARGS))
 	$(info IMG=$(IMG))
-	$(BINARY) $(ARGS) $(IMG)
+	$(NEMU_HOME)/build/riscv32-nemu-interpreter  $(ARGS) $(IMG)
 
 
 
