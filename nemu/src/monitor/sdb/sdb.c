@@ -47,9 +47,19 @@ static int cmd_c(char *args) {
   return 0;
 }
 
+/*static int cmd_info(char *args){
+  char *ars;
+  int num_a;
+  sscanf(args,"%s,%d",ars,num_a);
+  printf("%s %d",ars,num_a);
+  return 0;
+}*/
+
+
 static int cmd_si(char *args){
  /* strtok(args," ");
   char* num = strtok(NULL," ");*/
+  printf("%s ",args);
   int num_exe;
   if (args == NULL)
   {
@@ -73,7 +83,8 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-  { "si", "execute N commands and suspend, default N = 1", cmd_si}
+  { "si", "execute N commands and suspend, default N = 1", cmd_si},
+  //{ "info", "r is print the status of  monitor,w is print watchpoint's information",cmd_info},
 
   /* TODO: Add more commands */
 
