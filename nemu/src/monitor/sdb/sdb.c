@@ -67,7 +67,7 @@ static int cmd_x(char *args){
   //printf(" %x \n %d this is a test",addr,num_a);
   for (int i = 0; i < num_a; i++)
   {
-    printf("%x:0x%x\n",addr,paddr_read(addr,4));
+    printf("0x%x:%08x\n",addr,paddr_read(addr,4));
     addr += 4;
   }
   return 0; 
