@@ -137,9 +137,60 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
+}
+int p,q;
+
+static bool check_parentheses(int p, int q) {
+    // 第一个和最后一个括号匹配
+    if (tokens[p].type != 258 || tokens[q].type != 258) {
+        return false;
+    }
+    int cnt = 0; 
+    for (int i = p + 1; i < q; ++i) {
+        if (tokens[i].type == '(') cnt++;
+        else if (tokens[i].type == ')') {
+            cnt--;
+            if (cnt < 0) return false;
+        }
+    }
+    // 如果遍历完毕后级别不为0，说明左括号多于右括号
+    if (cnt != 0) {
+        return false;
+    }
+    return true;
+}
+
+//计算p和q之间的主运算符函数
+static int main_operate(p,q){
+  assert(p>q,"error!");
+
+
+
+}
+
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
+eval(p,q){
+    if (p > q) printf("situation of p and q is error");assert(p > q);
+    else if(p == q)  return atoi(tokens[p].str);
+    else if(check_parrentheses(p,q) == true)  return eval(p+1,q-1);
+    else{
+      op = main_operate(p,q)
+      val1 = eval(p,op-1);
+      val2 = eval(op+1,q);
+      switch (op.type)
+      {
+      case /* constant-expression */:
+        /* code */
+        break;
+      
+      default:
+        break;
+      }
+    }
+    
+
+  }
 
   return 0;
 }
