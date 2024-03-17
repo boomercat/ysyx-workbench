@@ -14,7 +14,7 @@
 ***************************************************************************************/
 
 #include <common.h>
-
+#include "monitor/sdb/sdb.h"
 void init_monitor(int, char *[]);
 void am_init_monitor();
 void engine_start();
@@ -26,6 +26,26 @@ int main(int argc, char *argv[]) {
   am_init_monitor();
 #else
   init_monitor(argc, argv);
+  FILE *fp;
+  bool *success = false;
+  fp = fopen("/home/white/ysyx-workbench/nemu/tools/gen-expr/build/input","r");
+  if (fp == NULL){
+    return EXIT_FAILURE;
+  }
+  char line[1024]={};
+    while (fgets(line, sizeof(line), fp) != NULL) {    
+    char *e = NULL;
+    e = strchr(line, ' ');
+    if (e != NULL) {
+      e += 1;
+      word_t result = expr(e,success);
+      if (success) {
+        printf("calcuate successful,result is %d\n ",result);
+      }
+      else printf("defeat");
+      }
+    }
+  
 #endif
 
   /* Start engine. */
@@ -33,3 +53,4 @@ int main(int argc, char *argv[]) {
 
   return is_exit_status_bad();
 }
+    

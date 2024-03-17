@@ -20,20 +20,47 @@
 #include <assert.h>
 #include <string.h>
 
+
 // this should be enough
 static char buf[65536] = {};
+//char buffer[1024] = {};
 static char code_buf[65536 + 128] = {}; // a little larger than `buf`
 static char *code_format =
 "#include <stdio.h>\n"
 "int main() { "
-"  unsigned result = %s; "
-"  printf(\"%%u\", result); "
+"  unsigned result = %s ; \n"
+"  printf(\"%%u\", result);\n "
 "  return 0; "
 "}";
 
-static void gen_rand_expr() {
-  buf[0] = '\0';
+int  choose(int n ){
+  return rand() % n ;
 }
+
+void gen_num(){
+  int i;
+  i = rand() % 9 + 1;
+  sprintf(buf+strlen(buf),"%d",i);
+ 
+}
+void gen_rand_op(){
+  char op = "+-*/"[rand() % 4];
+  sprintf(buf+strlen(buf),"%c",op);
+}
+void gen(int a ){
+  sprintf(buf+strlen(buf),"%c", a );
+}
+
+
+void gen_rand_expr() {
+  switch (choose(3)) {
+    case 0: gen_num(); break;
+    case 1: gen('('); gen_rand_expr(); gen(')'); break;
+    default: gen_rand_expr(); gen_rand_op(); gen_rand_expr(); break;
+  }
+}
+
+
 
 int main(int argc, char *argv[]) {
   int seed = time(0);
@@ -44,10 +71,11 @@ int main(int argc, char *argv[]) {
   }
   int i;
   for (i = 0; i < loop; i ++) {
+    memset(buf,0,sizeof(buf));
     gen_rand_expr();
-
+    expr(*buffer,1);
     sprintf(code_buf, code_format, buf);
-
+    //strcat(buf,buffer);
     FILE *fp = fopen("/tmp/.code.c", "w");
     assert(fp != NULL);
     fputs(code_buf, fp);

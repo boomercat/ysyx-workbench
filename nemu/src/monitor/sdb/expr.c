@@ -21,8 +21,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ,TK_LBR,TK_RBR,TK_XIEXIAN,
-  TK_MUL,TK_SUB,TK_NUM,TK_PLUS
+  TK_NOTYPE = 256, TK_EQ,
 
   /* TODO: Add more token types */
 
@@ -40,12 +39,12 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
   {"==", TK_EQ},        // equal
-  {"\\(", TK_LBR},          // left bracket
-  {"\\)", TK_RBR},         //right bracket
-  {"\\/", TK_XIEXIAN},         //我也不会英文
-  {"\\*", TK_MUL},         //mutiple
-  {"\\-", TK_SUB},          //minus
-  {"\\d+",TK_NUM},        //integrity
+  {"\\(", '('},          // left bracket
+  {"\\)", ')'},         //right bracket
+  {"\\/", '/'},         //我也不会英文
+  {"\\*", '*'},         //mutiple
+  {"\\-", '-'},          //minus
+  {"\\d+",'d'},        //integrity
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -74,9 +73,9 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[32] __attribute__((used)) = {};
+static Token tokens[128] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
-
+//识别其中的token，传入要识别的token（buf）
 static bool make_token(char *e) {
   int position = 0;
   int i;
@@ -100,18 +99,17 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-
         switch (rules[i].token_type) {
           case TK_NOTYPE: break;
           case TK_EQ:
-          case TK_LBR:
-          case TK_RBR:
-          case TK_XIEXIAN:
-          case TK_MUL:
-          case TK_SUB:
-          case TK_PLUS:
+          case '(':
+          case ')':
+          case '/':
+          case '*':
+          case '-':
+          case '+':
                       tokens[nr_token].type = rules[i].token_type;
-          case TK_NUM:
+          case 'd':
                       if (substr_len <= 31)  substr_len = 31;
                       assert(substr_len>32);
                       strncpy(tokens[nr_token].str, substr_start, substr_len);     
@@ -132,17 +130,18 @@ static bool make_token(char *e) {
 }
 
 
-word_t expr(char *e, bool *success) {
+word_t expr(char *e, bool *success){
   if (!make_token(e)) {
     *success = false;
     return 0;
+    }
+    return  true;
   }
-}
-int p,q;
+int p,q,op;
 
 static bool check_parentheses(int p, int q) {
     // 第一个和最后一个括号匹配
-    if (tokens[p].type != 258 || tokens[q].type != 258) {
+    if (tokens[p].type != '(' || tokens[q].type != ')') {
         return false;
     }
     int cnt = 0; 
@@ -161,36 +160,62 @@ static bool check_parentheses(int p, int q) {
 }
 
 //计算p和q之间的主运算符函数
-static int main_operate(p,q){
-  assert(p>q,"error!");
-
-
-
+static int main_operate(int p,int q){
+  int locate = 0;
+  while(p < q){
+    switch (tokens[p].type){
+      case '(': 
+        for (; p < q; p++)
+        {
+          if(tokens[p].type == ')') break;
+        }
+       break;
+      case ')': p++;break;
+      case 'd': p++;break;
+      case '/': if ((tokens[locate].type == '+')||tokens[locate].type =='-') p++;
+                else {
+                  locate = p;
+                  p++;}
+                break;
+      case '*': if ((tokens[locate].type == '+')||tokens[locate].type =='-') {p++;}
+                else {
+                  locate = p;
+                  p++;
+                }
+                break;
+      case '+':locate = p;p++;break;
+      case '-':locate = p;p++;break;
+      default: break;
+    }  
+  }
+  return locate;
 }
 
 
   /* TODO: Insert codes to evaluate the expression. */
-eval(p,q){
-    if (p > q) printf("situation of p and q is error");assert(p > q);
+int eval(int p,int q){
+  int op,val1,val2;
+    if (p > q) {printf("situation of p and q is error");
+                assert(p > q);
+    }
     else if(p == q)  return atoi(tokens[p].str);
-    else if(check_parrentheses(p,q) == true)  return eval(p+1,q-1);
+    else if(check_parentheses(p,q) == true)  return eval(p+1,q-1);
     else{
-      op = main_operate(p,q)
+      op = main_operate(p,q);
       val1 = eval(p,op-1);
-      val2 = eval(op+1,q);
-      switch (op.type)
+      val2 = eval(op+1,q);  
+      switch (tokens[op].type)
       {
-      case /* constant-expression */:
-        /* code */
-        break;
-      
-      default:
-        break;
+      case '+':  return  val1 + val2;
+      case '-': return val1 - val2;
+      case '*': return val1 * val2;
+      case '/': return val1 / val2;
+      default: assert(0);
       }
     }
     
 
-  }
+  
 
   return 0;
 }
