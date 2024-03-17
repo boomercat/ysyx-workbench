@@ -37,6 +37,7 @@ int main(int argc, char *argv[]) {
     while (fgets(line, sizeof(line), fp) != NULL) {    
     char *e = NULL;
     e = strchr(line, ' ');
+    printf("this character is %s",e);
     if (e != NULL) {
       e += 1;
       word_t result = expr(e,success);
