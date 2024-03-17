@@ -130,13 +130,6 @@ static bool make_token(char *e) {
 }
 
 
-word_t expr(char *e, bool *success){
-  if (!make_token(e)) {
-    *success = false;
-    return 0;
-    }
-    return  true;
-  }
 int p,q,op;
 
 static bool check_parentheses(int p, int q) {
@@ -218,4 +211,16 @@ int eval(int p,int q){
   
 
   return 0;
+}
+
+word_t expr(char *e, bool *success) {
+  if (!make_token(e)) {
+    *success = false;
+    return 0;
+  }
+
+  /* TODO: Insert codes to evaluate the expression. */
+  TODO();
+  make_token(e);
+  return eval(0,strlen(tokens->str));
 }
