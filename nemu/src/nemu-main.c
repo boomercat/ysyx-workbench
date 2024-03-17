@@ -34,19 +34,22 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
   char line[1024]={};
+  char buffer[1024]= {};
     while (fgets(line, sizeof(line), fp) != NULL) {    
-    char *e = NULL;
-    e = strchr(line, ' ');
-    printf("this character is %s",e);
-    if (e != NULL) {
-      e += 1;
-      word_t result = expr(e,success);
-      if (success) {
-        printf("calcuate successful,result is %d\n ",result);
-      }
-      else printf("defeat");
-      }
+    //char *e = NULL;
+    //e = strchr(line, ' ');
+    strtok(line," ");
+    strcpy(buffer,strtok(NULL," "));
+    printf("this buffer is %s",buffer);
+    //if (e != NULL) {
+     // e += 1;
+    word_t result = expr(buffer,success);
+    if (success) {
+      printf("calcuate successful,result is %d\n ",result);
     }
+    else printf("defeat");
+    }      
+    
   
 #endif
 
