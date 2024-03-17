@@ -47,7 +47,44 @@ static int cmd_c(char *args) {
   return 0;
 }
 
+static int cmd_info(char *args){
+  char *ar = strtok(args," ");
+  if (*ar == 'r')
+  {
+    isa_reg_display();
+   }
+   /*
+  else if (*ar == 'w')
+  {
+    
+  }*/
+  printf("%s" ,ar);
+  return 0;
+}
+static int cmd_x(char *args){
+  int num_a = atoi(strtok(args," "));
+  paddr_t addr = strtoul(strtok(NULL," "),NULL, 0); // 32位
+  //printf(" %x \n %d this is a test",addr,num_a);
+  for (int i = 0; i < num_a; i++)
+  {
+    printf("0x%x:%08x\n",addr,paddr_read(addr,4));
+    addr += 4;
+  }
+  return 0; 
+}
 
+static int cmd_si(char *args){
+ /* strtok(args," ");
+  char* num = strtok(NULL," ");*/
+  int num_exe;
+  if (args == NULL)
+  {
+    num_exe = 1;
+  }
+  else num_exe = atoi(args);
+  cpu_exec(num_exe);
+  return 0;
+}
 static int cmd_q(char *args) {
   return -1;
 }
@@ -62,6 +99,9 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
+  { "si", "execute N commands and suspend, default N = 1", cmd_si},
+  { "info", "r is print the status of  monitor,w is print watchpoint's information",cmd_info},
+  { "x", "calculate the value of EXPR,and the result as the  start memory address,output permanet N 4bits in 0x",cmd_x},
 
   /* TODO: Add more commands */
 
@@ -124,7 +164,7 @@ void sdb_mainloop() {
 
     int i;
     for (i = 0; i < NR_CMD; i ++) {
-      if (strcmp(cmd, cmd_table[i].name) == 0) {
+       if (strcmp(cmd, cmd_table[i].name) == 0) {
         if (cmd_table[i].handler(args) < 0) { return; }
         break;
       }

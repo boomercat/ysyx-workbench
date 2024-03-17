@@ -24,19 +24,20 @@ $(BINARY):: compile_git
 
 # Some convenient rules
 
-override ARGS ?= --log=$(BUILD_DIR)/nemu-log.txt
+override ARGS ?= -l $(BUILD_DIR)/nemu-log.txt
 override ARGS += $(ARGS_DIFF)
 
 # Command to execute NEMU
 IMG ?= 
-NEMU_EXEC := $(BINARY) $(ARGS) $(IMG)
+NEMU_EXEC := $(BINARY) $(ARGS) $(IMG) 
 
 run-env: $(BINARY) $(DIFF_REF_SO)
 
 run: run-env
 	$(call git_commit, "run NEMU")
-	echo $(BINARY)
-	$(NEMU_EXEC)
+	$(NEMU_EXEC) || echo "nemu quit" 
+
+
 
 gdb: run-env
 	$(call git_commit, "gdb NEMU")
