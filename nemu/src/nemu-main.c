@@ -35,7 +35,8 @@ int main(int argc, char *argv[]) {
   }
   char line[1024]={};
   char buffer[1024]= {};
-    while (fgets(line, sizeof(line), fp) != NULL) {   
+    while (fgets(line, sizeof(line), fp) != NULL) {  
+    printf("line is %s",line); 
     //char *e = NULL;
     //e = strchr(line, ' ');
     strcpy(buffer,strtok(NULL," "));
@@ -47,13 +48,14 @@ int main(int argc, char *argv[]) {
       printf("calcuate successful,result is %d\n ",result);
     }
     else printf("defeat");
-    }      
+    }     
     
   
 #endif
 
   /* Start engine. */
   engine_start();
+  fclose(fp);
 
   return is_exit_status_bad();
 }
