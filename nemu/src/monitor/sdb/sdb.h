@@ -19,6 +19,5 @@
 #include <common.h>
 
 word_t expr(char *e, bool *success);
-word_t paddr_read(paddr_t addr, int len);
-#endif
 
+#endif

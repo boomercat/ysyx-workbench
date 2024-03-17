@@ -39,12 +39,6 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
   {"==", TK_EQ},        // equal
-  {"\\(", '('},          // left bracket
-  {"\\)", ')'},         //right bracket
-  {"\\/", '/'},         //我也不会英文
-  {"\\*", '*'},         //mutiple
-  {"\\-", '-'},          //minus
-  {"\\d+",'d'},        //integrity
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -73,9 +67,9 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[128] __attribute__((used)) = {};
+static Token tokens[32] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
-//识别其中的token，传入要识别的token（buf）
+
 static bool make_token(char *e) {
   int position = 0;
   int i;
@@ -84,7 +78,6 @@ static bool make_token(char *e) {
   nr_token = 0;
 
   while (e[position] != '\0') {
-    printf("normal detect %d",e[position]);
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
@@ -100,24 +93,12 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
+
         switch (rules[i].token_type) {
-          case TK_NOTYPE: break;
-          case TK_EQ:
-          case '(':
-          case ')':
-          case '/':
-          case '*':
-          case '-':
-          case '+':
-                      tokens[nr_token].type = rules[i].token_type;
-          case 'd':
-                      if (substr_len <= 31)  substr_len = 31;
-                      assert(substr_len>32);
-                      strncpy(tokens[nr_token].str, substr_start, substr_len);     
-                      nr_token++;
-                      break;
-          default: printf("Unprocess str \n");
+          default: TODO();
         }
+
+        break;
       }
     }
 
@@ -131,98 +112,14 @@ static bool make_token(char *e) {
 }
 
 
-int p,q,op;
-
-static bool check_parentheses(int p, int q) {
-    // 第一个和最后一个括号匹配
-    if (tokens[p].type != '(' || tokens[q].type != ')') {
-        return false;
-    }
-    int cnt = 0; 
-    for (int i = p + 1; i < q; ++i) {
-        if (tokens[i].type == '(') cnt++;
-        else if (tokens[i].type == ')') {
-            cnt--;
-            if (cnt < 0) return false;
-        }
-    }
-    // 如果遍历完毕后级别不为0，说明左括号多于右括号
-    if (cnt != 0) {
-        return false;
-    }
-    return true;
-}
-
-//计算p和q之间的主运算符函数
-static int main_operate(int p,int q){
-  int locate = 0;
-  while(p < q){
-    switch (tokens[p].type){
-      case '(': 
-        for (; p < q; p++)
-        {
-          if(tokens[p].type == ')') break;
-        }
-       break;
-      case ')': p++;break;
-      case 'd': p++;break;
-      case '/': if ((tokens[locate].type == '+')||tokens[locate].type =='-') p++;
-                else {
-                  locate = p;
-                  p++;}
-                break;
-      case '*': if ((tokens[locate].type == '+')||tokens[locate].type =='-') {p++;}
-                else {
-                  locate = p;
-                  p++;
-                }
-                break;
-      case '+':locate = p;p++;break;
-      case '-':locate = p;p++;break;
-      default: break;
-    }  
-  }
-  return locate;
-}
-
-
-  /* TODO: Insert codes to evaluate the expression. */
-int eval(int p,int q){
-  int op,val1,val2;
-    if (p > q) {printf("situation of p and q is error");
-                assert(p > q);
-    }
-    else if(p == q)  return atoi(tokens[p].str);
-    else if(check_parentheses(p,q) == true)  return eval(p+1,q-1);
-    else{
-      op = main_operate(p,q);
-      val1 = eval(p,op-1);
-      val2 = eval(op+1,q);  
-      switch (tokens[op].type)
-      {
-      case '+':  return  val1 + val2;
-      case '-': return val1 - val2;
-      case '*': return val1 * val2;
-      case '/': return val1 / val2;
-      default: assert(0);
-      }
-    }
-    
-
-  
-
-  return 0;
-}
-
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
-    printf("shibai!!\n");
     *success = false;
     return 0;
   }
 
   /* TODO: Insert codes to evaluate the expression. */
   TODO();
-  make_token(e);
-  return eval(0,strlen(tokens->str));
+
+  return 0;
 }
