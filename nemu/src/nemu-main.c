@@ -36,10 +36,8 @@ int main(int argc, char *argv[]) {
   char line[1024]={};
   char buffer[1024]= {};
     while (fgets(line, sizeof(line), fp) != NULL) {   
-      printf("line is %s",line);
     //char *e = NULL;
     //e = strchr(line, ' ');
-    strtok(line," ");
     strcpy(buffer,strtok(NULL," "));
     printf("this buffer is %s",buffer);
     //if (e != NULL) {
