@@ -21,7 +21,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ,
+  TK_NOTYPE = 256, TK_EQ,TK_LBR,TK_RBR,TK_DIV,TK_MUL,TK_SUB,TK_NUM
 
   /* TODO: Add more token types */
 
@@ -39,12 +39,12 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
   {"==", TK_EQ},        // equal
-  {"\\(", '('},          // left bracket
-  {"\\)", ')'},         //right bracket
-  {"\\/", '/'},         //我也不会英文
-  {"\\*", '*'},         //mutiple
-  {"\\-", '-'},          //minus
-  {"\\d",'d'},        //integrity
+  {"\\(", TK_LBR},          // left bracket
+  {"\\)", TK_RBR},         //right bracket
+  {"\\/", TK_DIV},         //我也不会英文
+  {"\\*", TK_MUL},         //mutiple
+  {"\\-", TK_SUB},          //minus
+  {"\\d",TK_NUM},        //integrity
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -107,14 +107,14 @@ static bool make_token(char *e) {
         switch (rules[i].token_type) {
           case TK_NOTYPE: break;
           case TK_EQ:
-          case '(':
-          case ')':
-          case '/':
-          case '*':
-          case '-':
+          case TK_LBR:
+          case TK_RBR:
+          case TK_DIV:
+          case TK_MUL:
+          case TK_SUB:
           case '+':
                       tokens[nr_token].type = rules[i].token_type;
-          case 'd':
+          case TK_NUM:
                       if (substr_len <= 31)  substr_len = 31;
                       assert(substr_len>32);
                       strncpy(tokens[nr_token].str, substr_start, substr_len);     
