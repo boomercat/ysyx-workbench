@@ -82,7 +82,7 @@ static bool make_token(char *e) {
   regmatch_t pmatch;
   for (int j = 0; j < strlen(e); j++)
   {
-    printf("the value of e is  %c",e[j]);
+    printf("the value of e is  %d",e[j]);
   }
   
   nr_token = 0;
