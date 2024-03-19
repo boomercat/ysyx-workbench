@@ -33,12 +33,19 @@ int main(int argc, char *argv[]) {
   if (fp == NULL){
     return EXIT_FAILURE;
   }
-  char line[1024]={};
+  char line[1024] = {};
   char buffer[1024]= {};
     while (fgets(line, sizeof(line), fp) != NULL) {  
     printf("line is %s",line); 
-    strtok(line,"");
-    strcpy(buffer,strtok(NULL," "));
+    strtok(line," ");
+    char *second_token = strtok(NULL,"");
+    strcpy(buffer,second_token);
+    for (int  i = 0; buffer[i] != '\0'; i++)
+    {
+      printf("buffer[i] is %c",buffer[i]);
+    }
+    
+    
     word_t result = expr(buffer,success);
     if (success) {
       printf("calcuate successful,result is %d\n ",result);
