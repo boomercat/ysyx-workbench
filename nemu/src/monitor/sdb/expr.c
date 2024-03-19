@@ -118,8 +118,9 @@ static bool make_token(char *e) {
                       strncpy(tokens[nr_token].str, substr_start, substr_len);     
                       nr_token++;
             
-          default: printf("Unprocess str \n");
+          default: printf("Unprocess str %c \n",e[position]);
         }
+        break;
       }
     }
 
