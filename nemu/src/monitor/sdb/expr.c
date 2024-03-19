@@ -110,10 +110,10 @@ static bool make_token(char *e) {
           case TK_MUL:
           case TK_SUB:
           case '+':
-                      tokens[nr_token].type = rules[i].token_type;
+                      tokens[nr_token].type = rules[i].token_type;break;
           case TK_NUM:
                       if (substr_len <= 31)  substr_len = 31;
-                      assert(substr_len>32);
+                      assert(substr_len<32);
                       strncpy(tokens[nr_token].str, substr_start, substr_len);     
                       nr_token++;
                       break;
