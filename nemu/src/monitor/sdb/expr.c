@@ -86,6 +86,7 @@ static bool make_token(char *e) {
     printf("normal detect %d",e[position]);
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
+      if (e[position] == '\0')break;
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
         printf("this extractive num is %c",*substr_start);
@@ -110,12 +111,12 @@ static bool make_token(char *e) {
           case TK_MUL:
           case TK_SUB:
           case TK_PLUS:
-                      tokens[nr_token].type = rules[i].token_type; break;
+                      tokens[nr_token].type = rules[i].token_type; 
           case TK_NUM:
                       if (substr_len <= 31)  substr_len = 31;
                       assert(substr_len<32);
                       strncpy(tokens[nr_token].str, substr_start, substr_len);     
-                      nr_token++;break;
+                      nr_token++;
             
           default: printf("Unprocess str %c \n",e[position]);        break;
 
