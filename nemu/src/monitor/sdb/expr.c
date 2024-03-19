@@ -44,7 +44,7 @@ static struct rule {
   {"\\/", '/'},         //我也不会英文
   {"\\*", '*'},         //mutiple
   {"\\-", '-'},          //minus
-  {"\\d+",'d'},        //integrity
+  {"\\d",'d'},        //integrity
 };
 
 #define NR_REGEX ARRLEN(rules)
