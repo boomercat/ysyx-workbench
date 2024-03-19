@@ -120,9 +120,8 @@ static bool make_token(char *e) {
         break;
       }
     }
-    e[strlen(e)-1] = '\0';
 
-    if ((i == NR_REGEX )&&(position != strlen(e) - 1)) {
+    if (i == NR_REGEX ) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
     }
