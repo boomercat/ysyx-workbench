@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     strcpy(buffer,second_token);
     for (int  i = 0; buffer[i] != '\0'; i++)
     {
-      printf("buffer[i] is %c",buffer[i]);
+      printf("buffer[i] is %c\n",buffer[i]);
     }
     
     
