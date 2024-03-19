@@ -123,6 +123,7 @@ static bool make_token(char *e) {
       }
     }
     if(e[position] == '\0') break;
+    printf("e[position] is %c",e[position]);
     if (i == NR_REGEX) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
