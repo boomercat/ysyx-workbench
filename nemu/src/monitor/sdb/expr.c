@@ -44,7 +44,7 @@ static struct rule {
   {"\\/", TK_DIV},         //我也不会英文
   {"\\*", TK_MUL},         //mutiple
   {"\\-", TK_SUB},          //minus
-  {"\\d",TK_NUM},        //integrity
+  {"\\w",TK_NUM},        //integrity
 };
 
 #define NR_REGEX ARRLEN(rules)
