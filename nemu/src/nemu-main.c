@@ -41,6 +41,7 @@ int main(int argc, char *argv[]) {
     //char *e = NULL;
     //e = strchr(line, ' ');
     strcpy(buffer,strtok(NULL," "));
+    strcat(buffer," ");
     printf("this buffer is %s",buffer);
     //if (e != NULL) {
      // e += 1;
