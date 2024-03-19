@@ -112,7 +112,7 @@ static bool make_token(char *e) {
           case TK_PLUS:
                       tokens[nr_token].type = rules[i].token_type;
           case TK_NUM:
-                      if (substr_len <= 31)  substr_len = 31;
+                      if (substr_len > 31)  substr_len = 31;
                       assert(substr_len<32);
                       strncpy(tokens[nr_token].str, substr_start, substr_len);     
                       nr_token++;
@@ -120,6 +120,7 @@ static bool make_token(char *e) {
           default: printf("Unprocess str %c \n",e[position]);break;
         }
         break;
+        printf("extract token is %s",tokens[nr_token].str);
       }
     }
     printf("NR_TOKEN is %d",nr_token);
