@@ -120,10 +120,9 @@ static bool make_token(char *e) {
           default: printf("Unprocess str %c \n",e[position]);break;
         }
         break;
-        printf("extract token is %s",tokens[nr_token].str);
       }
     }
-    printf("NR_TOKEN is %d",nr_token);
+    if(e[position] == '\0') break;
     if (i == NR_REGEX) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
