@@ -37,13 +37,8 @@ int main(int argc, char *argv[]) {
   char buffer[1024]= {};
     while (fgets(line, sizeof(line), fp) != NULL) {  
     printf("line is %s",line); 
-    strtok(line," ");
-    //char *e = NULL;
-    //e = strchr(line, ' ');
+    strtok(line,"");
     strcpy(buffer,strtok(NULL," "));
-    printf("this buffer is %s",buffer);
-    //if (e != NULL) {
-     // e += 1;
     word_t result = expr(buffer,success);
     if (success) {
       printf("calcuate successful,result is %d\n ",result);
