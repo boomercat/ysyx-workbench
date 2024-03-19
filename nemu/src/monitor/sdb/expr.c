@@ -83,7 +83,6 @@ static bool make_token(char *e) {
   nr_token = 0;
 
   while (e[position] != '\0') {
-    printf("normal detect %d",e[position]);
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
@@ -117,14 +116,12 @@ static bool make_token(char *e) {
                       strncpy(tokens[nr_token].str, substr_start, substr_len);     
                       nr_token++;break;
             
-          default: printf("Unprocess str %c \n",e[position]);break;
+          default: printf("Unprocess str %c \n",e[position]);
         }
         break;
       }
     }
-    if(e[position] == '\0') break;
-    printf("e[position] is %c",e[position]);
-    if (i == NR_REGEX) {
+    if ((i == NR_REGEX )&&(e[position] != ' ')) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
     }
