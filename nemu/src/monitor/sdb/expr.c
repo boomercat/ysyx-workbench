@@ -36,7 +36,7 @@ static struct rule {
    * Pay attention to the precedence level of different rules.
    */
 
-  {" ", TK_NOTYPE},    // spaces
+  {" +", TK_NOTYPE},    // spaces
   {"\\+", TK_PLUS},         // plus
   {"==", TK_EQ},        // equal
   {"\\(", TK_LBR},          // left bracket
@@ -127,7 +127,7 @@ static bool make_token(char *e) {
     }
     printf("this is a test");
   }
-
+  printf("successful!!");
   return true;
 }
 
