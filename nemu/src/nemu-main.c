@@ -43,6 +43,11 @@ int main(int argc, char *argv[]) {
     for (int  i = 0; buffer[i] != '\0'; i++)
     {
       printf("buffer[i] is %c\n",buffer[i]);
+      if (buffer[i] == '\0')
+      {
+        printf("i is %d",i);
+      }
+      
     }
     
     
