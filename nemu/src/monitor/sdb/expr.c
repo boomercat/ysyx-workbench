@@ -80,20 +80,15 @@ static bool make_token(char *e) {
   int position = 0;
   int i;
   regmatch_t pmatch;
-  for (int j = 0; j < strlen(e); j++)
-  {
-    printf("the value of e is  %d",e[j]);
-  }
-  
   nr_token = 0;
 
   while (e[position] != '\0') {
     printf("normal detect %d",e[position]);
     /* Try all rules one by one. */
-    printf("NR_REGEX is %d",NR_REGEX);
     for (i = 0; i < NR_REGEX; i ++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
+        printf("this extractive num is %c",*substr_start);
         int substr_len = pmatch.rm_eo;
 
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
