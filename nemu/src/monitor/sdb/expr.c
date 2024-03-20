@@ -21,7 +21,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ,
+  TK_NOTYPE = 256, TK_EQ,TK_LBR,TK_RBR,TK_DIV,TK_MUL,TK_SUB,TK_NUM,TK_PLUS
 
   /* TODO: Add more token types */
 
@@ -36,19 +36,18 @@ static struct rule {
    * Pay attention to the precedence level of different rules.
    */
 
-  {" +", TK_NOTYPE},    // spaces
-  {"\\+", '+'},         // plus
+  {"\\s", TK_NOTYPE},    // spaces
+  {"\\+", TK_PLUS},         // plus
   {"==", TK_EQ},        // equal
-  {"\\(", '('},          // left bracket
-  {"\\)", ')'},         //right bracket
-  {"\\/", '/'},         //我也不会英文
-  {"\\*", '*'},         //mutiple
-  {"\\-", '-'},          //minus
-  {"\\d+",'d'},        //integrity
+  {"\\(", TK_LBR},          // left bracket
+  {"\\)", TK_RBR},         //right bracket
+  {"\\/", TK_DIV},         //我也不会英文
+  {"\\*", TK_MUL},         //mutiple
+  {"\\-", TK_SUB},          //minus
+  {"\\w",TK_NUM},        //integrity
 };
 
 #define NR_REGEX ARRLEN(rules)
-
 static regex_t re[NR_REGEX] = {};
 
 /* Rules are used for many times.
@@ -75,26 +74,27 @@ typedef struct token {
 
 static Token tokens[128] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
+static int useful_num;
 //识别其中的token，传入要识别的token（buf）
 static bool make_token(char *e) {
   int position = 0;
   int i;
   regmatch_t pmatch;
-
   nr_token = 0;
-
+  useful_num = 0;
   while (e[position] != '\0') {
-    printf("normal detect %d",e[position]);
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
+        printf("this extractive num is %c",*substr_start);
         int substr_len = pmatch.rm_eo;
 
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
         position += substr_len;
+        printf("substrlen is %d\n",substr_len);
 
         /* TODO: Now a new token is recognized with rules[i]. Add codes
          * to record the token in the array `tokens'. For certain types
@@ -103,30 +103,41 @@ static bool make_token(char *e) {
         switch (rules[i].token_type) {
           case TK_NOTYPE: break;
           case TK_EQ:
-          case '(':
-          case ')':
-          case '/':
-          case '*':
-          case '-':
-          case '+':
+          case TK_LBR:
+          case TK_RBR:
+          case TK_DIV:
+          case TK_MUL:
+          case TK_SUB:
+          case TK_PLUS:
                       tokens[nr_token].type = rules[i].token_type;
-          case 'd':
-                      if (substr_len <= 31)  substr_len = 31;
-                      assert(substr_len>32);
-                      strncpy(tokens[nr_token].str, substr_start, substr_len);     
-                      nr_token++;
+                      printf("the type is %d \n",tokens[useful_num].type);
+                      useful_num += 1;  
                       break;
-          default: printf("Unprocess str \n");
+          case TK_NUM:
+                      if (substr_len > 31)  substr_len = 31;
+                      assert(substr_len<32);
+                      strncpy(tokens[nr_token].str, substr_start, substr_len);   
+                      printf("the type is %d \n",tokens[useful_num].type);                        
+                      nr_token++;
+                      useful_num += 1;
+                      break;
+            
+          default: printf("Unprocess str %c \n",e[position]);
         }
+        
+
+        break;
       }
     }
 
-    if (i == NR_REGEX) {
+    if (i == NR_REGEX ) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
     }
-  }
 
+
+  }
+  printf("successful!!,useful_num is %d",useful_num);
   return true;
 }
 
@@ -157,28 +168,33 @@ static bool check_parentheses(int p, int q) {
 static int main_operate(int p,int q){
   int locate = 0;
   while(p < q){
+    //printf("tokens type is %d",tokens[p].type);
     switch (tokens[p].type){
-      case '(': 
+      case TK_LBR: 
         for (; p < q; p++)
         {
-          if(tokens[p].type == ')') break;
+          if(tokens[p].type == ')') {
+             p++;
+             break;
+          }
         }
        break;
-      case ')': p++;break;
-      case 'd': p++;break;
-      case '/': if ((tokens[locate].type == '+')||tokens[locate].type =='-') p++;
+      case TK_RBR: p++;break;
+      case TK_NUM: p++;break;
+      case TK_DIV: if ((tokens[locate].type == '+')||tokens[locate].type =='-') p++;
                 else {
                   locate = p;
                   p++;}
                 break;
-      case '*': if ((tokens[locate].type == '+')||tokens[locate].type =='-') {p++;}
+      case TK_MUL: if ((tokens[locate].type == '+')||tokens[locate].type =='-') {p++;}
                 else {
                   locate = p;
                   p++;
                 }
                 break;
-      case '+':locate = p;p++;break;
-      case '-':locate = p;p++;break;
+      case TK_PLUS:locate = p;p++;break;
+      case TK_SUB:locate = p;p++;break;
+      case TK_NOTYPE:p++;break;
       default: break;
     }  
   }
@@ -188,6 +204,7 @@ static int main_operate(int p,int q){
 
   /* TODO: Insert codes to evaluate the expression. */
 int eval(int p,int q){
+  printf("in eval fuctions");
   int op,val1,val2;
     if (p > q) {printf("situation of p and q is error");
                 assert(p > q);
@@ -220,9 +237,12 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-
+  else{
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
   make_token(e);
-  return eval(0,strlen(tokens->str));
+  printf("this is  e %s",e);
+  printf("is this success?");
+  return   eval(0,useful_num-1);
+
+  }
 }

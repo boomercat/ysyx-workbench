@@ -33,27 +33,29 @@ int main(int argc, char *argv[]) {
   if (fp == NULL){
     return EXIT_FAILURE;
   }
-  char line[1024]={};
+  char line[1024] = {};
   char buffer[1024]= {};
-    while (fgets(line, sizeof(line), fp) != NULL) {   
-    //char *e = NULL;
-    //e = strchr(line, ' ');
-    strcpy(buffer,strtok(NULL," "));
-    printf("this buffer is %s",buffer);
-    //if (e != NULL) {
-     // e += 1;
-    word_t result = expr(buffer,success);
+    while (fgets(line, sizeof(line), fp) != NULL) {  
+    printf("line is %s",line); 
+    strtok(line," ");
+    char *second_token = strtok(NULL,"");
+    strcpy(buffer,second_token);
+    
+    
+    
+   // word_t result = expr(buffer,success);
     if (success) {
       printf("calcuate successful,result is %d\n ",result);
     }
     else printf("defeat");
-    }      
+    }     
     
   
 #endif
 
   /* Start engine. */
   engine_start();
+  fclose(fp);
 
   return is_exit_status_bad();
 }
