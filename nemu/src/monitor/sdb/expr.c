@@ -142,7 +142,8 @@ static bool make_token(char *e) {
 }
 
 
-int p,q,op;
+static int locate = 0;
+
 
 static bool check_parentheses(int p, int q) {
     // 第一个和最后一个括号匹配
@@ -167,28 +168,28 @@ static bool check_parentheses(int p, int q) {
 //计算p和q之间的主运算符函数
 static int main_operate(int p,int q){
   printf("test the main_operate function");
-  int locate = 0;
-  while(p < q){
+  int tmp = p;
+  while(tmp < q){
     //printf("tokens type is %d",tokens[p].type);
-    while(tokens[p].type == TK_LBR){
+    while(tokens[tmp].type == TK_LBR){
       printf("test the  while function");
-      if(tokens[p].type == TK_RBR) break;
-      p++;
+      if(tokens[tmp].type == TK_RBR) break;
+      tmp++;
     }
-    switch (tokens[p].type){
+    switch (tokens[tmp].type){
       case TK_RBR: 
       case TK_NUM: break;
       case TK_DIV: if ((tokens[locate].type != TK_PLUS)||tokens[locate].type !=TK_SUB) {
-                   locate = p;}
+                   locate = tmp;}
                    break;
       case TK_MUL: if ((tokens[locate].type != TK_PLUS)||tokens[locate].type == TK_SUB) {
-                   locate = p;}
+                   locate = tmp;}
                    break;
-      case TK_PLUS:locate = p;break;
-      case TK_SUB:locate = p;break;
+      case TK_PLUS:locate = tmp;break;
+      case TK_SUB:locate = tmp;break;
       default: break;
     }  
-    p++;
+    tmp++;
   }
   return locate;
 }
