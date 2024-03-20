@@ -165,7 +165,7 @@ static bool check_parentheses(int p, int q) {
 }
 
 //计算p和q之间的主运算符函数
-static int main_operate(int p,int q){
+int main_operate(int p,int q){
   int locate = 0;
   printf("test the main_operate function");
   int tmp = p;
