@@ -117,6 +117,8 @@ static bool make_token(char *e) {
             
           default: printf("Unprocess str %c \n",e[position]);
         }
+        useful_num = substr_len;
+
         break;
       }
     }
@@ -128,7 +130,6 @@ static bool make_token(char *e) {
 
 
   }
-  useful_num = nr_token;
   printf("successful!!,useful_num is %d",useful_num);
   return true;
 }
