@@ -169,17 +169,11 @@ static int main_operate(int p,int q){
   int locate = 0;
   while(p < q){
     //printf("tokens type is %d",tokens[p].type);
+    while(tokens[p].type == TK_LBR){
+      if(tokens[p].type == TK_RBR) break;
+      p++;
+    }
     switch (tokens[p].type){
-      case TK_LBR: 
-        /*for (; p < q; p++)
-        {
-          if(tokens[p].type == ')') {
-             p++;
-             break;
-          }
-        }*/
-        while(tokens[p].type != TK_RBR) p++;
-        break;
       case TK_RBR: p++;break;
       case TK_NUM: p++;break;
       case TK_DIV: if ((tokens[locate].type == '+')||tokens[locate].type =='-') p++;
