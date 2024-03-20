@@ -166,6 +166,7 @@ static bool check_parentheses(int p, int q) {
 
 //计算p和q之间的主运算符函数
 static int main_operate(int p,int q){
+  printf("test the main_operate function");
   int locate = 0;
   while(p < q){
     //printf("tokens type is %d",tokens[p].type);
