@@ -176,24 +176,17 @@ static int main_operate(int p,int q){
       p++;
     }
     switch (tokens[p].type){
-      case TK_RBR: p++;break;
-      case TK_NUM: p++;break;
-      case TK_DIV: if ((tokens[locate].type == '+')||tokens[locate].type =='-') p++;
-                else {
-                  locate = p;
-                  p++;}
-                break;
-      case TK_MUL: if ((tokens[locate].type == '+')||tokens[locate].type =='-') {p++;}
-                else {
-                  locate = p;
-                  p++;
-                }
-                break;
-      case TK_PLUS:locate = p;p++;break;
-      case TK_SUB:locate = p;p++;break;
-      case TK_NOTYPE:p++;break;
+      case TK_RBR: 
+      case TK_NUM: break;
+      case TK_DIV: if ((tokens[locate].type != TK_PLUS)||tokens[locate].type !=TK_SUB) locate = p;
+                   break;
+      case TK_MUL: if ((tokens[locate].type != TK_PLUS)||tokens[locate].type == TK_SUB) locate = p;
+                   break;
+      case TK_PLUS:locate = p;break;
+      case TK_SUB:locate = p;break;
       default: break;
     }  
+    p++;
   }
   return locate;
 }
