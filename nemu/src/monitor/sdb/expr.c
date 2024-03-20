@@ -171,14 +171,15 @@ static int main_operate(int p,int q){
     //printf("tokens type is %d",tokens[p].type);
     switch (tokens[p].type){
       case TK_LBR: 
-        for (; p < q; p++)
+        /*for (; p < q; p++)
         {
           if(tokens[p].type == ')') {
              p++;
              break;
           }
-        }
-       break;
+        }*/
+        while(tokens[p].type != TK_RBR) p++;
+        break;
       case TK_RBR: p++;break;
       case TK_NUM: p++;break;
       case TK_DIV: if ((tokens[locate].type == '+')||tokens[locate].type =='-') p++;
