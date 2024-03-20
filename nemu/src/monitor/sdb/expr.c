@@ -166,6 +166,7 @@ static bool check_parentheses(int p, int q) {
 static int main_operate(int p,int q){
   int locate = 0;
   while(p < q){
+    printf("tokens type is %d",tokens[p].type);
     switch (tokens[p].type){
       case TK_LBR: 
         for (; p < q; p++)
@@ -239,6 +240,7 @@ word_t expr(char *e, bool *success) {
   make_token(e);
   printf("this is  e %s",e);
   printf("is this success?");
-  return eval(0,useful_num-1);
+  return   eval(0,useful_num-1);
+
   }
 }
