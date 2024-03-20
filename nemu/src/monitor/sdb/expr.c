@@ -129,7 +129,7 @@ static bool make_token(char *e) {
 
   }
   useful_num = nr_token;
-  printf("successful!!");
+  printf("successful!!,useful_num is %d",useful_num);
   return true;
 }
 
