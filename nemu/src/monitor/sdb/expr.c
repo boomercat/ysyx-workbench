@@ -176,6 +176,8 @@ int main_operate(int p,int q){
       if(tokens[tmp].type == TK_RBR) break;
       tmp++;
     }
+    int i = tokens[tmp].type;
+    printf("%d",i);
     switch (tokens[tmp].type){
       case TK_RBR: 
       case TK_NUM: break;
@@ -188,8 +190,9 @@ int main_operate(int p,int q){
       case TK_PLUS:locate = tmp;break;
       case TK_SUB:locate = tmp;break;
       default: break;
+      tmp++;
     }  
-    tmp++;
+    
     main_num = locate;
   }
   return main_num;
