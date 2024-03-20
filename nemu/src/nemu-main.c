@@ -40,8 +40,7 @@ int main(int argc, char *argv[]) {
     strtok(line," ");
     char *second_token = strtok(NULL,"");
     strcpy(buffer,second_token);
-    
-    word_t result = expr(buffer,success);
+    int  result = expr(buffer,success);
     printf("result is %d\n",result);
     }     
     
