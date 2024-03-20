@@ -116,10 +116,10 @@ static bool make_token(char *e) {
           case TK_NUM:
                       if (substr_len > 31)  substr_len = 31;
                       assert(substr_len<32);
-                      strncpy(tokens[nr_token].str, substr_start, substr_len);     
+                      strncpy(tokens[nr_token].str, substr_start, substr_len);   
+                      printf("the type is %d \n",tokens[nr_token].type);                        
                       nr_token++;
                       useful_num += 1;
-                      printf("the type is %d \n",tokens[nr_token].type);
                       break;
             
           default: printf("Unprocess str %c \n",e[position]);
