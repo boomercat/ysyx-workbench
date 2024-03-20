@@ -48,7 +48,6 @@ static struct rule {
 };
 
 #define NR_REGEX ARRLEN(rules)
-static int useful_num;
 static regex_t re[NR_REGEX] = {};
 
 /* Rules are used for many times.
@@ -75,12 +74,14 @@ typedef struct token {
 
 static Token tokens[128] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
+static int useful_num;
 //识别其中的token，传入要识别的token（buf）
 static bool make_token(char *e) {
   int position = 0;
   int i;
   regmatch_t pmatch;
   nr_token = 0;
+  useful_num = 0;
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
