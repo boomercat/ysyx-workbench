@@ -162,7 +162,10 @@ static int main_operate(int p,int q){
       case TK_LBR: 
         for (; p < q; p++)
         {
-          if(tokens[p].type == ')') break;
+          if(tokens[p].type == ')') {
+             p++;
+             break;
+          }
         }
        break;
       case TK_RBR: p++;break;
