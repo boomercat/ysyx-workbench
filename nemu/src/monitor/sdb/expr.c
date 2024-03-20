@@ -190,7 +190,7 @@ int main_operate(int p,int q){
       default: break;
     }  
     tmp++;
-    main_num = tmp;
+    main_num = locate;
   }
   return main_num;
 }
