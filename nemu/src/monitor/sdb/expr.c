@@ -228,7 +228,7 @@ word_t expr(char *e, bool *success) {
   else{
   /* TODO: Insert codes to evaluate the expression. */
   printf("this is  e %s",e);
-  make_token(e);
+  printf("strlen tokens is %ld",strlen(tokens->str));
   return eval(0,strlen(tokens->str));
   }
 }
