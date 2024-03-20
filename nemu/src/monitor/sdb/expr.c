@@ -119,6 +119,7 @@ static bool make_token(char *e) {
                       strncpy(tokens[nr_token].str, substr_start, substr_len);     
                       nr_token++;
                       useful_num += 1;
+                      printf("the type is %d \n",tokens[nr_token].type);
                       break;
             
           default: printf("Unprocess str %c \n",e[position]);
