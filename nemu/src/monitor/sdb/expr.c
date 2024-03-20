@@ -163,7 +163,7 @@ static bool check_parentheses(int p, int q) {
     }
     return true;
 }
-
+int main_num;
 //计算p和q之间的主运算符函数
 int main_operate(int p,int q){
   int locate = 0;
@@ -190,8 +190,9 @@ int main_operate(int p,int q){
       default: break;
     }  
     tmp++;
+    main_num = tmp;
   }
-  return locate;
+  return main_num;
 }
 
 
