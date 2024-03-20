@@ -159,27 +159,28 @@ static int main_operate(int p,int q){
   int locate = 0;
   while(p < q){
     switch (tokens[p].type){
-      case '(': 
+      case TK_LBR: 
         for (; p < q; p++)
         {
           if(tokens[p].type == ')') break;
         }
        break;
-      case ')': p++;break;
-      case 'd': p++;break;
-      case '/': if ((tokens[locate].type == '+')||tokens[locate].type =='-') p++;
+      case TK_RBR: p++;break;
+      case TK_NUM: p++;break;
+      case TK_DIV: if ((tokens[locate].type == '+')||tokens[locate].type =='-') p++;
                 else {
                   locate = p;
                   p++;}
                 break;
-      case '*': if ((tokens[locate].type == '+')||tokens[locate].type =='-') {p++;}
+      case TK_MUL: if ((tokens[locate].type == '+')||tokens[locate].type =='-') {p++;}
                 else {
                   locate = p;
                   p++;
                 }
                 break;
-      case '+':locate = p;p++;break;
-      case '-':locate = p;p++;break;
+      case TK_PLUS:locate = p;p++;break;
+      case TK_SUB:locate = p;p++;break;
+      case TK_NOTYPE:p++;break;
       default: break;
     }  
   }
