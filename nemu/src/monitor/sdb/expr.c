@@ -193,6 +193,7 @@ static int main_operate(int p,int q){
 
   /* TODO: Insert codes to evaluate the expression. */
 int eval(int p,int q){
+  printf("in eval fuctions");
   int op,val1,val2;
     if (p > q) {printf("situation of p and q is error");
                 assert(p > q);
