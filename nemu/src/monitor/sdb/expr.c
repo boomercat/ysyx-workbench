@@ -142,11 +142,10 @@ static bool make_token(char *e) {
 }
 
 
-static int locate = 0;
 
 
 static bool check_parentheses(int p, int q) {
-    // 第一个和最后一个括号匹配
+     // 第一个和最后一个括号匹配
     if (tokens[p].type != '(' || tokens[q].type != ')') {
         return false;
     }
@@ -167,6 +166,7 @@ static bool check_parentheses(int p, int q) {
 
 //计算p和q之间的主运算符函数
 static int main_operate(int p,int q){
+  int locate = 0;
   printf("test the main_operate function");
   int tmp = p;
   while(tmp < q){
