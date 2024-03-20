@@ -178,9 +178,11 @@ static int main_operate(int p,int q){
     switch (tokens[p].type){
       case TK_RBR: 
       case TK_NUM: break;
-      case TK_DIV: if ((tokens[locate].type != TK_PLUS)||tokens[locate].type !=TK_SUB) locate = p;
+      case TK_DIV: if ((tokens[locate].type != TK_PLUS)||tokens[locate].type !=TK_SUB) {
+                   locate = p;}
                    break;
-      case TK_MUL: if ((tokens[locate].type != TK_PLUS)||tokens[locate].type == TK_SUB) locate = p;
+      case TK_MUL: if ((tokens[locate].type != TK_PLUS)||tokens[locate].type == TK_SUB) {
+                   locate = p;}
                    break;
       case TK_PLUS:locate = p;break;
       case TK_SUB:locate = p;break;
