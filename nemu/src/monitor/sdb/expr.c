@@ -202,7 +202,7 @@ static int main_operate(int p,int q){
   /* TODO: Insert codes to evaluate the expression. */
 int eval(int p,int q){
   int op,val1,val2;
-  printf("test tge evak function");
+  printf("test the eval function");
     if (p > q) {printf("situation of p and q is error");
                 assert(p > q);
     }
@@ -237,7 +237,8 @@ word_t expr(char *e, bool *success) {
   else{
   /* TODO: Insert codes to evaluate the expression. */
   printf("this is  e %s",e);
-  return   eval(0,useful_num-1);
+  eval(0,useful_num-1);
+  return true;
 
   }
 }
