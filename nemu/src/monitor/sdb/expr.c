@@ -110,15 +110,15 @@ static bool make_token(char *e) {
           case TK_PLUS:
                       tokens[useful_num].type = rules[i].token_type;
                       useful_num += 1; 
-                      printf("the type is %d \n",tokens[nr_token].type);
+                      printf("the type is %d \n",tokens[useful_num].type);
                       break;
           case TK_NUM:
                       if (substr_len > 31)  substr_len = 31;
                       assert(substr_len<32);
                       tokens[useful_num].type = rules[i].token_type;
-                      useful_num += 1; 
-                      strncpy(tokens[nr_token].str, substr_start, substr_len);   
-                      printf("the type is %d \n",tokens[nr_token].type);                        
+                      strncpy(tokens[useful_num].str, substr_start, substr_len);  
+                      useful_num += 1;  
+                      printf("the type is %d \n",tokens[useful_num].type);                        
                       nr_token++;
                       break;
             
@@ -133,7 +133,6 @@ static bool make_token(char *e) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
     }
-
 
   }
   printf("successful!!,useful_num is %d",useful_num);
