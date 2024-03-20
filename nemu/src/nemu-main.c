@@ -42,10 +42,7 @@ int main(int argc, char *argv[]) {
     strcpy(buffer,second_token);
     
     word_t result = expr(buffer,success);
-    if (success) {
-      printf("calcuate successful,result is %d\n ",result);
-    }
-    else printf("defeat");
+    printf("result is %d\n",result);
     }     
     
   
