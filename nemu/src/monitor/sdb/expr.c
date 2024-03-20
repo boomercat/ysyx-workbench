@@ -171,7 +171,7 @@ static int main_operate(int p,int q){
   while(p < q){
     //printf("tokens type is %d",tokens[p].type);
     while(tokens[p].type == TK_LBR){
-      printf("test the function");
+      printf("test the  while function");
       if(tokens[p].type == TK_RBR) break;
       p++;
     }
@@ -202,6 +202,7 @@ static int main_operate(int p,int q){
   /* TODO: Insert codes to evaluate the expression. */
 int eval(int p,int q){
   int op,val1,val2;
+  printf("test tge evak function");
     if (p > q) {printf("situation of p and q is error");
                 assert(p > q);
     }
