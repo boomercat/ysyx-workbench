@@ -170,6 +170,7 @@ static int main_operate(int p,int q){
   while(p < q){
     //printf("tokens type is %d",tokens[p].type);
     while(tokens[p].type == TK_LBR){
+      printf("test the function");
       if(tokens[p].type == TK_RBR) break;
       p++;
     }
