@@ -40,15 +40,7 @@ int main(int argc, char *argv[]) {
     strtok(line," ");
     char *second_token = strtok(NULL,"");
     strcpy(buffer,second_token);
-    for (int  i = 0; buffer[i] != '\0'; i++)
-    {
-      printf("buffer[i] is %c\n",buffer[i]);
-      if (buffer[i] == '\0')
-      {
-        printf("i is %d",i);
-      }
-      
-    }
+    
     
     
     word_t result = expr(buffer,success);
