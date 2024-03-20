@@ -190,9 +190,8 @@ int main_operate(int p,int q){
       case TK_PLUS:locate = tmp;break;
       case TK_SUB:locate = tmp;break;
       default: break;
-      tmp++;
-    }  
-    
+     }  
+    tmp++;
     main_num = locate;
   }
   return main_num;
