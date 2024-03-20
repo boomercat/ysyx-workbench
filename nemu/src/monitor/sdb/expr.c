@@ -238,7 +238,6 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   make_token(e);
   printf("this is  e %s",e);
-  printf("strlen tokens is %d",useful_num);
-  return eval(0,useful_num);
+  return eval(0,useful_num-1);
   }
 }
