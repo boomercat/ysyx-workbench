@@ -110,6 +110,7 @@ static bool make_token(char *e) {
           case TK_SUB:
           case TK_PLUS:
                       tokens[nr_token].type = rules[i].token_type;
+                      printf("the type is %d \n",tokens[nr_token].type);
                       useful_num += 1;  
                       break;
           case TK_NUM:
