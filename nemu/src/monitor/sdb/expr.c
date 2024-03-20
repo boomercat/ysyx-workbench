@@ -48,7 +48,7 @@ static struct rule {
 };
 
 #define NR_REGEX ARRLEN(rules)
-
+static int useful_num;
 static regex_t re[NR_REGEX] = {};
 
 /* Rules are used for many times.
@@ -126,7 +126,9 @@ static bool make_token(char *e) {
       return false;
     }
 
+
   }
+  useful_num = nr_token;
   printf("successful!!");
   return true;
 }
@@ -228,8 +230,9 @@ word_t expr(char *e, bool *success) {
   }
   else{
   /* TODO: Insert codes to evaluate the expression. */
+  make_token(e);
   printf("this is  e %s",e);
-  printf("strlen tokens is %ld",strlen(tokens->str));
-  return eval(0,strlen(tokens->str));
+  printf("strlen tokens is %d",useful_num);
+  return eval(0,useful_num);
   }
 }
