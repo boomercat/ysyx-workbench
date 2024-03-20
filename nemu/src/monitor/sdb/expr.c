@@ -109,14 +109,14 @@ static bool make_token(char *e) {
           case TK_SUB:
           case TK_PLUS:
                       tokens[nr_token].type = rules[i].token_type;
-                      printf("the type is %d \n",tokens[useful_num].type);
+                      printf("the type is %d \n",tokens[nr_token].type);
                       useful_num += 1;  
                       break;
           case TK_NUM:
                       if (substr_len > 31)  substr_len = 31;
                       assert(substr_len<32);
                       strncpy(tokens[nr_token].str, substr_start, substr_len);   
-                      printf("the type is %d \n",tokens[useful_num].type);                        
+                      printf("the type is %d \n",tokens[nr_token].type);                        
                       nr_token++;
                       useful_num += 1;
                       break;
