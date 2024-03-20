@@ -110,7 +110,6 @@ static bool make_token(char *e) {
           case TK_PLUS:
                       tokens[useful_num].type = rules[i].token_type;
                       printf("the type is %d \n",tokens[nr_token].type);
-                      useful_num += 1;  
                       break;
           case TK_NUM:
                       if (substr_len > 31)  substr_len = 31;
@@ -119,7 +118,6 @@ static bool make_token(char *e) {
                       strncpy(tokens[nr_token].str, substr_start, substr_len);   
                       printf("the type is %d \n",tokens[nr_token].type);                        
                       nr_token++;
-                      useful_num += 1;
                       break;
             
           default: printf("Unprocess str %c \n",e[position]);
@@ -129,7 +127,7 @@ static bool make_token(char *e) {
         break;
       }
     }
-
+    useful_num += 1; 
     if (i == NR_REGEX ) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
@@ -239,8 +237,7 @@ word_t expr(char *e, bool *success) {
   else{
   /* TODO: Insert codes to evaluate the expression. */
   printf("this is  e %s",e);
-  eval(0,useful_num-1);
-  return true;
+  return eval(0,useful_num-1);
 
   }
 }
