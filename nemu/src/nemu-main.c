@@ -41,9 +41,7 @@ int main(int argc, char *argv[]) {
     char *second_token = strtok(NULL,"");
     strcpy(buffer,second_token);
     
-    
-    
-   // word_t result = expr(buffer,success);
+    word_t result = expr(buffer,success);
     if (success) {
       printf("calcuate successful,result is %d\n ",result);
     }
