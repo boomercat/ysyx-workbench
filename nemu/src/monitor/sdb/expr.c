@@ -198,17 +198,19 @@ int main_operate(int p,int q){
 
   /* TODO: Insert codes to evaluate the expression. */
 int eval(int p,int q){
+  int tmp1 = p;
+  int tmp2 = q;
   int op,val1,val2;
   printf("test the eval function");
-    if (p > q) {printf("situation of p and q is error");
+    if (tmp1 > tmp2) {printf("situation of p and q is error");
                 assert(p > q);
     }
-    else if(p == q)  return atoi(tokens[p].str);
-    else if(check_parentheses(p,q) == true)  return eval(p+1,q-1);
+    else if(tmp1 == tmp2)  return atoi(tokens[tmp1].str);
+    else if(check_parentheses(tmp1,tmp2) == true)  return eval(tmp1+1,tmp2-1);
     else{
-      op = main_operate(p,q);
-      val1 = eval(p,op-1);
-      val2 = eval(op+1,q);  
+      op = main_operate(tmp1,tmp2);
+      val1 = eval(tmp1,op-1);
+      val2 = eval(op+1,tmp2);  
       switch (tokens[op].type)
       {
       case '+':  return  val1 + val2;
@@ -218,6 +220,7 @@ int eval(int p,int q){
       default: assert(0);
       }
     }
+    
     
 
   
