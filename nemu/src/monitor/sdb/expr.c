@@ -173,8 +173,9 @@ int main_operate(int p,int q){
     //printf("tokens type is %d",tokens[p].type);
     while(tokens[tmp].type == TK_LBR){
       printf("test the  while function");
-      if(tokens[tmp].type == TK_RBR) break;
       tmp++;
+      if(tokens[tmp].type == TK_RBR) break;
+      
     }
     int i = tokens[tmp].type;
     printf("%d",i);
