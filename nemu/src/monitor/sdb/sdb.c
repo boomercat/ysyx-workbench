@@ -62,16 +62,18 @@ static int cmd_info(char *args){
   return 0;
 }
 static int cmd_x(char *args){
- /* 
+  
   int num_a = atoi(strtok(args," "));
-  paddr_t addr = strtoul(strtok(NULL," "),NULL, 0); // 32位
+  printf("%d",num_a);
+  uint32_t addr = strtoul(strtok(NULL," "),NULL, 0); // 32位
   //printf(" %x \n %d this is a test",addr,num_a);
   for (int i = 0; i < num_a; i++)
   {
     printf("0x%x:%08x\n",addr,paddr_read(addr,4));
     addr += 4;
   }
-  return 0; */
+  return 0; 
+  /*
   if (args == NULL) {
         printf("Wrong Command!\n");
         return 0;
@@ -86,7 +88,7 @@ static int cmd_x(char *args){
   
   }
    return 0;
-
+  */
 }
 
 static int cmd_si(char *args){
