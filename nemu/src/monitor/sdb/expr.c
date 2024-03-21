@@ -168,15 +168,10 @@ int main_operate(int p,int q){
   printf("test the main_operate function");
   int tmp = p;
   while(tmp < q){
-    //printf("tokens type is %d",tokens[p].type);
-    /*while(tokens[tmp].type == TK_LBR){
-      printf("test the  while function");
-      tmp++;
-      if(tokens[tmp].type == TK_RBR) break;
-      
-    }*/
-    if(tokens[tmp].type == TK_LBR){
-      for(int i = tmp; tokens[i].type != TK_RBR; i++,tmp++){}
+    if((tokens[tmp].type == TK_LBR)){
+      while( tokens[tmp].type != TK_RBR){
+        tmp++;
+      }
     }
     int i = tokens[tmp].type;
     printf("%d",i);
