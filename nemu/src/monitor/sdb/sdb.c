@@ -62,6 +62,7 @@ static int cmd_info(char *args){
   return 0;
 }
 static int cmd_x(char *args){
+  /*
   int num_a = atoi(strtok(args," "));
   paddr_t addr = strtoul(strtok(NULL," "),NULL, 0); // 32位
   //printf(" %x \n %d this is a test",addr,num_a);
@@ -70,7 +71,32 @@ static int cmd_x(char *args){
     printf("0x%x:%08x\n",addr,paddr_read(addr,4));
     addr += 4;
   }
-  return 0; 
+  return 0; */
+   char *arg1 = strtok(NULL, " ");
+  if (arg1 == NULL) {
+    printf("Usage: x N EXPR\n");
+    return 0;
+  }
+  char *arg2 = strtok(NULL, " ");
+  if (arg1 == NULL) {
+    printf("Usage: x N EXPR\n");
+    return 0;
+  }
+  int n = strtol(arg1, NULL, 10);
+  vaddr_t expr = strtol(arg2, NULL, 16);
+  int i, j;
+  for (i = 0; i < n;) {
+    printf(ANSI_FMT("%#018x: ", ANSI_FG_CYAN), expr);
+
+    for (j = 0; i < n && j < 4; i++, j++) {
+      word_t w = paddr_read(expr, 8);
+      expr += 8;
+      printf("%#018x ", w);
+    }
+    puts("");
+  }
+  
+  return 0;
 }
 
 static int cmd_si(char *args){
