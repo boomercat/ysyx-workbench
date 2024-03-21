@@ -32,16 +32,19 @@ static struct rule {
   int token_type;
 } rules[] = {
   {"\\s", TK_NOTYPE},    // spaces
+  {"0[xX][0-9a-fA-F]+",TK_HEX},    //十六进制;
+  {"\\$(\\$0|ra|[sgt]p|t[0-6]|a[0-7]|s([0-9]|1[0-1]))",TK_REG}, //reg 
   {"\\+", TK_PLUS},         // plus
   {"==", TK_EQ},        // equal
+  {"!=", TK_NEQ},       // not equal
   {"\\(", TK_LBR},          // left bracket
   {"\\)", TK_RBR},         //right bracket
-  {"\\/", TK_DIV},         //我也不会英文
+  {"&&" , TK_AND},          //val1 && val2
+  {"\\/", TK_DIV},         //divide
   {"\\*", TK_MUL},         //mutiple
   {"\\-", TK_SUB},          //minus
   {"\\b[0-9]+\\b",TK_NUM},        //integrity
-  {"0[xX][0-9a-fA-F]+",TK_HEX},    //十六进制;
-  {"\\$(\\$0|ra|[sgt]p|t[0-6]|a[0-7]|s([0-9]|1[0-1]))",TK_REG} //reg 
+
 };
 #define NR_REGEX ARRLEN(rules)
 static regex_t re[NR_REGEX] = {};
@@ -96,13 +99,20 @@ static bool make_token(char *e) {
          */
         switch (rules[i].token_type) {
           case TK_NOTYPE: break;
+          case TK_HEX: 
+          case TK_REG:if (substr_len > 31)  substr_len = 31;
+                      assert(substr_len<32);
+                      tokens[useful_num].type = rules[i].token_type;
+                      strncpy(tokens[useful_num].str, substr_start, substr_len);  
+                      useful_num += 1;     
+                      break;
           case TK_EQ:
           case TK_LBR:
           case TK_RBR:
           case TK_DIV:
           case TK_MUL:
-          case TK_SUB:
-          case TK_REG:
+          case TK_AND:
+          case TK_SUB: 
           case TK_NEQ:
           case TK_PLUS:
                       tokens[useful_num].type = rules[i].token_type;
@@ -211,7 +221,15 @@ int eval(int p,int q){
       case TK_PLUS: return  val1 + val2;
       case TK_SUB: return val1 - val2;
       case TK_MUL: return val1 * val2;
-      case TK_DIV: return val1 / val2;
+      case TK_DIV: if (val2 == 0) {
+                      printf("divide ZERO!");
+                      return false;
+                      }     
+                   else  return (sword_t)val1 / (sword_t)val2;   //先转换成有符号数，否则会出现错误
+      case TK_EQ  : return (val1 == val2);
+      case TK_NEQ : return (val1 != val2);
+      case TK_AND : return (val1 && val2);
+      case TK_REG : return 0;
       default: assert(0);
       }
     }
@@ -238,7 +256,7 @@ word_t expr(char *e, bool *success) {
   }
 }  
  
-  return eval(0,useful_num-1);
+  return   eval(0,useful_num-1);
 
   }
 }
