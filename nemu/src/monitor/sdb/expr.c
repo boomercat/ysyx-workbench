@@ -21,8 +21,8 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ,TK_LBR,TK_RBR,TK_DIV,TK_MUL,TK_SUB,TK_NUM,TK_PLUS
-
+  TK_NOTYPE = 256, TK_EQ,TK_LBR,TK_RBR,TK_DIV,TK_MUL,TK_SUB,TK_NUM,TK_PLUS,
+  TK_HEX,TK_REG,TK_AND,TK_NEQ
   /* TODO: Add more token types */
 
 };
@@ -31,11 +31,6 @@ static struct rule {
   const char *regex;
   int token_type;
 } rules[] = {
-
-  /* TODO: Add more rules.
-   * Pay attention to the precedence level of different rules.
-   */
-
   {"\\s", TK_NOTYPE},    // spaces
   {"\\+", TK_PLUS},         // plus
   {"==", TK_EQ},        // equal
@@ -44,9 +39,10 @@ static struct rule {
   {"\\/", TK_DIV},         //我也不会英文
   {"\\*", TK_MUL},         //mutiple
   {"\\-", TK_SUB},          //minus
-  {"\\w",TK_NUM},        //integrity
+  {"\\b[0-9]+\\b",TK_NUM},        //integrity
+  {"0[xX][0-9a-fA-F]+",TK_HEX},    //十六进制;
+  {"\\$(\\$0|ra|[sgt]p|t[0-6]|a[0-7]|s([0-9]|1[0-1]))",TK_REG} //reg 
 };
-
 #define NR_REGEX ARRLEN(rules)
 static regex_t re[NR_REGEX] = {};
 
@@ -94,7 +90,6 @@ static bool make_token(char *e) {
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
         position += substr_len;
-
         /* TODO: Now a new token is recognized with rules[i]. Add codes
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
@@ -107,6 +102,8 @@ static bool make_token(char *e) {
           case TK_DIV:
           case TK_MUL:
           case TK_SUB:
+          case TK_REG:
+          case TK_NEQ:
           case TK_PLUS:
                       tokens[useful_num].type = rules[i].token_type;
                       useful_num += 1; 
@@ -119,13 +116,12 @@ static bool make_token(char *e) {
                       strncpy(tokens[useful_num].str, substr_start, substr_len);  
                       useful_num += 1;  
                       printf("the type is %d \n",tokens[useful_num].type);                        
-                      nr_token++;
+                      //nr_token++;
                       break;
             
           default: printf("Unprocess str %c \n",e[position]);
         }
         
-
         break;
       }
     }
@@ -135,7 +131,8 @@ static bool make_token(char *e) {
     }
 
   }
-  printf("successful!!,useful_num is %d",useful_num);
+
+printf("successful!!,useful_num is %d",useful_num);
   return true;
 }
 
@@ -234,7 +231,13 @@ word_t expr(char *e, bool *success) {
   }
   else{
   /* TODO: Insert codes to evaluate the expression. */
-  printf("this is  e %s",e);
+  for (int j = 0; j < useful_num; j ++) { //judge the * is mul or other
+  if (tokens[j].type == TK_MUL && (j == 0 || tokens[j - 1].type == TK_PLUS || tokens[j - 1].type == TK_SUB ||
+   tokens[j - 1].type == TK_MUL || tokens[j - 1].type == TK_DIV)) {
+    tokens[j].type = TK_REG;
+  }
+}  
+ 
   return eval(0,useful_num-1);
 
   }
