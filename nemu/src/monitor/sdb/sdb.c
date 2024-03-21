@@ -62,7 +62,7 @@ static int cmd_info(char *args){
   return 0;
 }
 static int cmd_x(char *args){
-  /*
+ /* 
   int num_a = atoi(strtok(args," "));
   paddr_t addr = strtoul(strtok(NULL," "),NULL, 0); // 32位
   //printf(" %x \n %d this is a test",addr,num_a);
@@ -72,31 +72,21 @@ static int cmd_x(char *args){
     addr += 4;
   }
   return 0; */
-   char *arg1 = strtok(NULL, " ");
-  if (arg1 == NULL) {
-    printf("Usage: x N EXPR\n");
-    return 0;
-  }
-  char *arg2 = strtok(NULL, " ");
-  if (arg1 == NULL) {
-    printf("Usage: x N EXPR\n");
-    return 0;
-  }
-  int n = strtol(arg1, NULL, 10);
-  vaddr_t expr = strtol(arg2, NULL, 16);
-  int i, j;
-  for (i = 0; i < n;) {
-    printf(ANSI_FMT("%#018x: ", ANSI_FG_CYAN), expr);
-
-    for (j = 0; i < n && j < 4; i++, j++) {
-      word_t w = paddr_read(expr, 8);
-      expr += 8;
-      printf("%#018x ", w);
-    }
-    puts("");
-  }
+  if (args == NULL) {
+        printf("Wrong Command!\n");
+        return 0;
+  }                                                                           
+	int N;
+  uint32_t startAddress;
+	sscanf(args,"%d%x",&N,&startAddress);
+	for (int i = 0;i < N;i ++){
+      printf("%x\n", paddr_read(startAddress,4));
+      //C语言会自动执行类型提升以匹配表达式的操作数的类型。所以，4 被转换为 uint32_t，
+      startAddress += 4;
   
-  return 0;
+  }
+   return 0;
+
 }
 
 static int cmd_si(char *args){
