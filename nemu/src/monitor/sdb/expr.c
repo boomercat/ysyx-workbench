@@ -32,7 +32,7 @@ static struct rule {
   int token_type;
 } rules[] = {
   {"\\s", TK_NOTYPE},    // spaces
-  {"0(x|X)\\w+",TK_HEX},    //十六进制;
+  {"(0x|0X)\\w+",TK_HEX},    //十六进制;
   {"\\$(\\$0|ra|[sgt]p|t[0-6]|a[0-7]|s([0-9]|1[0-1]))",TK_REG}, //reg 
   {"\\+", TK_PLUS},         // plus
   {"==", TK_EQ},        // equal
