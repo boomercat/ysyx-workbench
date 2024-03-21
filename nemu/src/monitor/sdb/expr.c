@@ -144,13 +144,13 @@ static bool make_token(char *e) {
 
 static bool check_parentheses(int p, int q) {
      // 第一个和最后一个括号匹配
-    if (tokens[p].type != '(' || tokens[q].type != ')') {
+    if (tokens[p].type != TK_LBR || tokens[q].type != TK_RBR) {
         return false;
     }
     int cnt = 0; 
     for (int i = p + 1; i < q; ++i) {
-        if (tokens[i].type == '(') cnt++;
-        else if (tokens[i].type == ')') {
+        if (tokens[i].type == TK_LBR) cnt++;
+        else if (tokens[i].type == TK_RBR) {
             cnt--;
             if (cnt < 0) return false;
         }
