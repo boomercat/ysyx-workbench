@@ -102,6 +102,7 @@ static bool make_token(char *e) {
           case TK_REG:if (substr_len > 31)  substr_len = 31;
                       assert(substr_len<32);
                       tokens[useful_num].type = rules[i].token_type;
+                      printf("the type is %d \n",tokens[useful_num].type);
                       strncpy(tokens[useful_num].str, substr_start, substr_len);  
                       useful_num += 1;     
                       break;
@@ -115,8 +116,8 @@ static bool make_token(char *e) {
           case TK_NEQ:
           case TK_PLUS:
                       tokens[useful_num].type = rules[i].token_type;
-                      useful_num += 1; 
                       printf("the type is %d \n",tokens[useful_num].type);
+                      useful_num += 1; 
                       break;
           case TK_NUM:
                       if (substr_len > 31)  substr_len = 31;
@@ -182,8 +183,7 @@ int main_operate(int p,int q){
     int i = tokens[tmp].type;
     printf("%d",i);
     switch (tokens[tmp].type){
-      case TK_DEREF:
-      case TK_DIV: if ((tokens[locate].type != TK_PLUS)||tokens[locate].type !=TK_SUB) {
+       case TK_DIV: if ((tokens[locate].type != TK_PLUS)||tokens[locate].type !=TK_SUB) {
                    locate = tmp;}
                    break;
       case TK_MUL: if ((tokens[locate].type != TK_PLUS)||tokens[locate].type == TK_SUB) {
