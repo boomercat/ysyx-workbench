@@ -65,7 +65,7 @@ static int cmd_x(char *args){
   
   int num_a = atoi(strtok(args," "));
   printf("%d",num_a);
-  uint32_t addr = strtoul(strtok(NULL," "),NULL, 0); // 32位
+  word_t addr = strtoul(strtok(NULL," "),NULL, 0); // 32位
   //printf(" %x \n %d this is a test",addr,num_a);
   for (int i = 0; i < num_a; i++)
   {
@@ -89,6 +89,15 @@ static int cmd_x(char *args){
   }
    return 0;
   */
+}
+static int  cmd_p(char *args){
+  printf("%s",args);
+  /*
+  char EXPR[1024] = strtok(args," ");
+  //char EXPR[1024] = strtog(NULL," ");
+  bool *success = false;
+  return  expr(EXPR,success);*/
+  return 0;
 }
 
 static int cmd_si(char *args){
@@ -119,7 +128,8 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   { "si", "execute N commands and suspend, default N = 1", cmd_si},
   { "info", "r is print the status of  monitor,w is print watchpoint's information",cmd_info},
-  { "x", "calculate the value of EXPR,and the result as the  start memory address,output permanet N 4bits in 0x",cmd_x},
+  { "x", "calculate the value of EXPR,and the result as the  start memory address,output permanet N 4Byte in 0x",cmd_x},
+  { "p", "calculate the value of EXPR ", cmd_p}
 
   /* TODO: Add more commands */
 
