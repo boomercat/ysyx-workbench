@@ -92,12 +92,11 @@ static int cmd_x(char *args){
 }
 static int  cmd_p(char *args){
   printf("%s",args);
-  /*
-  char EXPR[1024] = strtok(args," ");
+  
   //char EXPR[1024] = strtog(NULL," ");
   bool *success = false;
-  return  expr(EXPR,success);*/
-  return 0;
+  return  expr(args,success);
+  //return 0;
 }
 
 static int cmd_si(char *args){
