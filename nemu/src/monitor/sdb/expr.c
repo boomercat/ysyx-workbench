@@ -180,8 +180,6 @@ int main_operate(int p,int q){
         tmp++;
       }
     }
-    int i = tokens[tmp].type;
-    printf("%d",i);
     switch (tokens[tmp].type){
       case TK_DEREF: if((tokens[locate].type != TK_PLUS) || (tokens[locate].type !=TK_SUB) ||
                         (tokens[locate].type !=TK_MUL) ||(tokens[locate].type !=TK_DIV)){
@@ -197,7 +195,7 @@ int main_operate(int p,int q){
       case TK_PLUS:locate = tmp;break;
       case TK_SUB:locate = tmp;break;
       default: break;
-     }  
+    }  
     tmp++;
     main_num = locate;
   }
