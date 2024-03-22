@@ -95,8 +95,9 @@ static int  cmd_p(char *args){
   
   //char EXPR[1024] = strtog(NULL," ");
   bool *success = false;
-  return  expr(args,success);
-  //return 0;
+  word_t result = expr(args,success);
+  printf("result is %d\n",result);
+  return 0;
 }
 
 static int cmd_si(char *args){
