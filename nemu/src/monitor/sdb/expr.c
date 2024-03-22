@@ -254,8 +254,8 @@ word_t expr(char *e, bool *success) {
   else{
   /* TODO: Insert codes to evaluate the expression. */
   for (int j = 0; j < useful_num; j ++) { //judge the * is mul or other
-  if (tokens[j].type == TK_MUL && (j == 0 || tokens[j - 1].type == TK_PLUS || tokens[j - 1].type == TK_SUB ||
-   tokens[j - 1].type == TK_MUL || tokens[j - 1].type == TK_DIV)) {
+  if (tokens[j].type == TK_MUL && (j == 0 || (tokens[j - 1].type == TK_PLUS) || (tokens[j - 1].type == TK_SUB) ||
+   (tokens[j - 1].type == TK_MUL) || (tokens[j - 1].type == TK_DIV))) {
     tokens[j].type = TK_DEREF;
   }
 }  
