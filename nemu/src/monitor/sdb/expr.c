@@ -213,7 +213,7 @@ word_t eval(int p,int q){
     }
     else if(p == q)  {                    //定位到 具体的一个str时，要判断其类型然后根据类型进行return
         if(tokens[p].type == TK_NUM)  return  atoi(tokens[p].str);
-        else if(tokens[p].type == TK_HEX) return  strtol(tokens[p].str,NULL,16);
+        else if(tokens[p].type == TK_HEX) return  strtol(tokens[p].str,NULL,10);
         else if(tokens[p].type == TK_REG) {
           word_t num; bool t = true;
           num = isa_reg_str2val(tokens[p].str,&t);
