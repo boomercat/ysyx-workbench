@@ -183,7 +183,12 @@ int main_operate(int p,int q){
     int i = tokens[tmp].type;
     printf("%d",i);
     switch (tokens[tmp].type){
-       case TK_DIV: if ((tokens[locate].type != TK_PLUS)||tokens[locate].type !=TK_SUB) {
+      case TK_DEREF: if((tokens[locate].type != TK_PLUS) || (tokens[locate].type !=TK_SUB) ||
+                        (tokens[locate].type !=TK_MUL) ||(tokens[locate].type !=TK_DIV)){
+                          locate = tmp;
+                        } 
+                        break;
+      case TK_DIV: if ((tokens[locate].type != TK_PLUS)||tokens[locate].type !=TK_SUB) {
                    locate = tmp;}
                    break;
       case TK_MUL: if ((tokens[locate].type != TK_PLUS)||tokens[locate].type == TK_SUB) {
