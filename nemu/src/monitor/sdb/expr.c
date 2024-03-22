@@ -211,15 +211,24 @@ int eval(int p,int q){
     if (p>q) {printf("situation of p and q is error");
                 assert(p > q);
     }
-    else if(p == q)  return atoi(tokens[p].str);
-    else if(check_parentheses(p,q) == true)  return eval(p+1,q-1);
+    else if(p == q)  {                    //定位到 具体的一个str时，要判断其类型然后根据类型进行return
+        if(tokens[p].type == TK_NUM)  return  atoi(tokens[p].str);
+        else if(tokens[p].type == TK_HEX) return  strtol(tokens[p].str,NULL,16);
+        else if(tokens[p].type == TK_REG) {
+          word_t num; bool t = true;
+          num = isa_reg_str2val(tokens[p].str,&t);
+          if(!t) {num = 0;}
+          return num;
+        }
+    } 
+    else if(check_parentheses(p,q) == true)  return eval(p+1,q-1);  //检查括号匹配
     else{
-      op = main_operate(p,q);
+      op = main_operate(p,q);   //寻找主要运算式
       val1 = eval(p,op-1);
       val2 = eval(op+1,q);  
       switch (tokens[op].type)
       {
-      case TK_DEREF: return paddr_read(val2,4);
+      case TK_DEREF: return paddr_read(val2,4);   //如果解运算符的话进行解运算，其中需要解的表达式肯定在”*“的后面。
       case TK_PLUS: return  val1 + val2;
       case TK_SUB: return val1 - val2;
       case TK_MUL: return val1 * val2;
@@ -231,12 +240,6 @@ int eval(int p,int q){
       case TK_EQ  : return (val1 == val2);
       case TK_NEQ : return (val1 != val2);
       case TK_AND : return (val1 && val2);
-      case TK_HEX : return strtol(tokens[op].str,NULL,16);
-      case TK_REG : word_t num; bool t = true;
-                    num = isa_reg_str2val(tokens[op].str,&t);
-                    if(!t) {num = 0;}
-                    return num;
-
       default: assert(0);
       }
     }
