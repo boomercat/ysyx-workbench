@@ -212,14 +212,15 @@ word_t eval(int p,int q){
                 assert(p > q);
     }
     else if(p == q)  {                    //定位到 具体的一个str时，要判断其类型然后根据类型进行return
-        if(tokens[p].type == TK_NUM)  return  atoi(tokens[p].str);
-        else if(tokens[p].type == TK_HEX) return  strtol(tokens[p].str,NULL,10);
+        if(tokens[p].type == TK_NUM)  return  strtol(tokens[p].str,NULL,10); //atoi(tokens[p].str);
+        else if(tokens[p].type == TK_HEX) return  strtol(tokens[p].str,NULL,16);
         else if(tokens[p].type == TK_REG) {
           word_t num; bool t = true;
           num = isa_reg_str2val(tokens[p].str,&t);
           if(!t) {num = 0;}
           return num;
         }
+        
     } 
     else if(check_parentheses(p,q) == true)  return eval(p+1,q-1);  //检查括号匹配
     else{
