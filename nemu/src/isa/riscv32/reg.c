@@ -37,7 +37,6 @@ word_t isa_reg_str2val(const char *s, bool *success) {
     if (regs[k] == s){
       break;
     }
-    else printf("search false");
   }
   return cpu.gpr[k];
 }
