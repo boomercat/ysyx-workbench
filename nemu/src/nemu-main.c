@@ -27,9 +27,9 @@ int main(int argc, char *argv[]) {
   am_init_monitor();
 #else
   init_monitor(argc, argv);
+  /*
   FILE *fp;
-  bool *success = false;
-  fp = fopen("/home/white/ysyx-workbench/nemu/tools/gen-expr/build/input","r");
+   fp = fopen("/home/white/ysyx-workbench/nemu/tools/gen-expr/build/input","r");
   if (fp == NULL){
     return EXIT_FAILURE;
   }
@@ -41,13 +41,13 @@ int main(int argc, char *argv[]) {
     word_t result = expr(buffer,success);
     printf("result is %d\n",result);
     }     
-    
+   */ 
   
 #endif
 
   /* Start engine. */
   engine_start();
-  fclose(fp);
+  //fclose(fp);
 
   return is_exit_status_bad();
 }
