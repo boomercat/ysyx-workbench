@@ -44,7 +44,6 @@ static struct rule {
   {"\\*", TK_MUL},         //mutiple
   {"\\-", TK_SUB},          //minus
   {"\\b[0-9]+\\b",TK_NUM},        //integrity
-  {"(+|-|*|/)*(\\(.+\\)|\\w+)",TK_DEREF}
 };
 #define NR_REGEX ARRLEN(rules)
 static regex_t re[NR_REGEX] = {};
