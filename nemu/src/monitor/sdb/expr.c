@@ -206,7 +206,7 @@ int main_operate(int p,int q){
   /* TODO: Insert codes to evaluate the expression. */
 int eval(int p,int q){
 
-  int op,val1,val2;
+  int op;
   printf("test the eval function");
     if (p>q) {printf("situation of p and q is error");
                 assert(p > q);
@@ -224,8 +224,8 @@ int eval(int p,int q){
     else if(check_parentheses(p,q) == true)  return eval(p+1,q-1);  //检查括号匹配
     else{
       op = main_operate(p,q);   //寻找主要运算式
-      val1 = eval(p,op-1);
-      val2 = eval(op+1,q);  
+      word_t val1 = eval(p,op-1);
+      word_t val2 = eval(op+1,q);  
       switch (tokens[op].type)
       {
       case TK_DEREF: return paddr_read(val2,4);   //如果解运算符的话进行解运算，其中需要解的表达式肯定在”*“的后面。
