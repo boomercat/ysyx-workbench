@@ -34,9 +34,11 @@ word_t isa_reg_str2val(const char *s, bool *success) {
   int k;
   for ( k = 0; k < rg_num ; k++)
   {
-    if (regs[k] == s){
-      break;
+    if (strcmp(regs[k], s) == 0){
+      *success = true;
+      return cpu.gpr[k];
     }
   }
-  return cpu.gpr[k];
+  *success = false;
+  return 0;
 }
