@@ -204,7 +204,7 @@ int main_operate(int p,int q){
 
 
   /* TODO: Insert codes to evaluate the expression. */
-int eval(int p,int q){
+word_t eval(int p,int q){
 
   int op;
   printf("test the eval function");
@@ -243,11 +243,6 @@ int eval(int p,int q){
       default: assert(0);
       }
     }
-    
-    
-
-  
-
   return 0;
 }
 
