@@ -14,7 +14,7 @@
 ***************************************************************************************/
 
 #include <isa.h>
-
+#include "sdb.h"
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
@@ -22,7 +22,7 @@
 
 enum {
   TK_NOTYPE = 256, TK_EQ,TK_LBR,TK_RBR,TK_DIV,TK_MUL,TK_SUB,TK_NUM,TK_PLUS,
-  TK_HEX,TK_REG,TK_AND,TK_NEQ
+  TK_HEX,TK_REG,TK_AND,TK_NEQ,TK_DEREF
   /* TODO: Add more token types */
 
 };
@@ -44,7 +44,7 @@ static struct rule {
   {"\\*", TK_MUL},         //mutiple
   {"\\-", TK_SUB},          //minus
   {"\\b[0-9]+\\b",TK_NUM},        //integrity
-
+  {"(+|-|*|/)*(\\(.+\\)|\\w+)",TK_DEREF}
 };
 #define NR_REGEX ARRLEN(rules)
 static regex_t re[NR_REGEX] = {};
@@ -183,8 +183,7 @@ int main_operate(int p,int q){
     int i = tokens[tmp].type;
     printf("%d",i);
     switch (tokens[tmp].type){
-      case TK_RBR: 
-      case TK_NUM: break;
+      case TK_DEREF:
       case TK_DIV: if ((tokens[locate].type != TK_PLUS)||tokens[locate].type !=TK_SUB) {
                    locate = tmp;}
                    break;
@@ -218,6 +217,7 @@ int eval(int p,int q){
       val2 = eval(op+1,q);  
       switch (tokens[op].type)
       {
+      case TK_DEREF: return paddr_read(val2,4);
       case TK_PLUS: return  val1 + val2;
       case TK_SUB: return val1 - val2;
       case TK_MUL: return val1 * val2;
@@ -229,7 +229,12 @@ int eval(int p,int q){
       case TK_EQ  : return (val1 == val2);
       case TK_NEQ : return (val1 != val2);
       case TK_AND : return (val1 && val2);
-      case TK_REG : return 0;
+      case TK_HEX : return strtol(tokens[op].str,NULL,16);
+      case TK_REG : word_t num; bool t = true;
+                    num = isa_reg_str2val(tokens[op].str,&t);
+                    if(!t) {num = 0;}
+                    return num;
+
       default: assert(0);
       }
     }
@@ -252,7 +257,7 @@ word_t expr(char *e, bool *success) {
   for (int j = 0; j < useful_num; j ++) { //judge the * is mul or other
   if (tokens[j].type == TK_MUL && (j == 0 || tokens[j - 1].type == TK_PLUS || tokens[j - 1].type == TK_SUB ||
    tokens[j - 1].type == TK_MUL || tokens[j - 1].type == TK_DIV)) {
-    tokens[j].type = TK_REG;
+    tokens[j].type = TK_DEREF;
   }
 }  
  
