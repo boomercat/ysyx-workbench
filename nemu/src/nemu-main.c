@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     printf("result is %d\n",result);
     }     
    */ 
-  
+  printf("test"); 
 #endif
 
   /* Start engine. */
