@@ -89,7 +89,7 @@ void free_wp(WP *wp){
 void set_WP(char *args,word_t value){
   WP *point = new_wp();
   point->expr_value = value;
-  point->str = args;
+  point->str = strdup(args);
   //strcpy(point->str,args);
   printf("watchpoint value is %d,expression is %s",point->expr_value,point->str);
 }
