@@ -125,6 +125,7 @@ void delete_point(int num){
    if(tmp1 == NULL){printf("point not exist");
                   return ;}
   else {
+    printf("tmp1.NO is %d\n",tmp1->NO);
     while(tmp1->NO != num){
     tmp1 = tmp1->next;
     }
