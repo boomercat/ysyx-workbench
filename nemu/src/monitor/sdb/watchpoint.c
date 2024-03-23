@@ -90,7 +90,7 @@ void set_WP(char *args,word_t value){
   point->expr_value = value;
   point->str = args;
   //strcpy(point->str,args);
-  printf("watchpoint value is %d,expression is %s",value,args);
+  printf("watchpoint value is %d,expression is %s",point->expr_value,point->str);
 }
 
 // scan all watchpoint
