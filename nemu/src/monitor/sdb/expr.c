@@ -211,8 +211,7 @@ int main_operate(int p,int q){
 
   /* TODO: Insert codes to evaluate the expression. */
 word_t eval(int p,int q,bool *success){
-  *success = true;
-  int op;
+   int op;
   printf("test the eval function");
     if (p>q) {printf("situation of p and q is error");
                 *success = false;
