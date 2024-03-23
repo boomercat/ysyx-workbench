@@ -107,8 +107,8 @@ static int  cmd_p(char *args){
   printf("%s",args);
   
   //char EXPR[1024] = strtog(NULL," ");
-  bool *success = false;
-  word_t result = expr(args,success);
+  bool success = true;
+  word_t result = expr(args,&success);
   printf("result is %d\n",result);
   return 0;
 }

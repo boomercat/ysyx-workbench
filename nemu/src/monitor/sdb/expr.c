@@ -98,7 +98,13 @@ static bool make_token(char *e) {
          */
         switch (rules[i].token_type) {
           case TK_NOTYPE: break;
-          case TK_HEX: 
+          case TK_HEX: if (substr_len > 31)  substr_len = 31;
+                      assert(substr_len<32);
+                      tokens[useful_num].type = rules[i].token_type;
+                      printf("the type is %d \n",tokens[useful_num].type);
+                      strncpy(tokens[useful_num].str, substr_start+2, substr_len-2);  
+                      useful_num += 1;     
+                      break;
           case TK_REG:if (substr_len > 31)  substr_len = 31;
                       assert(substr_len<32);
                       tokens[useful_num].type = rules[i].token_type;
@@ -204,11 +210,12 @@ int main_operate(int p,int q){
 
 
   /* TODO: Insert codes to evaluate the expression. */
-word_t eval(int p,int q){
-
+word_t eval(int p,int q,bool *success){
+  *success = true;
   int op;
   printf("test the eval function");
     if (p>q) {printf("situation of p and q is error");
+                *success = false;
                 assert(p > q);
     }
     else if(p == q)  {                    //定位到 具体的一个str时，要判断其类型然后根据类型进行return
@@ -222,11 +229,11 @@ word_t eval(int p,int q){
         }
         
     } 
-    else if(check_parentheses(p,q) == true)  return eval(p+1,q-1);  //检查括号匹配
+    else if(check_parentheses(p,q) == true)  return eval(p+1,q-1,success);  //检查括号匹配
     else{
       op = main_operate(p,q);   //寻找主要运算式
-      word_t val1 = eval(p,op-1);
-      word_t val2 = eval(op+1,q);  
+      word_t val1 = eval(p,op-1,success);
+      word_t val2 = eval(op+1,q,success);  
       switch (tokens[op].type)
       {
       case TK_DEREF: return paddr_read(val2,4);   //如果解运算符的话进行解运算，其中需要解的表达式肯定在”*“的后面。
@@ -235,13 +242,14 @@ word_t eval(int p,int q){
       case TK_MUL: return val1 * val2;
       case TK_DIV: if (val2 == 0) {
                       printf("divide ZERO!");
+                      *success = false;
                       return false;
                       }     
                    else  return (sword_t)val1 / (sword_t)val2;   //先转换成有符号数，否则会出现错误
       case TK_EQ  : return (val1 == val2);
       case TK_NEQ : return (val1 != val2);
       case TK_AND : return (val1 && val2);
-      default:  
+      default:  *success = false;
                 assert(0);
 
       }
@@ -267,7 +275,7 @@ word_t expr(char *e, bool *success) {
     printf("the %d tokens type is %d",j,tokens[j].type);
   }
 
-   return   eval(0,useful_num-1);
+   return   eval(0,useful_num-1,success);
 
   }
 }
