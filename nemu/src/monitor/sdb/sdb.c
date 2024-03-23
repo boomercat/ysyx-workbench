@@ -52,7 +52,9 @@ static int cmd_w(char *args){
   bool *success = false;
   word_t result = expr(args,success);
   if(!success){ printf("expression false");}
-  set_WP(args,result);
+  else {
+    set_WP(args,result);
+  }
   return 0;
   
 }
