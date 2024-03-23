@@ -32,6 +32,7 @@ void init_wp_pool() {
   int i;
   for (i = 0; i < NR_WP; i ++) {
     wp_pool[i].NO = i;
+    strcpy(wp_pool[i].str,"null");
     wp_pool[i].next = (i == NR_WP - 1 ? NULL : &wp_pool[i + 1]);
     //wp_pool[i].front = (i ==  0 ? NULL : &wp_pool[i - 1]);
   }
@@ -88,8 +89,8 @@ void free_wp(WP *wp){
 void set_WP(char *args,word_t value){
   WP *point = new_wp();
   point->expr_value = value;
-  point->str = args;
-  //strcpy(point->str,args);
+  //point->str = args;
+  strcpy(point->str,args);
   printf("watchpoint value is %d,expression is %s",point->expr_value,point->str);
 }
 
