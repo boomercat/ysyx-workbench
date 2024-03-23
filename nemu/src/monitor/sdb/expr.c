@@ -254,6 +254,7 @@ word_t expr(char *e, bool *success) {
     return 0;
   }
   else{
+  *success = true;
   /* TODO: Insert codes to evaluate the expression. */
   for (int j = 0; j < useful_num; j ++) { //judge the * is mul or other
   if (tokens[j].type == TK_MUL && (j == 0 || (tokens[j - 1].type == TK_PLUS) || (tokens[j - 1].type == TK_SUB) ||
@@ -261,8 +262,7 @@ word_t expr(char *e, bool *success) {
     tokens[j].type = TK_DEREF;
   }
 }  
- 
-  return   eval(0,useful_num-1);
+   return   eval(0,useful_num-1);
 
   }
 }
