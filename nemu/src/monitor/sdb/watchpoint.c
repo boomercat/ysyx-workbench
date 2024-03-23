@@ -113,7 +113,7 @@ void display_watchpoint(){
   WP *tmp = head;
   if(tmp==NULL){printf("point is NULL");}
   else {
-    while(tmp->next != NULL){
+    while(tmp != NULL){
     printf("point %d:  %s  : %d\n",tmp->NO,tmp->str,tmp->expr_value);
     tmp = tmp->next;
     }
