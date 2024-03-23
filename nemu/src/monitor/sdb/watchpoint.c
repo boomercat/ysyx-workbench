@@ -122,17 +122,16 @@ void display_watchpoint(){
 
 void delete_point(int num){
   WP *tmp1 = head;
-  WP *tmp2;
-  if(tmp1 == NULL){printf("point not exist");
+   if(tmp1 == NULL){printf("point not exist");
                   return ;}
   else {
-    while(tmp1->NO != num-1){
+    while(tmp1->NO != num){
     tmp1 = tmp1->next;
     }
-    tmp2 = tmp1->next;
-    tmp1->next = tmp2->next;
-    printf("delete successful! delete point's num is %d",tmp2->NO);
-    tmp2->next = NULL;
-    free(tmp2);
+    if(tmp1 == NULL){printf("the point is NULL");}
+    else{ 
+    printf("delete successful! delete point's num is %d",tmp1->NO);
+    free(tmp1);
+  }
   }
 }
