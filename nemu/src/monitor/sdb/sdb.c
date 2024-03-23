@@ -19,6 +19,7 @@
 #include <readline/history.h>
 #include "sdb.h"
 
+
 static int is_batch_mode = false;
 
 void init_regex();
@@ -46,23 +47,35 @@ static int cmd_c(char *args) {
   cpu_exec(-1);
   return 0;
 }
+//实现监视点
+static int cmd_w(char *args){
+  bool *success = false;
+  word_t result = expr(args,success);
+  if(!success){ printf("expression false");}
+  else  {set_WP(args,result);}
+  return 0;
+  
+}
 
 static int cmd_info(char *args){
   char *ar = strtok(args," ");
   if (*ar == 'r')
-  {
-    isa_reg_display();
-   }
-   /*
+  { isa_reg_display();}
+
   else if (*ar == 'w')
-  {
-    
-  }*/
-  printf("%s" ,ar);
+  {  display_watchpoint();}
+  
   return 0;
 }
-static int cmd_x(char *args){
-  
+
+static int cmd_d(char *args){
+  int num = atoi(strtok(args," "));
+  delete_point(num);
+  return 0;
+}
+
+
+static int cmd_x(char *args){  
   int num_a = atoi(strtok(args," "));
   printf("%d",num_a);
   word_t addr = strtoul(strtok(NULL," "),NULL, 0); // 32位
@@ -129,7 +142,9 @@ static struct {
   { "si", "execute N commands and suspend, default N = 1", cmd_si},
   { "info", "r is print the status of  monitor,w is print watchpoint's information",cmd_info},
   { "x", "calculate the value of EXPR,and the result as the  start memory address,output permanet N 4Byte in 0x",cmd_x},
-  { "p", "calculate the value of EXPR ", cmd_p}
+  { "p", "calculate the value of EXPR ", cmd_p},
+  { "w", "build the watchpoint and supervise this expression's value",cmd_w},
+  { "d", "delate a watchpoint",cmd_d},
 
   /* TODO: Add more commands */
 
