@@ -111,12 +111,12 @@ void scan_wp(){
 
 //print all watchpoint
 void display_watchpoint(){
-  WP *tmp = head;
-  if(tmp==NULL){printf("point is NULL");}
+  WP *tmp1 = head;
+  if(tmp1==NULL){printf("point is NULL");}
   else {
-    while(tmp != NULL){
-    printf("point %d:  %s  : %d\n",tmp->NO,tmp->str,tmp->expr_value);
-    tmp = tmp->next;
+    while(tmp1 != NULL){
+    printf("point %d:  %s  : %d\n",tmp1->NO,tmp1->str,tmp1->expr_value);
+    tmp1 = tmp1->next;
     }
   }
 }
