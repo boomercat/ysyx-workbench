@@ -107,6 +107,7 @@ void scan_wp(){
       s_point->expr_value = new_result;
       nemu_state.state = NEMU_STOP;
     }
+    s_point = s_point->next;
   }
 }
 
