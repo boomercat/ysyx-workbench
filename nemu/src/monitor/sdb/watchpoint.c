@@ -56,7 +56,7 @@ WP* new_wp(){
 }
 
 //free a watchpoint to free_
-/*
+
 void free_wp(WP *wp){
   if (wp == NULL){
     printf("this is a void point");
@@ -83,35 +83,9 @@ void free_wp(WP *wp){
     wp->next = free_;
     free_ = wp;
   }
+
   
 }
-*/
- 
-void free_wp(WP *wp)
-{
-  if(wp==head)
-  {
-    head=head->next;
-  }
-  else
-  {
-    WP *pos=head;
-    while(pos && pos->next!=wp)
-    {
-      pos++;
-    }
-    if (!pos) 
-    {
-      printf("输入的监视点不在head链表中\n");
-      assert(0);
-    }
-    pos->next=wp->next;  
-  }
-  wp->next=free_;
-  free_=wp;
-}
-
-
 //build a new watchpoint and copy expression's value to watchpoint
 void set_WP(char *args,word_t value){
   WP *point = new_wp();
