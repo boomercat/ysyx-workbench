@@ -71,6 +71,7 @@ void free_wp(WP *wp){
       WP *tmp = head;
       while(tmp->next != NULL){
         if(tmp->next == wp) {break;} 
+        tmp = tmp->next;
       }
       if(tmp->next != wp){assert(0);}
       tmp->next = wp->next;
