@@ -71,8 +71,8 @@ void free_wp(WP *wp){
       WP *tmp = head;
       while(tmp->next != NULL){
         if(tmp->next == wp) {break;}
-        printf("search failure");
-        assert(0);
+        else {printf("search failure");
+        assert(0);}
       }
       tmp->next = wp->next;
       wp->next = free_;
