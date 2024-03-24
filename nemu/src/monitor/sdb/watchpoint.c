@@ -67,22 +67,16 @@ void free_wp(WP *wp){
     wp->next = free_;
     free_ = wp;
   }
-  /*
-  else if(wp->next == NULL){
-    wp->next = free_;
-    free_ = wp;
-    head = NULL;
-  }*/
-  else {
-    WP *tmp = head;
-    while(tmp->next != NULL){
-      if(tmp->next == wp) {break;}
-      printf("search failure");
-      assert(0);
-    }
-    tmp->next = wp->next;
-    wp->next = free_;
-    free_ = wp;
+  else{
+      WP *tmp = head;
+      while(tmp->next != NULL){
+        if(tmp->next == wp) {break;}
+        printf("search failure");
+        assert(0);
+      }
+      tmp->next = wp->next;
+      wp->next = free_;
+      free_ = wp;
   }
 
   
