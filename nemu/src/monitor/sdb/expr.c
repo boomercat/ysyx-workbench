@@ -195,7 +195,7 @@ int main_operate(int p,int q){
       case TK_DIV: if ((tokens[locate].type != TK_PLUS)&&tokens[locate].type !=TK_SUB) {
                    locate = tmp;}
                    break;
-      case TK_MUL: if ((tokens[locate].type != TK_PLUS)&&tokens[locate].type == TK_SUB) {
+      case TK_MUL: if ((tokens[locate].type != TK_PLUS)&&tokens[locate].type != TK_SUB) {
                    locate = tmp;}
                    break;
       case TK_PLUS:locate = tmp;break;
