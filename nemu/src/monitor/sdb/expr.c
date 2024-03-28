@@ -178,7 +178,7 @@ int main_num;
 //计算p和q之间的主运算符函数
 int main_operate(int p,int q){
   int locate = 0;
-  printf("test the main_operate function");
+  //printf("test the main_operate function");
   int tmp = p;
   while(tmp < q){
     if((tokens[tmp].type == TK_LBR)){
@@ -212,7 +212,7 @@ int main_operate(int p,int q){
   /* TODO: Insert codes to evaluate the expression. */
 word_t eval(int p,int q,bool *success){
   int op;
-  printf("test the eval function");
+  //printf("test the eval function");
     if (p>q) {printf("situation of p and q is error");
                 *success = false;
                 assert(p > q);
@@ -276,9 +276,10 @@ word_t expr(char *e, bool *success) {
     tokens[j].type = TK_DEREF;
   }
 } 
+/*
   for(int j = 0;j<useful_num;j++){
     printf("the %d tokens type is %d",j,tokens[j].type);
-  }
+  }*/
 
    return   eval(0,useful_num-1,success);
 
