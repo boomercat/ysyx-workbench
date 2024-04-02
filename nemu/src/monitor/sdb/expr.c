@@ -70,7 +70,7 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[1024] __attribute__((used)) = {};
+static Token tokens[128] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 static int useful_num;
 //识别其中的token，传入要识别的token（buf）
@@ -182,20 +182,9 @@ int main_operate(int p,int q){
   int tmp = p;
   while(tmp < q){
     if((tokens[tmp].type == TK_LBR)){
-      /*
       while( tokens[tmp].type != TK_RBR){
         tmp++;
-      }*/
-      int cnt_brk = 1;
-      while(cnt_brk != 0){
-        tmp++;
-        if(tokens[tmp].type == TK_LBR){
-          cnt_brk++;
-        }
-        else if(tokens[tmp].type == TK_RBR){
-          cnt_brk--;
-        }
-       }
+      }
     }
     switch (tokens[tmp].type){
       case TK_DEREF: if((tokens[locate].type != TK_PLUS) && (tokens[locate].type !=TK_SUB) &&
