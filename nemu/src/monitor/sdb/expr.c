@@ -161,7 +161,7 @@ static bool check_parentheses(int p, int q) {
         return false;
     }
     int cnt = 0; 
-    for (int i = p + 1; i < q; ++i) {
+    for (int i = p ; i < q; ++i) {
         if (tokens[i].type == TK_LBR) cnt++;
         else if (tokens[i].type == TK_RBR) {
             cnt--;
