@@ -182,7 +182,19 @@ int main_operate(int p,int q){
   int tmp = p;
   while(tmp < q){
     if((tokens[tmp].type == TK_LBR)){
+      /*
       while( tokens[tmp].type != TK_RBR){
+        tmp++;
+      }*/
+      tmp++;
+      int cnt_brk = 1;
+      while(cnt_brk != 0){
+        if(tokens[tmp].type == TK_LBR){
+          cnt_brk++;
+        }
+        else if(tokens[tmp].type == TK_RBR){
+          cnt_brk--;
+        }
         tmp++;
       }
     }
