@@ -99,7 +99,7 @@ void set_WP(char *args,word_t value){
 void scan_wp(){
   WP *s_point = head;
   printf("scaning poing...\n");
-  while(s_point->next != NULL){
+  while(s_point != NULL){
     bool success = 1;
     word_t new_result = expr(s_point->str,&success);
     printf("scaning new result is %d",new_result);
