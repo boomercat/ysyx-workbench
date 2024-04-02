@@ -99,14 +99,12 @@ void set_WP(char *args,word_t value){
 void scan_wp(){
   WP *s_point = head;
   printf("scaning poing...\n");
-  printf("this point->str is %s",s_point->str);
   while(s_point != NULL){
     bool success = 1;
     word_t new_result = expr(s_point->str,&success);
-    printf("scaning new result is %d",new_result);
     if(new_result !=  s_point->expr_value){
-      printf("the watchpoint NO %d expression's %s value  is changed\n",s_point->NO,s_point->str);
-      printf("new value is %d",new_result);
+      printf("\nthe watchpoint NO %d expression's %s value  is changed\n",s_point->NO,s_point->str);
+      printf("new value is %d\n",new_result);
       s_point->expr_value = new_result;
       nemu_state.state = NEMU_STOP;
     }
