@@ -186,17 +186,16 @@ int main_operate(int p,int q){
       while( tokens[tmp].type != TK_RBR){
         tmp++;
       }*/
-      tmp++;
       int cnt_brk = 1;
       while(cnt_brk != 0){
+        tmp++;
         if(tokens[tmp].type == TK_LBR){
           cnt_brk++;
         }
         else if(tokens[tmp].type == TK_RBR){
           cnt_brk--;
         }
-        tmp++;
-      }
+       }
     }
     switch (tokens[tmp].type){
       case TK_DEREF: if((tokens[locate].type != TK_PLUS) && (tokens[locate].type !=TK_SUB) &&
