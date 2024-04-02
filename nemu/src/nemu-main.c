@@ -37,8 +37,9 @@ int main(int argc, char *argv[]) {
   char line[1024] = {};
   char buffer[1024]= {};
     while (fgets(line, sizeof(line), fp) != NULL) {  
-    printf("line is %s",line); 
+    //printf("line is %s",line); 
     strtok(line," ");
+    printf("line is %s",line);
     strcpy(buffer,line);
     word_t result = expr(buffer,&success);
     printf("\nresult is %d\n",result);
