@@ -30,8 +30,10 @@ void isa_reg_display() {
   }
 }
 word_t isa_reg_str2val(const char *s, bool *success) {
+  s = s+1;
   int rg_num  = ARRLEN(regs);
   int k;
+  
   for ( k = 0; k < rg_num ; k++)
   {
     if (strcmp(regs[k], s) == 0){

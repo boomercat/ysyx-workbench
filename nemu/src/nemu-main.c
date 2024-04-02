@@ -22,12 +22,13 @@ void engine_start();
 int is_exit_status_bad();
 
 int main(int argc, char *argv[]) {
+  bool success = 1;
   /* Initialize the monitor. */
 #ifdef CONFIG_TARGET_AM
   am_init_monitor();
 #else
   init_monitor(argc, argv);
-  /*
+  
   FILE *fp;
    fp = fopen("/home/white/ysyx-workbench/nemu/tools/gen-expr/build/input","r");
   if (fp == NULL){
@@ -36,12 +37,16 @@ int main(int argc, char *argv[]) {
   char line[1024] = {};
   char buffer[1024]= {};
     while (fgets(line, sizeof(line), fp) != NULL) {  
-    printf("line is %s",line); 
+    //printf("line is %s",line); 
+    strtok(line," ");
+    //printf("line is %s",line);
+    strcpy(line,strtok(NULL," "));
+    printf("\n change line is %s \n",line);
     strcpy(buffer,line);
-    word_t result = expr(buffer,success);
-    printf("result is %d\n",result);
+    word_t result = expr(buffer,&success);
+    printf("\nresult is %d\n",result);
     }     
-   */ 
+    
   printf("test"); 
 #endif
 
