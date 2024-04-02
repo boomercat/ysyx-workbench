@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
     strtok(line," ");
     strcpy(buffer,line);
     word_t result = expr(buffer,&success);
-    printf("result is %d\n",result);
+    printf("\nresult is %d\n",result);
     }     
     
   printf("test"); 
