@@ -32,6 +32,7 @@ void isa_reg_display() {
 word_t isa_reg_str2val(const char *s, bool *success) {
   int rg_num  = ARRLEN(regs);
   int k;
+  printf("reg is %si\n",s);
   for ( k = 0; k < rg_num ; k++)
   {
     if (strcmp(regs[k], s) == 0){
