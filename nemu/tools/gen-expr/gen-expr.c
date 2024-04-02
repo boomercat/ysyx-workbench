@@ -56,8 +56,6 @@ void gen(int a ){
     sprintf(buf+strlen(buf),"%c", a );
 }
 void gen_rand_expr() {
-  if(strlen(buf)>128);
-  break;
   switch (choose(3)) {
     case 0: gen_num(); break;
     case 1: 
