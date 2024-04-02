@@ -40,6 +40,8 @@ int main(int argc, char *argv[]) {
     //printf("line is %s",line); 
     strtok(line," ");
     printf("line is %s",line);
+    strcpy(line,strtok(NULL," "));
+    printf("\n change line is %s \n",line);
     strcpy(buffer,line);
     word_t result = expr(buffer,&success);
     printf("\nresult is %d\n",result);
