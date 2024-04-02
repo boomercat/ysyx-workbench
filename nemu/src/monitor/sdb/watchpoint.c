@@ -100,8 +100,8 @@ void scan_wp(){
   WP *s_point = head;
   printf("scaning poing...\n");
   while(s_point->next != NULL){
-    bool *success = false;
-    word_t new_result = expr(s_point->str,success);
+    bool success = 1;
+    word_t new_result = expr(s_point->str,&success);
     if(new_result !=  s_point->expr_value){
       printf("the watchpoint NO %d expression's %s value  is changed\n",s_point->NO,s_point->str);
       printf("new value is %d",new_result);
