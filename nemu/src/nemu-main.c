@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
     while (fgets(line, sizeof(line), fp) != NULL) {  
     //printf("line is %s",line); 
     strtok(line," ");
-    printf("line is %s",line);
+    //printf("line is %s",line);
     strcpy(line,strtok(NULL," "));
     printf("\n change line is %s \n",line);
     strcpy(buffer,line);
