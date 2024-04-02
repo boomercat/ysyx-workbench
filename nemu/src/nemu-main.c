@@ -28,6 +28,7 @@ int main(int argc, char *argv[]) {
   am_init_monitor();
 #else
   init_monitor(argc, argv);
+  
   FILE *fp;
    fp = fopen("/home/white/ysyx-workbench/nemu/tools/gen-expr/build/input","r");
   if (fp == NULL){
@@ -36,10 +37,10 @@ int main(int argc, char *argv[]) {
   char line[1024] = {};
   char buffer[1024]= {};
     while (fgets(line, sizeof(line), fp) != NULL) {  
-
     printf("line is %s",line); 
+    strtok(line," ");
     strcpy(buffer,line);
-    word_t result = expr(buffer, &success);
+    word_t result = expr(buffer,&success);
     printf("result is %d\n",result);
     }     
     
