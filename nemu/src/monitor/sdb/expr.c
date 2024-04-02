@@ -70,7 +70,7 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[128] __attribute__((used)) = {};
+static Token tokens[256] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 static int useful_num;
 //识别其中的token，传入要识别的token（buf）
