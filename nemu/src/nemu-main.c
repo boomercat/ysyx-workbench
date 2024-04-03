@@ -22,13 +22,13 @@ void engine_start();
 int is_exit_status_bad();
 
 int main(int argc, char *argv[]) {
-  bool success = 1;
+  //bool success = 1; if test the expression ,cancel this
   /* Initialize the monitor. */
 #ifdef CONFIG_TARGET_AM
   am_init_monitor();
 #else
   init_monitor(argc, argv);
-  
+ /* 
   FILE *fp;
    fp = fopen("/home/white/ysyx-workbench/nemu/tools/gen-expr/build/input","r");
   if (fp == NULL){
@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
     printf("\nresult is %d\n",result);
     }     
     
-  printf("test"); 
+  printf("test"); */
 #endif
 
   /* Start engine. */
