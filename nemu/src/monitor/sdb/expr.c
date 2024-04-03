@@ -211,6 +211,7 @@ int main_operate(int p,int q){
                    break;
       case TK_PLUS:locate = tmp;break;
       case TK_SUB:locate = tmp;break;
+      case TK_EQ:locate = tmp;break;
       default: break;
     }  
     tmp++;
