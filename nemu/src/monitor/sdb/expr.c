@@ -222,7 +222,7 @@ int main_operate(int p,int q){
 
 
   /* TODO: Insert codes to evaluate the expression. */
-uint32_t eval(int p,int q,bool *success){
+word_t eval(int p,int q,bool *success){
   int op;
   //printf("test the eval function");
     if (p>q) {printf("situation of p and q is error");
@@ -233,7 +233,7 @@ uint32_t eval(int p,int q,bool *success){
         if(tokens[p].type == TK_NUM)  return  strtol(tokens[p].str,NULL,10); //atoi(tokens[p].str);
         else if(tokens[p].type == TK_HEX) return  strtol(tokens[p].str,NULL,16);
         else if(tokens[p].type == TK_REG) {
-          uint32_t num; bool t = true;
+          word_t num; bool t = true;
           num = isa_reg_str2val(tokens[p].str,&t);
           if(!t) {num = 0;}
           return num;
@@ -249,8 +249,8 @@ uint32_t eval(int p,int q,bool *success){
       return paddr_read(val2,4);   //如果解运算符的话进行解运算，其中需要解的表达式肯定在”*“的后面。
     }
     word_t val1 = eval(p,op-1,success); */
-    u_int32_t val1 = (op==0) ?  0 : eval(p,op-1,success);
-    u_int32_t val2 = eval(op+1,q,success);
+    word_t val1 = (op==0) ?  0 : eval(p,op-1,success);
+    word_t val2 = eval(op+1,q,success);
     switch (tokens[op].type)
     {
       case TK_DEREF: return paddr_read(val2,4);
@@ -274,7 +274,7 @@ uint32_t eval(int p,int q,bool *success){
   return 0;
 }
 
-uint32_t expr(char *e, bool *success) {
+word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     printf("shibai!!\n");
     *success = false;
