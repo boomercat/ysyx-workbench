@@ -101,10 +101,10 @@ void scan_wp(){
   printf("scaning poing...\n");
   while(s_point != NULL){
     bool success = 1;
-    word_t new_result = expr(s_point->str,&success);
+    uint32_t new_result = expr(s_point->str,&success);
     if(new_result !=  s_point->expr_value){
       printf("\nthe watchpoint NO %d expression's %s value  is changed\n",s_point->NO,s_point->str);
-      printf("new value is %d\n",new_result);
+      printf("new value is %u\n",new_result);
       s_point->expr_value = new_result;
       nemu_state.state = NEMU_STOP;
     }
