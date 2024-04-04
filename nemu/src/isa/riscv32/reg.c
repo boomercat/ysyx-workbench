@@ -29,7 +29,7 @@ void isa_reg_display() {
     printf("%-8s%-#20x%-20d\n", regs[i], cpu.gpr[i], cpu.gpr[i]);
   }
 }
-word_t isa_reg_str2val(const char *s, bool *success) {
+uint32_t isa_reg_str2val(const char *s, bool *success) {
   s = s+1;
   int rg_num  = ARRLEN(regs);
   int k;
