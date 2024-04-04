@@ -222,7 +222,7 @@ int main_operate(int p,int q){
 
 
   /* TODO: Insert codes to evaluate the expression. */
-word_t eval(int p,int q,bool *success){
+uint32_t eval(int p,int q,bool *success){
   int op;
   //printf("test the eval function");
     if (p>q) {printf("situation of p and q is error");
@@ -233,7 +233,7 @@ word_t eval(int p,int q,bool *success){
         if(tokens[p].type == TK_NUM)  return  strtol(tokens[p].str,NULL,10); //atoi(tokens[p].str);
         else if(tokens[p].type == TK_HEX) return  strtol(tokens[p].str,NULL,16);
         else if(tokens[p].type == TK_REG) {
-          word_t num; bool t = true;
+          uint32_t num; bool t = true;
           num = isa_reg_str2val(tokens[p].str,&t);
           if(!t) {num = 0;}
           return num;
