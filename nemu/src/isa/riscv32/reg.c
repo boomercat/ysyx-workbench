@@ -29,13 +29,16 @@ void isa_reg_display() {
     printf("%-8s%-#20x%-20u\n", regs[i], cpu.gpr[i], cpu.gpr[i]);
   }
 }
-uint32_t isa_reg_str2val(const char *s, bool *success) {
+word_t isa_reg_str2val(const char *s, bool *success) {
   s = s+1;
   int rg_num  = ARRLEN(regs);
   int k;
   
   for ( k = 0; k < rg_num ; k++)
   {
+    if(strcmp("pc",s) == 0){
+      return cpu.pc;
+    }
     if (strcmp(regs[k], s) == 0){
       *success = true;
       return cpu.gpr[k];
