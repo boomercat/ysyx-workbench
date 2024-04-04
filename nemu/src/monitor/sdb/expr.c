@@ -274,7 +274,7 @@ word_t eval(int p,int q,bool *success){
   return 0;
 }
 
-word_t expr(char *e, bool *success) {
+uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     printf("shibai!!\n");
     *success = false;
