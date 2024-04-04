@@ -35,12 +35,8 @@ enum {
 #define immS() do { *imm = (SEXT(BITS(i, 31, 25), 7) << 5) | BITS(i, 11, 7); } while(0)
 /*#define immJ() do { *imm = SEXT((BITS(i,31,31) << 19) | BITS(i,30,21) |\
                               (BITS(i,20,20) << 10) | (BITS(i,19,12) << 11),20);} while(0)*/
-#define immJ() do { *imm = SEXT(( \
-(BITS(i, 31, 31) << 19) | \
-BITS(i, 30, 21) | \
-(BITS(i, 20, 20) << 10) | \
-(BITS(i, 19, 12) << 11) \
-) << 1, 21); } while(0)
+#define immJ() do { *imm = SEXT(((BITS(i, 31, 31) << 19) | BITS(i, 30, 21) | (BITS(i, 20, 20) << 10)|\
+                                                (BITS(i, 19, 12) << 11)) << 1, 21); } while(0)
 
 
 static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_t *imm, int type) {
@@ -79,7 +75,7 @@ static int decode_exec(Decode *s) {
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
   //INSTPAT("??????? ????? ????? 000 ????? 11011 11", jalr   , I, R(rd) = s->pc + 4;s->dnpc = (src1 + imm) & ~(word_t)1);
-  INSTPAT("??????? ????? ????? 010 ????? 00000 11", lw     , I, R(rd) = SEXT(Mr(src1 + imm, 4), 32));  
+  INSTPAT("??????? ????? ????? 010 ????? 00000 11", lw     , I, R(rd) = Mr(src1 + imm, 4));  
   INSTPAT_END();
 
   R(0) = 0; // reset $zero to 0
