@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
   am_init_monitor();
 #else
   init_monitor(argc, argv);
-  /*
+  
   bool success = 1; //if test the expression ,cancel this
   FILE *fp;
    fp = fopen("/home/white/ysyx-workbench/nemu/tools/gen-expr/build/input","r");
@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
     printf("\nresult is %d\n",result);
     }     
     
-  printf("test"); */
+  printf("test"); 
 #endif
 
   /* Start engine. */
