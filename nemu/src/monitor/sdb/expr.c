@@ -122,7 +122,6 @@ static bool make_token(char *e) {
           case TK_NEQ:
           case TK_PLUS:
                       tokens[useful_num].type = rules[i].token_type;
-                      printf("the type is %d \n",tokens[useful_num].type);
                       useful_num += 1; 
                       break;
           case TK_NUM:
@@ -131,7 +130,6 @@ static bool make_token(char *e) {
                       tokens[useful_num].type = rules[i].token_type;
                       strncpy(tokens[useful_num].str, substr_start, substr_len);  
                       useful_num += 1;  
-                      printf("the type is %d \n",tokens[useful_num].type);                        
                       //nr_token++;
                       break;
             
@@ -148,7 +146,7 @@ static bool make_token(char *e) {
 
   }
 
-printf("successful!!,useful_num is %d",useful_num);
+
   return true;
 }
 
