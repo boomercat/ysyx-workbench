@@ -101,14 +101,13 @@ static bool make_token(char *e) {
           case TK_HEX: if (substr_len > 31)  substr_len = 31;
                       assert(substr_len<32);
                       tokens[useful_num].type = rules[i].token_type;
-                      printf("the type is %d \n",tokens[useful_num].type);
+
                       strncpy(tokens[useful_num].str, substr_start+2, substr_len-2);  
                       useful_num += 1;     
                       break;
           case TK_REG:if (substr_len > 31)  substr_len = 31;
                       assert(substr_len<32);
                       tokens[useful_num].type = rules[i].token_type;
-                      printf("the type is %d \n",tokens[useful_num].type);
                       strncpy(tokens[useful_num].str, substr_start, substr_len);  
                       useful_num += 1;     
                       break;
