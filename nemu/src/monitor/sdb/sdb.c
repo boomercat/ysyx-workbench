@@ -110,7 +110,7 @@ static int  cmd_p(char *args){
   //char EXPR[1024] = strtog(NULL," ");
   bool success = true;
   word_t result = expr(args,&success);
-  printf("result is %d\n",result);
+  printf("result is %u\n",result);
   return 0;
 }
 
