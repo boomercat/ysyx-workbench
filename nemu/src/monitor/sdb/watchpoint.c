@@ -118,7 +118,7 @@ void display_watchpoint(){
   if(tmp1==NULL){printf("point is NULL");}
   else {
     while(tmp1 != NULL){
-    printf("point %d:  %s  : %d\n",tmp1->NO,tmp1->str,tmp1->expr_value);
+    printf("point %d:  %s  : %x\n",tmp1->NO,tmp1->str,tmp1->expr_value);
     tmp1 = tmp1->next;
     }
   }
@@ -145,13 +145,13 @@ void delete_point(int n)  //delete the watchpoint, its NO is n.
 {
   WP *tmp = head;
   if(tmp == NULL)
-    printf("The watchpoint for which NO is %d does't exist.\n", n);
+    printf("The watchpoint  %d does't exist.\n", n);
   else
   {
     while(tmp->NO != n)
       tmp = tmp->next;
     if(tmp == NULL)
-      printf("The watchpoint for which NO is %d does't exist.\n", n);
+      printf("The watchpoint  %d does't exist.\n", n);
     else
     {
       free_wp(tmp);
