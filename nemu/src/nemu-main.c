@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
     printf("\n change line is %s \n",line);
     strcpy(buffer,line);
     word_t result = expr(buffer,&success);
-    printf("\nresult is %d\n",result);
+    printf("\nresult is %u\n",result);
     }     
     
   printf("test"); 
