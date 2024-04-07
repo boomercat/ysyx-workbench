@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<assert.h>
-#include<stdint.h>
 #include "Vtop.h"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
@@ -11,8 +10,8 @@ u_int32_t guest_to_host(u_int32_t addr);
 u_int32_t pmem_read(u_int32_t *memory,u_int32_t vaddr);
 
 void single_cycle(){
-	dut.clk=0;dut.eval;
-	dut.clk=1;dut.eval;
+	dut.clk=0;dut.eval();
+	dut.clk=1;dut.eval();
 
 }
 
@@ -33,7 +32,7 @@ int main( ){
 	//const std::unique_ptr<VerilatedContext> contextp{new VerilatedContext};  
 	//初始化一个 VerilatedVcdc的类，把地址赋值给指针tfp。
     VerilatedVcdC* tfp = new VerilatedVcdC;
-	dut->trace(tfp,5); //将top模块的模型信息输出到tfp指向的vcd对象
+	dut.trace(tfp,5); //将top模块的模型信息输出到tfp指向的vcd对象
 	tfp->open("obj_dir/wave.vcd");//打开波形文件
 	/*
 	while(!contextp->gotFinish()){
@@ -47,7 +46,7 @@ int main( ){
 		tfp->dump(contextp->time());
 	}*/
 	reset(10);
-	dut->pc = 32'b10000000000000000000000000000000
+	dut.pc = 0b10000000000000000000000000000000
 	for(int i = 0;i < 4;i++){
 		dut.instruction = pmem_read(memory,dut.pc);
 		single_cycle();
