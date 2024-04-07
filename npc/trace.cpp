@@ -1,5 +1,5 @@
 //#include <stdlib.h>
-#include <stdint.h>
+//#include <stdint.h>
 #include <string.h>
 static const uint32_t img_rsv32[] = {
     0b00000000010100000000000010010011,
