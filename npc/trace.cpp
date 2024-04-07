@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
 static const uint32_t img_rsv32[] = {
