@@ -4,7 +4,26 @@
 #include "Vtop.h"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
-int main(int argc, char**argv){
+static Vtop dut;
+u_int32_t *init_mem(size_t size);
+u_int32_t guest_to_host(u_int32_t addr);
+u_int32_t pmem_read(u_int32_t *memory,u_int32_t vaddr);
+
+void single_cycle(){
+	dut.clk=0;dut.eval;
+	dut.clk=1;dut.eval;
+
+}
+
+static void reset(int n){
+	dut.rst = 1;
+	while(n-- > 0) single_cycle();
+	dut.rst = 0;
+}
+
+int main( ){
+	__uint32_t *memory;
+	memory = init_mem(3);
 	//初始化一个VerilatedCOntext对象，把地址复制给contextp。为verilator仿真做准备
 	VerilatedContext* contextp = new VerilatedContext;
 	contextp->commandArgs(argc, argv);
@@ -16,20 +35,24 @@ int main(int argc, char**argv){
     VerilatedVcdC* tfp = new VerilatedVcdC;
 	top->trace(tfp,0); //将top模块的模型信息输出到tfp指向的vcd对象
 	tfp->open("obj_dir/wave.vcd");//打开波形文件
+	/*
 	while(!contextp->gotFinish()){
     //while (contextp->time() < sim_time && !contextp->gotFinish()) {
 
-		int a = rand() & 1;
-		int b = rand() & 1;
-		top->a = a;
-		top->b = b;
-        
-		printf("a = %d, b = %d, f = %d", a, b, top->f);
+
+		top->inst = pmem_read(top->pc);
 	    tfp->dump(contextp->time());
 		contextp->timeInc(1); 
 		top->eval();
-		assert(top->f == (a ^ b));
 		tfp->dump(contextp->time());
+	}*/
+	reset(10);
+	dut.pc = 32'b10000000000000000000000000000000
+	for(int i = 0;i < 4;i++){
+		dut.instruction = pmem_read(memory,dut.pc);
+		single_cycle();
+		tfp->dump(contextp->time());
+		contextp->timeInc(1);
 	}
 	tfp->close();
 	delete top;
