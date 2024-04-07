@@ -1,4 +1,7 @@
 #include<stdio.h>
+#include<stdlib.h>
+#include<assert.h>
+#include<stdint.h>
 #include "Vtop.h"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
@@ -26,12 +29,11 @@ int main( ){
 	VerilatedContext* contextp = new VerilatedContext;
 	contextp->commandArgs(argc, argv);
 	contextp->traceEverOn(true);//追踪波形
-	Vtop* top= new Vtop{contextp};//创建一个Vtop类的对象，把contextp的参数复制给Vtop
 
 	//const std::unique_ptr<VerilatedContext> contextp{new VerilatedContext};  
 	//初始化一个 VerilatedVcdc的类，把地址赋值给指针tfp。
     VerilatedVcdC* tfp = new VerilatedVcdC;
-	top->trace(tfp,0); //将top模块的模型信息输出到tfp指向的vcd对象
+	dut->trace(tfp,5); //将top模块的模型信息输出到tfp指向的vcd对象
 	tfp->open("obj_dir/wave.vcd");//打开波形文件
 	/*
 	while(!contextp->gotFinish()){
@@ -53,7 +55,6 @@ int main( ){
 		contextp->timeInc(1);
 	}
 	tfp->close();
-	delete top;
 	delete contextp;
 	return 0;
 }
