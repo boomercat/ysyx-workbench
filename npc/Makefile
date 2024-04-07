@@ -1,18 +1,20 @@
+######################################################################
 ifeq ($(VERILATOR_ROOT),)
 VERILATOR = verilator
 else
-VERILATOR = ~/verilator/verilator
+export VERILATOR_ROOT
+VERILATOR = $(VERILATOR_ROOT)/bin/verilator
 endif
-all:
-	@echo "Write this Makefile by your self."
 
-sim: 
+sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	@echo "--achieve simulate on one button --------"
-	$(VERILATOR) -cc --exe --trace --build   -j -I ~/ysyx-workbench/npc/vsrc/top.v  ~/ysyx-workbench/npc/top_trace_main.cpp 
-	obj_dir/Vtop
+	@echo "-- VERILATE & BUILD --------"
+	$(VERILATOR) -cc --exe --trace --build -j  ~/ysyx-workbench/npc/vsrc/top.v ~/ysyx-workbench/npc/top_trace_main.cpp
+	@echo "-- RUN ---------------------"
+	obj_dir/Vtop +trace
 	@echo "-- DONE --------------------"
+######################################################################
 
-clean:
-	rm -rf $(OBJS) *.vcd 
-include ../Makefile
+maintainer-copy::
+clean mostlyclean distclean maintainer-clean::
+	-rm -rf obj_dir *.log *.dmp *.vpd core
