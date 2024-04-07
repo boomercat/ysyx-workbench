@@ -27,7 +27,7 @@ int main( ){
 	memory = init_mem(3);
 	//初始化一个VerilatedCOntext对象，把地址复制给contextp。为verilator仿真做准备
 	VerilatedContext* contextp = new VerilatedContext;
-	contextp->commandArgs(argc, argv);
+	//contextp->commandArgs(argc, argv);
 	contextp->traceEverOn(true);//追踪波形
 
 	//const std::unique_ptr<VerilatedContext> contextp{new VerilatedContext};  
@@ -47,7 +47,7 @@ int main( ){
 		tfp->dump(contextp->time());
 	}*/
 	reset(10);
-	dut.pc = 32'b10000000000000000000000000000000
+	dut->pc = 32'b10000000000000000000000000000000
 	for(int i = 0;i < 4;i++){
 		dut.instruction = pmem_read(memory,dut.pc);
 		single_cycle();
