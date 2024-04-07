@@ -2,7 +2,7 @@
 //#include<stdlib.h>
 #include "Vtop.h"
 //#include "verilated.h"
-#include "verilated_vcd_c.h"
+//#include "verilated_vcd_c.h"
 
 static Vtop dut;
 
