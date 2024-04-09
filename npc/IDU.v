@@ -8,12 +8,17 @@ module IDU(
     // 还可以根据需要输出更多的控制信号
 );
 
+import "DPI-C" function void trap_ebreak();
 assign  opcode = instruction[6:0];
 assign  rs1 = instruction[19:15];
 assign  rd = instruction[11:7];
 assign  imm = {{20{instruction[31]}},instruction[31:20]};  // 立即数的符号扩展
 //assign funct3 = instruction[14:12];
     // 根据opcode设置其他控制信号
-
+always @(*) begin
+    if((opcode == 7'b1110011)&&(imm == {{20{1'b0}},{12'b000000000001}}))begin
+    trap_ebreak();
+    end
+end
 
 endmodule

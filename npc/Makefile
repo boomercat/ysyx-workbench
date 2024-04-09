@@ -9,7 +9,8 @@ endif
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	@echo "-- VERILATE & BUILD --------"
-	$(VERILATOR) -cc --exe --trace --build -j  ~/ysyx-workbench/npc/vsrc/top.v ~/ysyx-workbench/npc/top_trace_main.cpp
+	$(VERILATOR) -cc --exe --trace --build -j -I~ysyx/workbench/npc top.v  top_trace_main.cpp top_trace.cpp
+
 	@echo "-- RUN ---------------------"
 	obj_dir/Vtop +trace
 	@echo "-- DONE --------------------"
