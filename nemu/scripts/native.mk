@@ -24,7 +24,7 @@ $(BINARY):: compile_git
 
 # Some convenient rules
 
-override ARGS ?= -l $(BUILD_DIR)/nemu-log.txt
+override ARGS ?= -l $(BUILD_DIR)/nemu-log.txt  -b
 override ARGS += $(ARGS_DIFF)
 
 # Command to execute NEMU
@@ -35,7 +35,7 @@ run-env: $(BINARY) $(DIFF_REF_SO)
 
 run: run-env
 	$(call git_commit, "run NEMU")
-	$(NEMU_EXEC) || echo "nemu quit" 
+	$(NEMU_EXEC) 
 
 count:
 	find . -name "*.[hc]" | xargs grep "^." | wc -l
