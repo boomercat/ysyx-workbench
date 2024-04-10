@@ -51,18 +51,13 @@ DST_DIR   = $(WORK_DIR)/build/$(ARCH)
 $(shell mkdir -p $(DST_DIR))
 
 ### Compilation targets (a binary image or archive)
-IMAGE_REL = build/$(NAME)-$(ARCH)                    #相对路径
-IMAGE     = $(abspath $(IMAGE_REL))					  #绝对路径前缀
-ARCHIVE   = $(WORK_DIR)/build/$(NAME)-$(ARCH).a			#.a后缀
+IMAGE_REL = build/$(NAME)-$(ARCH)
+IMAGE     = $(abspath $(IMAGE_REL))
+ARCHIVE   = $(WORK_DIR)/build/$(NAME)-$(ARCH).a
 
 ### Collect the files to be linked: object files (`.o`) and libraries (`.a`)
-
- #base溢出源文件扩展名，main.c->main ，addsuffix .o，给上一步结果添加.o后缀，main ->main.o
- #addprefix 将$(DST_DIR)加到每个对象文件名前， $(DST_DIR)/main.o
-OBJS      = $(addprefix $(DST_DIR)/, $(addsuffix .o, $(basename $(SRCS))))  
-#将am klib添加到现有的 LIBS列表中，然后对LIBS进行sort
+OBJS      = $(addprefix $(DST_DIR)/, $(addsuffix .o, $(basename $(SRCS))))
 LIBS     := $(sort $(LIBS) am klib) # lazy evaluation ("=") causes infinite recursions
-#构建所有对象和库文件列表$（OBJS)，将路径和文件名调整
 LINKAGE   = $(OBJS) \
   $(addsuffix -$(ARCH).a, $(join \
     $(addsuffix /build/, $(addprefix $(AM_HOME)/, $(LIBS))), \
@@ -91,7 +86,7 @@ CFLAGS   += -O2 -MMD -Wall -Werror $(INCFLAGS) \
             -D__PLATFORM__=$(PLATFORM) -D__PLATFORM_$(shell echo $(PLATFORM) | tr a-z A-Z | tr - _) \
             -DARCH_H=\"$(ARCH_H)\" \
             -fno-asynchronous-unwind-tables -fno-builtin -fno-stack-protector \
-            -Wno-main -U_FORTIFY_SOURCE
+            -Wno-main -U_FORTIFY_SOURCE -fvisibility=hidden
 CXXFLAGS +=  $(CFLAGS) -ffreestanding -fno-rtti -fno-exceptions
 ASFLAGS  += -MMD $(INCFLAGS)
 LDFLAGS  += -z noexecstack
@@ -102,7 +97,6 @@ LDFLAGS  += -z noexecstack
 -include $(AM_HOME)/scripts/$(ARCH).mk
 
 ### Fall back to native gcc/binutils if there is no cross compiler
-#无交叉编译时的备用选择
 ifeq ($(wildcard $(shell which $(CC))),)
   $(info #  $(CC) not found; fall back to default gcc and binutils)
   CROSS_COMPILE :=
@@ -135,7 +129,7 @@ $(LIBS): %:
 	@$(MAKE) -s -C $(AM_HOME)/$* archive
 
 ### Rule (link): objects (`*.o`) and libraries (`*.a`) -> `IMAGE.elf`, the final ELF binary to be packed into image (ld)
-$(IMAGE).elf: $(OBJS) am $(LIBS)
+$(IMAGE).elf: $(OBJS) $(LIBS)
 	@echo + LD "->" $(IMAGE_REL).elf
 	@$(LD) $(LDFLAGS) -o $(IMAGE).elf --start-group $(LINKAGE) --end-group
 
@@ -152,7 +146,7 @@ $(ARCHIVE): $(OBJS)
 ### Build order control
 image: image-dep
 archive: $(ARCHIVE)
-image-dep: $(OBJS) am $(LIBS)
+image-dep: $(OBJS) $(LIBS)
 	@echo \# Creating image [$(ARCH)]
 .PHONY: image image-dep archive run $(LIBS)
 
