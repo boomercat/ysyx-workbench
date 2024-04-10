@@ -66,6 +66,7 @@ config TARGET_SHARE
   bool "Shared object (used as REF for differential testing)"
 config TARGET_AM
   bool "Application on Abstract-Machine (DON'T CHOOSE)"
+  default n
 endchoice
 
 menu "Build Options"
@@ -146,8 +147,6 @@ config ITRACE
   bool "Enable instruction tracer"
   default y
 
-
-
 config ITRACE_COND
   depends on ITRACE
   string "Only trace instructions when the condition is true"
@@ -161,14 +160,6 @@ config DIFFTEST
   help
     Enable differential testing with a reference design.
     Note that this will significantly reduce the performance of NEMU.
-
-
-config WATCHPOINT
-  bool "turn on the watchpoint"
-  default n 
-
-
-
 
 choice
   prompt "Reference design"
