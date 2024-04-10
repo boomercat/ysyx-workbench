@@ -127,10 +127,10 @@ endmenu
 
 menu "Testing and Debugging"
 
-config WATCH_POINT
+config WATCHPOINT
   bool "Watch point if value change"
   default y
-  
+
 config TRACE
   bool "Enable tracer"
   default y
