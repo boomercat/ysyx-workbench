@@ -67,6 +67,7 @@ static int decode_exec(Decode *s) {
  
   INSTPAT_START();
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
+  INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("??????? ????? ????? 000 ????? 00100 11", addi   , I, R(rd) = src1 + imm);  
 
   INSTPAT("??????? ????? ????? ??? ????? 01101 11", lui    , U, R(rd) = imm );//将一个20位立即数加载到目标寄存器的高20位，其余低12位清零。
