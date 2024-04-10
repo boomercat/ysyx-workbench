@@ -31,8 +31,8 @@ override ARGS += $(ARGS_DIFF)
 IMG ?= 
 
 
-ifneq ($(IMAGE),)
-	$(ARGS) += -b
+ifneq ($(IMG),)
+override	$(ARGS) += -b
 endif
 
 NEMU_EXEC := $(BINARY) $(ARGS) $(IMG) 
