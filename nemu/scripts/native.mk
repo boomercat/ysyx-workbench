@@ -31,8 +31,7 @@ override ARGS += $(ARGS_DIFF)
 IMG ?= 
 
 
-ifeq ($(IMG),)
-else 
+ifneq ($(IMG),)
 	$(ARGS) += -b
 endif
 
