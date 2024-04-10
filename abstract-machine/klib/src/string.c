@@ -5,7 +5,7 @@
 
 size_t strlen(const char *s) {
   const char *s_cnt;
-  int cnt;
+  int cnt=0;
   for ( s_cnt = s; *s_cnt != '\0'; s_cnt++){
     cnt++;
   }
@@ -80,7 +80,7 @@ void *memmove(void *dst, const void *src, size_t n) {
 
 void *memcpy(void *out, const void *in, size_t n) {
   char *d = out;
-  const *s = in;
+  const char *s = in;
   while(n--){
     *d++ = *s++;
   }
