@@ -38,10 +38,10 @@ run-env: $(BINARY) $(DIFF_REF_SO)
 
 run: run-env
 	$(call git_commit, "run NEMU")
-	ifneq ($(IMG),)
-		override ARGS += -b
-	endif
-	$(NEMU_EXEC) 
+	@if [ -n "$(IMG)" ]; then \
+		ARGS="$(ARGS) -b $(IMG)"; \
+	fi; \
+	$(NEMU_EXEC)
 
 count:
 	find . -name "*.[hc]" | xargs grep "^." | wc -l
