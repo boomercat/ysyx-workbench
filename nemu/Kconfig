@@ -66,7 +66,6 @@ config TARGET_SHARE
   bool "Shared object (used as REF for differential testing)"
 config TARGET_AM
   bool "Application on Abstract-Machine (DON'T CHOOSE)"
-  default n
 endchoice
 
 menu "Build Options"
