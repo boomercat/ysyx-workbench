@@ -4,12 +4,9 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 size_t strlen(const char *s) {
-  const char *s_cnt;
-  int cnt=0;
-  for ( s_cnt = s; *s_cnt != '\0'; s_cnt++){
-    cnt++;
-  }
-  return cnt;
+    const char *sc;
+  for (sc = s; *sc != '\0'; ++sc);
+  return sc - s;
 }
 
 char *strcpy(char *dst, const char *src) {
