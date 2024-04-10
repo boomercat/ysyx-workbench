@@ -26,9 +26,6 @@ $(BINARY):: compile_git
 
 override ARGS ?= -l $(BUILD_DIR)/nemu-log.txt  
 override ARGS += $(ARGS_DIFF)
-ifneq ($(IMG),)
-$(ARGS) += -b 
-endif
 
 # Command to execute NEMU
 IMG ?= 
@@ -41,6 +38,9 @@ run-env: $(BINARY) $(DIFF_REF_SO)
 
 run: run-env
 	$(call git_commit, "run NEMU")
+	ifneq ($(IMG),)
+		 $(ARGS) += -b 
+	endif
 	$(NEMU_EXEC) 
 
 count:
