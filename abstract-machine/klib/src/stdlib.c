@@ -28,6 +28,38 @@ int atoi(const char* nptr) {
   }
   return x;
 }
+char *itoa(int value, char *str) {  //从数字转到字符串
+    char *start = str;
+    char *end = str;
+    char temp;
+
+    // 负数处理
+    if (value < 0) {
+        *str++ = '-';   //加个负号
+        end++;
+        value = -value;//负数转换
+    }
+
+    // 数字转换
+    do {
+        *end++ = (value % 10) + '0';
+        value /= 10;
+    } while (value);
+
+    *end = '\0';
+    end--;
+
+    // 反转数字部分
+    while (start < end) {
+        temp = *start;
+        *start = *end;
+        *end = temp;
+        start++;
+        end--;
+    }
+
+    return str; // 返回转换后的长度
+}
 
 void *malloc(size_t size) {
   // On native, malloc() will be called during initializaion of C runtime.
