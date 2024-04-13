@@ -20,12 +20,13 @@ int sprintf(char *out, const char *fmt, ...) {
       if(*fmt == '%'){   //搜寻占位符%
           fmt++;
           switch(*fmt){
+            /*
             case 's':    //%s 若为%s
               char  *s = va_arg(args, char*);
               while(*s){
                 *out++ = *s++;
               }
-              break;
+              break;*/
             case 'd': //%d 十进制整数
                int d = va_arg(args,int);
                int d_tmp = d;
