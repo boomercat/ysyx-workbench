@@ -30,7 +30,7 @@ void display_inst(){
         p += sprintf(buf, "%s" FMT_WORD ":  %08x\t",\
          (i + 1) % MAX_INST == end ? "-->" : "   ", \
         iringbuf[i].pc, iringbuf[i].inst); 
-        printf("%s\n",p);
+        printf("%s is test \n",p);
         disassemble(p,buf+sizeof(buf)-p,iringbuf[i].pc,(uint8_t *)&iringbuf[i].inst,4);
 
         puts(buf);
