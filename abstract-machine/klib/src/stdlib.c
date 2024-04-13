@@ -58,7 +58,7 @@ char *itoa(int value, char *str) {  //从数字转到字符串
         end--;
     }
 
-    return str; // 返回转换后的长度
+    return str;
 }
 
 void *malloc(size_t size) {

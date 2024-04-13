@@ -29,7 +29,7 @@ typedef struct {
 } NEMUState;
 
 extern NEMUState nemu_state;
-
+//把出错的inst打印
 // ----------- timer -----------
 
 uint64_t get_time();
@@ -75,3 +75,5 @@ uint64_t get_time();
 
 
 #endif
+void trace_inst(word_t pc, uint32_t inst); //初始化trace 
+void display_inst();                     
