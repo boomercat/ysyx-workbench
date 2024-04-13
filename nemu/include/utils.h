@@ -77,3 +77,6 @@ uint64_t get_time();
 #endif
 void trace_inst(word_t pc, uint32_t inst); //初始化trace 
 void display_inst();                     
+void print_addread(paddr_t addr, int len);
+
+void print_addwrite(paddr_t addr, int len,word_t data);

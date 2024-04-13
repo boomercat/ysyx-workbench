@@ -27,10 +27,10 @@ void display_inst(){
     char *p;
     do{
         p = buf;
-        p += sprintf(buf, "%s" FMT_WORD ":  %08x\t",\
-         (i + 1) % MAX_INST == end ? "-->" : "   ", \
+        p += sprintf(buf, "%s" FMT_WORD ":  %08x\t",
+         (i + 1) % MAX_INST == end ? "-->" : "   ", 
         iringbuf[i].pc, iringbuf[i].inst); 
-        printf("%sisp\n",p);
+        
         disassemble(p,buf+sizeof(buf)-p,iringbuf[i].pc,(uint8_t *)&iringbuf[i].inst,4);
 
         puts(buf);
@@ -41,3 +41,11 @@ void display_inst(){
     }
 
 
+void print_addread(paddr_t addr, int len){
+    printf("read  at " FMT_PADDR "len=%d\n",addr,len);
+}
+
+
+void print_addwrite(paddr_t addr, int len,word_t data){
+    printf("write at " FMT_PADDR" len=%d,data=" FMT_WORD "\n",addr,len,data);
+}

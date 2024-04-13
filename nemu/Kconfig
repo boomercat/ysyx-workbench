@@ -130,6 +130,7 @@ config WATCHPOINT
   bool "Watch point if value change"
   default y
 
+
 config TRACE
   bool "Enable tracer"
   default y
@@ -154,6 +155,10 @@ config ITRACE_COND
   string "Only trace instructions when the condition is true"
   default "true"
 
+  config MTRACE
+    depends on TRACE
+    bool "Enable memory tracer"
+    default y
 
 config DIFFTEST
   depends on TARGET_NATIVE_ELF
