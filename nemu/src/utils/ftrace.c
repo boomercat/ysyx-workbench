@@ -91,6 +91,7 @@ void parse_elf(const char *elf_file){
     free(string_table);
 
 }
+/*
 int rec_depth = 1;
 void display_call_func(word_t pc,word_t func_addr){
     int i = 0;
@@ -118,4 +119,47 @@ void display_ret_func(word_t pc){
     rec_depth--;
     for (int  k = 0; i < rec_depth; k++) {printf(" ");}
     printf("ret [%s]\n",symbol[i].name);
+}*/
+int rec_depth = 1;
+void display_call_func(word_t pc, word_t func_addr)
+{
+    /*for(int i = 0; i < func_num; i++)
+    {
+        printf("%s\t0x%08x\t%lu\n", symbol[i].name, symbol[i].addr, symbol[i].size);
+    }
+    exit(0);*/
+    int i = 0;
+    for(; i < func_num; i++)
+    {
+        if(func_addr >= symbol[i].addr && func_addr < (symbol[i].addr + symbol[i].size))
+        {
+            break;
+        }
+    }
+    printf("0x%08x:", pc);
+
+    for(int k = 0; k < rec_depth; k++) printf("  ");
+
+    rec_depth++;
+
+    printf("call  [%s@0x%08x]\n", symbol[i].name, func_addr);
+}
+
+void display_ret_func(word_t pc)
+{
+    int i = 0;
+    for(; i < func_num; i++)
+    {
+        if(pc >= symbol[i].addr && pc < (symbol[i].addr + symbol[i].size))
+        {
+            break;
+        }
+    }
+    printf("0x%08x:", pc);
+
+    rec_depth--;
+
+    for(int k = 0; k < rec_depth; k++) printf("  ");
+
+    printf("ret  [%s]\n", symbol[i].name);
 }
