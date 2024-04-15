@@ -71,8 +71,16 @@ static int decode_exec(Decode *s) {
   INSTPAT("??????? ????? ????? ??? ????? 01101 11", lui    , U, R(rd) = imm );//将一个20位立即数加载到目标寄存器的高20位，其余低12位清零。
   INSTPAT("??????? ????? ????? ??? ????? 00101 11", auipc  , U, R(rd) = s->pc + imm);
   INSTPAT("??????? ????? ????? ??? ????? 11011 11", jal    , J, //s->dnpc = s->pc+ imm;R(rd) = s->pc +4
-                                                                s->dnpc = s->pc; s->dnpc += imm; R(rd) = s->pc + 4 );
-  INSTPAT("??????? ????? ????? 000 ????? 11001 11", jalr   , I, s->dnpc = (src1 + imm) & ~(word_t)1; R(rd) = s->pc + 4);  
+                                                                s->dnpc = s->pc; s->dnpc += imm; R(rd) = s->pc + 4;
+                                                                /*IFDEF(CONFIG_FTRACE,if(rd == 1){
+                                                                  display_call_func(s->pc,s->dnpc);
+                                                                })*/);
+  INSTPAT("??????? ????? ????? 000 ????? 11001 11", jalr   , I, s->dnpc = (src1 + imm) & ~(word_t)1; R(rd) = s->pc + 4;
+                                                                /*IFDEF(CONFIG_FTRACE,if(rd == 1){
+                                                                  display_call_func(s->pc,s->dnpc);}
+                                                                  else if(rd == 0 && src1 ==R(1)){
+                                                                    display_ret_func(s->pc);
+                                                                  })*/);  
   INSTPAT("??????? ????? ????? 000 ????? 11000 11", beq    , B, if(src1 == src2){ s->dnpc = s->pc + imm; });
   INSTPAT("??????? ????? ????? 001 ????? 11000 11", bne    , B, if(src1 != src2){ s->dnpc = s->pc + imm;});
   INSTPAT("??????? ????? ????? 100 ????? 11000 11", blt    , B, if ((int)src1 < (int)src2) {s->dnpc = s->pc + imm;});

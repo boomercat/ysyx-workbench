@@ -1,8 +1,8 @@
 #include <common.h>
-#include <elf.h>
 #include <device/map.h>
+void disassemble(char *str,int size,uint64_t pc,uint8_t *code, int nbyte);
 
-#define MAX_INST 16
+#define MAX_INST 15
 typedef struct {
     word_t pc;
     uint32_t inst;
@@ -20,7 +20,6 @@ void trace_inst(word_t pc, uint32_t inst){
 }
 
 void display_inst(){
-    void disassemble(char *str,int size,uint64_t pc,uint8_t *code, int nbyte);
     int end = p_curr;
     int i = p_curr;
     char buf[128];

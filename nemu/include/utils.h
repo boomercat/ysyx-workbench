@@ -80,3 +80,5 @@ void display_inst();
 void print_addread(paddr_t addr, int len);
 
 void print_addwrite(paddr_t addr, int len,word_t data);
+void display_call_func(word_t pc,word_t func_addr);
+void display_ret_func(word_t pc);
