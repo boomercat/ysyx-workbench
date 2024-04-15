@@ -105,6 +105,7 @@ void init_monitor(int argc, char *argv[]) {
 
   /* Parse arguments. */
   parse_args(argc, argv);
+  IFDEF(CONFIG_FTRACE,printf("elf file is %s\n",elf_file));
   IFDEF(CONFIG_FTRACE,parse_elf(elf_file));
   /* Set random seed. */
   init_rand();
