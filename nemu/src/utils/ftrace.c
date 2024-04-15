@@ -15,10 +15,17 @@ void parse_elf(const char *elf_file){
 
     FILE *fp;
     fp = fopen(elf_file,"rb"); //read binary
-
+    if(fp == NULL)
+        {
+            printf("failed to open the elf file!\n");
+            exit(0);
+        }
     Elf32_Ehdr edhr;
-    printf("use fread function to read head result is %ld\n",fread(&edhr,sizeof(Elf32_Ehdr),1,fp)); //从fp位置开始，读sizeof(Elf32_Ehdr)个字节，重复1次，并将读入的数据放到edhr中
-    //printf("elf_head test \n%s",fp);
+    if(fread(&edhr, sizeof(Elf32_Ehdr), 1, fp) <= 0)
+    {
+        printf("fail to read the elf_head!\n");
+        exit(0);
+    }    //printf("elf_head test \n%s",fp);
     //修改fp指针在SEKK_SET的e_shoff处
     fseek(fp,edhr.e_shoff,SEEK_SET);//e_shoff 为header table的offset，SEEK_SET 0:文件开头
 
@@ -27,7 +34,12 @@ void parse_elf(const char *elf_file){
     //寻找字符串表
     for (int i = 0; i < edhr.e_shnum; i++)
     {
-        printf("use fread function 's result is %ld\n",fread(&shdr,sizeof(Elf32_Shdr),1,fp)); //从fp中读sizeof(Elf32_shdr)个字节，存到shdr地址中
+
+        if(fread(&shdr, sizeof(Elf32_Shdr), 1, fp) <= 0)
+        {
+            printf("fail to read the shdr\n");
+            exit(0);
+        }
         if(shdr.sh_type == SHT_STRTAB)        //读取type =STRTAB的字符串表
         {
             string_table = malloc(shdr.sh_size);
@@ -41,7 +53,11 @@ void parse_elf(const char *elf_file){
     //开始遍历寻找符号表
     for (int i = 0; i < edhr.e_shnum; i++)
     {
-        printf("use fread function to read symbol table 's result is %ld\n",fread(&shdr,sizeof(Elf32_Shdr),1,fp));
+        if(fread(&shdr, sizeof(Elf32_Shdr), 1, fp) <= 0)
+        {
+            printf("fail to read the shdr\n");
+            exit(0);
+        }
         if(shdr.sh_type == SHT_SYMTAB)
         {
             fseek(fp,shdr.sh_offset,SEEK_SET);//修改fp指针到symbol_table处准备写入
@@ -52,8 +68,12 @@ void parse_elf(const char *elf_file){
 
             for (int  j = 0; j < sym_count; j++)
             {
-                printf("use fread to read sym's result is %ld\n",fread(&sym,sizeof(Elf32_Sym),1,fp));//把每一行的symbol实例读到sym中
-                if(ELF32_ST_TYPE(sym.st_info)==STT_FUNC)
+                if(fread(&sym, sizeof(Elf32_Sym), 1, fp) <= 0)
+                {
+                    printf("fail to read the symtab\n");
+                    exit(0);
+                }
+               if(ELF32_ST_TYPE(sym.st_info)==STT_FUNC)
                 {
                     const char *name = string_table + sym.st_name;
                     strncpy(symbol[func_num].name,name,sizeof(symbol[func_num].name) - 1);
