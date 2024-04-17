@@ -181,7 +181,7 @@ void sdb_set_batch_mode() {
 }
 
 void sdb_mainloop() {
-  if (1) {
+  if (is_batch_mode) {
     cmd_c(NULL);
     return;
   }
