@@ -16,7 +16,7 @@ extern "C" {
 
 
     // DPI IMPORTS
-    // DPI import at IDU.v:10:30
+    // DPI import at IDU.v:18:30
     extern void trap_ebreak();
 
 #ifdef __cplusplus

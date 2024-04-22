@@ -7,7 +7,6 @@ module RegisterFile #(ADDR_WIDTH = 5, DATA_WIDTH = 32) (
   output [DATA_WIDTH-1:0] RData1 //output the add1's data 
 
 );
-assign rf[1] = 0;
   reg [DATA_WIDTH-1:0] rf [2**ADDR_WIDTH-1:0]; //寄存器文件数组
   //write operation
   always @(posedge clk) begin
