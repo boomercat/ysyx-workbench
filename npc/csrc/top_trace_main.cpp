@@ -63,6 +63,7 @@ int main() {
         top->instruction = pmem_read(memory, top->pc);
         top->clk = 0;step_and_dump_wave();
         top->clk = 1;step_and_dump_wave();
+        printf("ersult is %p\n",top->next_pc);
         top->pc = top->next_pc;
     }
     tfp->close();
