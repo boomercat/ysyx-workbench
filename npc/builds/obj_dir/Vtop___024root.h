@@ -25,6 +25,8 @@ class Vtop___024root final : public VerilatedModule {
     CData/*0:0*/ top__DOT__idu__DOT__ext_num_type__DOT__i_extnum__DOT__i0__DOT__hit;
     CData/*1:0*/ top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__lut_out;
     CData/*0:0*/ top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__hit;
+    CData/*1:0*/ top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__lut_out;
+    CData/*0:0*/ top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__hit;
     CData/*0:0*/ top__DOT__test_1__DOT__i0__DOT__hit;
     CData/*0:0*/ top__DOT__instance1__DOT__test_2__DOT__i0__DOT__hit;
     CData/*0:0*/ top__DOT__alu__DOT__i0__DOT__i0__DOT__hit;
@@ -57,6 +59,9 @@ class Vtop___024root final : public VerilatedModule {
     VlUnpacked<SData/*8:0*/, 4> top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__pair_list;
     VlUnpacked<CData/*6:0*/, 4> top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__key_list;
     VlUnpacked<CData/*1:0*/, 4> top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__data_list;
+    VlUnpacked<SData/*8:0*/, 4> top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__pair_list;
+    VlUnpacked<CData/*6:0*/, 4> top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__key_list;
+    VlUnpacked<CData/*1:0*/, 4> top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__data_list;
     VlUnpacked<IData/*31:0*/, 32> top__DOT__reg_file__DOT__rf;
     VlUnpacked<QData/*32:0*/, 2> top__DOT__test_1__DOT__i0__DOT__pair_list;
     VlUnpacked<CData/*0:0*/, 2> top__DOT__test_1__DOT__i0__DOT__key_list;

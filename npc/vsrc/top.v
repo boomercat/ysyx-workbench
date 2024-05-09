@@ -40,7 +40,8 @@ IDU idu(
 	.RegWrite(RegWrite),
 	.PC_src(PC_src),
 	.rs1_add(rs1_add),
-	.rd_add(rd_add)
+	.rd_add(rd_add),
+	.alu_ctrl(alu_ctrl)
 );
 //读取src1 寄存器中的地址，为ALU加法做准备
 

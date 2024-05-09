@@ -70,6 +70,18 @@ VL_ATTR_COLD void Vtop___024root___eval_initial__TOP(Vtop___024root* vlSelf) {
     vlSelf->top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__pair_list[1U] = 0x1bdU;
     vlSelf->top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__pair_list[2U] = 0xdfU;
     vlSelf->top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__pair_list[3U] = 0x5eU;
+    vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__key_list[0U] = 0x67U;
+    vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__key_list[1U] = 0x6fU;
+    vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__key_list[2U] = 0x37U;
+    vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__key_list[3U] = 0x17U;
+    vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__data_list[0U] = 3U;
+    vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__data_list[1U] = 2U;
+    vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__data_list[2U] = 1U;
+    vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__data_list[3U] = 0U;
+    vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__pair_list[0U] = 0x19fU;
+    vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__pair_list[1U] = 0x1beU;
+    vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__pair_list[2U] = 0xddU;
+    vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__pair_list[3U] = 0x5cU;
 }
 
 VL_ATTR_COLD void Vtop___024root___eval_final(Vtop___024root* vlSelf) {
@@ -191,103 +203,114 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___ctor_var_reset\n"); );
     // Body
-    vlSelf->clk = VL_RAND_RESET_I(1);
-    vlSelf->rst = VL_RAND_RESET_I(1);
-    vlSelf->wen = VL_RAND_RESET_I(1);
-    vlSelf->instruction = VL_RAND_RESET_I(32);
-    vlSelf->pc = VL_RAND_RESET_I(32);
-    vlSelf->rd_data = VL_RAND_RESET_I(32);
-    vlSelf->next_pc = VL_RAND_RESET_I(32);
-    vlSelf->alu_result = VL_RAND_RESET_I(32);
-    vlSelf->top__DOT__rs1_data = VL_RAND_RESET_I(32);
-    vlSelf->top__DOT__ext_imm = VL_RAND_RESET_I(32);
-    vlSelf->top__DOT__Ext_type = VL_RAND_RESET_I(2);
-    vlSelf->top__DOT__out_data1 = VL_RAND_RESET_I(32);
-    vlSelf->top__DOT__alu_ctrl = VL_RAND_RESET_I(2);
-    vlSelf->top__DOT__PC_src = VL_RAND_RESET_I(1);
-    vlSelf->top__DOT__RegWrite = VL_RAND_RESET_I(2);
+    vlSelf->clk = 0;
+    vlSelf->rst = 0;
+    vlSelf->wen = 0;
+    vlSelf->instruction = 0;
+    vlSelf->pc = 0;
+    vlSelf->rd_data = 0;
+    vlSelf->next_pc = 0;
+    vlSelf->alu_result = 0;
+    vlSelf->top__DOT__rs1_data = 0;
+    vlSelf->top__DOT__ext_imm = 0;
+    vlSelf->top__DOT__Ext_type = 0;
+    vlSelf->top__DOT__out_data1 = 0;
+    vlSelf->top__DOT__alu_ctrl = 0;
+    vlSelf->top__DOT__PC_src = 0;
+    vlSelf->top__DOT__RegWrite = 0;
     for (int __Vi0 = 0; __Vi0 < 2; ++__Vi0) {
-        vlSelf->top__DOT__add_pc__DOT__i2__DOT__i0__DOT__pair_list[__Vi0] = VL_RAND_RESET_Q(33);
-    }
-    for (int __Vi0 = 0; __Vi0 < 2; ++__Vi0) {
-        vlSelf->top__DOT__add_pc__DOT__i2__DOT__i0__DOT__key_list[__Vi0] = VL_RAND_RESET_I(1);
+        vlSelf->top__DOT__add_pc__DOT__i2__DOT__i0__DOT__pair_list[__Vi0] = 0;
     }
     for (int __Vi0 = 0; __Vi0 < 2; ++__Vi0) {
-        vlSelf->top__DOT__add_pc__DOT__i2__DOT__i0__DOT__data_list[__Vi0] = VL_RAND_RESET_I(32);
+        vlSelf->top__DOT__add_pc__DOT__i2__DOT__i0__DOT__key_list[__Vi0] = 0;
     }
-    vlSelf->top__DOT__add_pc__DOT__i2__DOT__i0__DOT__lut_out = VL_RAND_RESET_I(32);
-    vlSelf->top__DOT__add_pc__DOT__i2__DOT__i0__DOT__hit = VL_RAND_RESET_I(1);
-    for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
-        vlSelf->top__DOT__idu__DOT__ext_num_type__DOT__i_extnum__DOT__i0__DOT__pair_list[__Vi0] = VL_RAND_RESET_I(9);
+    for (int __Vi0 = 0; __Vi0 < 2; ++__Vi0) {
+        vlSelf->top__DOT__add_pc__DOT__i2__DOT__i0__DOT__data_list[__Vi0] = 0;
     }
+    vlSelf->top__DOT__add_pc__DOT__i2__DOT__i0__DOT__lut_out = 0;
+    vlSelf->top__DOT__add_pc__DOT__i2__DOT__i0__DOT__hit = 0;
     for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
-        vlSelf->top__DOT__idu__DOT__ext_num_type__DOT__i_extnum__DOT__i0__DOT__key_list[__Vi0] = VL_RAND_RESET_I(7);
-    }
-    for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
-        vlSelf->top__DOT__idu__DOT__ext_num_type__DOT__i_extnum__DOT__i0__DOT__data_list[__Vi0] = VL_RAND_RESET_I(2);
-    }
-    vlSelf->top__DOT__idu__DOT__ext_num_type__DOT__i_extnum__DOT__i0__DOT__lut_out = VL_RAND_RESET_I(2);
-    vlSelf->top__DOT__idu__DOT__ext_num_type__DOT__i_extnum__DOT__i0__DOT__hit = VL_RAND_RESET_I(1);
-    for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
-        vlSelf->top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__pair_list[__Vi0] = VL_RAND_RESET_I(9);
+        vlSelf->top__DOT__idu__DOT__ext_num_type__DOT__i_extnum__DOT__i0__DOT__pair_list[__Vi0] = 0;
     }
     for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
-        vlSelf->top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__key_list[__Vi0] = VL_RAND_RESET_I(7);
+        vlSelf->top__DOT__idu__DOT__ext_num_type__DOT__i_extnum__DOT__i0__DOT__key_list[__Vi0] = 0;
     }
     for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
-        vlSelf->top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__data_list[__Vi0] = VL_RAND_RESET_I(2);
+        vlSelf->top__DOT__idu__DOT__ext_num_type__DOT__i_extnum__DOT__i0__DOT__data_list[__Vi0] = 0;
     }
-    vlSelf->top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__lut_out = VL_RAND_RESET_I(2);
-    vlSelf->top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__hit = VL_RAND_RESET_I(1);
+    vlSelf->top__DOT__idu__DOT__ext_num_type__DOT__i_extnum__DOT__i0__DOT__lut_out = 0;
+    vlSelf->top__DOT__idu__DOT__ext_num_type__DOT__i_extnum__DOT__i0__DOT__hit = 0;
+    for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
+        vlSelf->top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__pair_list[__Vi0] = 0;
+    }
+    for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
+        vlSelf->top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__key_list[__Vi0] = 0;
+    }
+    for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
+        vlSelf->top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__data_list[__Vi0] = 0;
+    }
+    vlSelf->top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__lut_out = 0;
+    vlSelf->top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__hit = 0;
+    for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
+        vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__pair_list[__Vi0] = 0;
+    }
+    for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
+        vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__key_list[__Vi0] = 0;
+    }
+    for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
+        vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__data_list[__Vi0] = 0;
+    }
+    vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__lut_out = 0;
+    vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__hit = 0;
     for (int __Vi0 = 0; __Vi0 < 32; ++__Vi0) {
-        vlSelf->top__DOT__reg_file__DOT__rf[__Vi0] = VL_RAND_RESET_I(32);
+        vlSelf->top__DOT__reg_file__DOT__rf[__Vi0] = 0;
     }
     for (int __Vi0 = 0; __Vi0 < 2; ++__Vi0) {
-        vlSelf->top__DOT__test_1__DOT__i0__DOT__pair_list[__Vi0] = VL_RAND_RESET_Q(33);
+        vlSelf->top__DOT__test_1__DOT__i0__DOT__pair_list[__Vi0] = 0;
     }
     for (int __Vi0 = 0; __Vi0 < 2; ++__Vi0) {
-        vlSelf->top__DOT__test_1__DOT__i0__DOT__key_list[__Vi0] = VL_RAND_RESET_I(1);
+        vlSelf->top__DOT__test_1__DOT__i0__DOT__key_list[__Vi0] = 0;
     }
     for (int __Vi0 = 0; __Vi0 < 2; ++__Vi0) {
-        vlSelf->top__DOT__test_1__DOT__i0__DOT__data_list[__Vi0] = VL_RAND_RESET_I(32);
+        vlSelf->top__DOT__test_1__DOT__i0__DOT__data_list[__Vi0] = 0;
     }
-    vlSelf->top__DOT__test_1__DOT__i0__DOT__lut_out = VL_RAND_RESET_I(32);
-    vlSelf->top__DOT__test_1__DOT__i0__DOT__hit = VL_RAND_RESET_I(1);
+    vlSelf->top__DOT__test_1__DOT__i0__DOT__lut_out = 0;
+    vlSelf->top__DOT__test_1__DOT__i0__DOT__hit = 0;
     for (int __Vi0 = 0; __Vi0 < 3; ++__Vi0) {
-        vlSelf->top__DOT__instance1__DOT__test_2__DOT__i0__DOT__pair_list[__Vi0] = VL_RAND_RESET_Q(34);
-    }
-    for (int __Vi0 = 0; __Vi0 < 3; ++__Vi0) {
-        vlSelf->top__DOT__instance1__DOT__test_2__DOT__i0__DOT__key_list[__Vi0] = VL_RAND_RESET_I(2);
+        vlSelf->top__DOT__instance1__DOT__test_2__DOT__i0__DOT__pair_list[__Vi0] = 0;
     }
     for (int __Vi0 = 0; __Vi0 < 3; ++__Vi0) {
-        vlSelf->top__DOT__instance1__DOT__test_2__DOT__i0__DOT__data_list[__Vi0] = VL_RAND_RESET_I(32);
+        vlSelf->top__DOT__instance1__DOT__test_2__DOT__i0__DOT__key_list[__Vi0] = 0;
     }
-    vlSelf->top__DOT__instance1__DOT__test_2__DOT__i0__DOT__lut_out = VL_RAND_RESET_I(32);
-    vlSelf->top__DOT__instance1__DOT__test_2__DOT__i0__DOT__hit = VL_RAND_RESET_I(1);
+    for (int __Vi0 = 0; __Vi0 < 3; ++__Vi0) {
+        vlSelf->top__DOT__instance1__DOT__test_2__DOT__i0__DOT__data_list[__Vi0] = 0;
+    }
+    vlSelf->top__DOT__instance1__DOT__test_2__DOT__i0__DOT__lut_out = 0;
+    vlSelf->top__DOT__instance1__DOT__test_2__DOT__i0__DOT__hit = 0;
     vlSelf->top__DOT__alu__DOT____VdfgTmp_h623bd169__0 = 0;
     for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
-        vlSelf->top__DOT__alu__DOT__i0__DOT__i0__DOT__pair_list[__Vi0] = VL_RAND_RESET_Q(34);
+        vlSelf->top__DOT__alu__DOT__i0__DOT__i0__DOT__pair_list[__Vi0] = 0;
     }
     for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
-        vlSelf->top__DOT__alu__DOT__i0__DOT__i0__DOT__key_list[__Vi0] = VL_RAND_RESET_I(2);
+        vlSelf->top__DOT__alu__DOT__i0__DOT__i0__DOT__key_list[__Vi0] = 0;
     }
     for (int __Vi0 = 0; __Vi0 < 4; ++__Vi0) {
-        vlSelf->top__DOT__alu__DOT__i0__DOT__i0__DOT__data_list[__Vi0] = VL_RAND_RESET_I(32);
+        vlSelf->top__DOT__alu__DOT__i0__DOT__i0__DOT__data_list[__Vi0] = 0;
     }
-    vlSelf->top__DOT__alu__DOT__i0__DOT__i0__DOT__lut_out = VL_RAND_RESET_I(32);
-    vlSelf->top__DOT__alu__DOT__i0__DOT__i0__DOT__hit = VL_RAND_RESET_I(1);
+    vlSelf->top__DOT__alu__DOT__i0__DOT__i0__DOT__lut_out = 0;
+    vlSelf->top__DOT__alu__DOT__i0__DOT__i0__DOT__hit = 0;
     for (int __Vi0 = 0; __Vi0 < 3; ++__Vi0) {
-        vlSelf->top__DOT__Write_rd_data__DOT__i0__DOT__pair_list[__Vi0] = VL_RAND_RESET_Q(34);
-    }
-    for (int __Vi0 = 0; __Vi0 < 3; ++__Vi0) {
-        vlSelf->top__DOT__Write_rd_data__DOT__i0__DOT__key_list[__Vi0] = VL_RAND_RESET_I(2);
+        vlSelf->top__DOT__Write_rd_data__DOT__i0__DOT__pair_list[__Vi0] = 0;
     }
     for (int __Vi0 = 0; __Vi0 < 3; ++__Vi0) {
-        vlSelf->top__DOT__Write_rd_data__DOT__i0__DOT__data_list[__Vi0] = VL_RAND_RESET_I(32);
+        vlSelf->top__DOT__Write_rd_data__DOT__i0__DOT__key_list[__Vi0] = 0;
     }
-    vlSelf->top__DOT__Write_rd_data__DOT__i0__DOT__lut_out = VL_RAND_RESET_I(32);
-    vlSelf->top__DOT__Write_rd_data__DOT__i0__DOT__hit = VL_RAND_RESET_I(1);
-    vlSelf->__Vtrigrprev__TOP__clk = VL_RAND_RESET_I(1);
+    for (int __Vi0 = 0; __Vi0 < 3; ++__Vi0) {
+        vlSelf->top__DOT__Write_rd_data__DOT__i0__DOT__data_list[__Vi0] = 0;
+    }
+    vlSelf->top__DOT__Write_rd_data__DOT__i0__DOT__lut_out = 0;
+    vlSelf->top__DOT__Write_rd_data__DOT__i0__DOT__hit = 0;
+    vlSelf->__Vtrigrprev__TOP__clk = 0;
     for (int __Vi0 = 0; __Vi0 < 3; ++__Vi0) {
         vlSelf->__Vm_traceActivity[__Vi0] = 0;
     }
