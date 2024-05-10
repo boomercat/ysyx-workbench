@@ -49,11 +49,14 @@ $(BIN): $(VSRCS) $(CSRCS)
 all: default
 
 run: $(BIN)
-	@$(call git_commit, "run NPC")
+	@$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	@$(NPC_EXEC)
+
 
 clean:
 	rm -rf $(BUILD_DIR)
-	rm -f waveform.vcd
+	rm -f wave.vcd
 
 .PHONY: default all clean run
+
+include ../Makefile
