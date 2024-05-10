@@ -8,6 +8,7 @@ static inline int check_reg_idx(int idx) {
   return idx;
 }
 
-#define gpr(idx) (n_cpu.gpr[check_reg_idx(idx)])
+#define gpr(idx) (npc_cpu.gpr[check_reg_idx(idx)])
 
 #endif
+

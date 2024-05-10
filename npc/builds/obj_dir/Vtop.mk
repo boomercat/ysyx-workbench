@@ -4,7 +4,7 @@
 # Execute this makefile from the object directory:
 #    make -f Vtop.mk
 
-default: /home/white/ysyx-workbench/npc/builds/Vtop
+default: /home/white/ysyx-workbench/npc/builds/top
 
 ### Constants...
 # Perl executable (from $PERL)
@@ -35,18 +35,34 @@ VM_PREFIX = Vtop
 VM_MODPREFIX = Vtop
 # User CFLAGS (from -CFLAGS on Verilator command line)
 VM_USER_CFLAGS = \
+	-DTOP_NAME="Vtop" \
 
 # User LDLIBS (from -LDFLAGS on Verilator command line)
 VM_USER_LDLIBS = \
+	-lreadline \
 
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
-	top_trace \
-	top_trace_main \
+	cpu-exe \
+	init \
+	paddr \
+	vaddr \
+	monitor \
+	sdb \
+	npc-main \
+	logo \
+	reg \
+	state \
+	timer \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
 	/home/white/ysyx-workbench/npc/csrc \
+	/home/white/ysyx-workbench/npc/csrc/cpu \
+	/home/white/ysyx-workbench/npc/csrc/memory \
+	/home/white/ysyx-workbench/npc/csrc/monitor \
+	/home/white/ysyx-workbench/npc/csrc/monitor/sdb \
+	/home/white/ysyx-workbench/npc/csrc/utils \
 
 
 ### Default rules...
@@ -58,13 +74,31 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 ### Executable rules... (from --exe)
 VPATH += $(VM_USER_DIR)
 
-top_trace.o: /home/white/ysyx-workbench/npc/csrc/top_trace.cpp
+cpu-exe.o: /home/white/ysyx-workbench/npc/csrc/cpu/cpu-exe.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-top_trace_main.o: /home/white/ysyx-workbench/npc/csrc/top_trace_main.cpp
+init.o: /home/white/ysyx-workbench/npc/csrc/cpu/init.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+paddr.o: /home/white/ysyx-workbench/npc/csrc/memory/paddr.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+vaddr.o: /home/white/ysyx-workbench/npc/csrc/memory/vaddr.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+monitor.o: /home/white/ysyx-workbench/npc/csrc/monitor/monitor.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+sdb.o: /home/white/ysyx-workbench/npc/csrc/monitor/sdb/sdb.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+npc-main.o: /home/white/ysyx-workbench/npc/csrc/npc-main.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+logo.o: /home/white/ysyx-workbench/npc/csrc/utils/logo.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+reg.o: /home/white/ysyx-workbench/npc/csrc/utils/reg.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+state.o: /home/white/ysyx-workbench/npc/csrc/utils/state.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+timer.o: /home/white/ysyx-workbench/npc/csrc/utils/timer.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 
 ### Link rules... (from --exe)
-/home/white/ysyx-workbench/npc/builds/Vtop: $(VK_USER_OBJS) $(VK_GLOBAL_OBJS) $(VM_PREFIX)__ALL.a $(VM_HIER_LIBS)
+/home/white/ysyx-workbench/npc/builds/top: $(VK_USER_OBJS) $(VK_GLOBAL_OBJS) $(VM_PREFIX)__ALL.a $(VM_HIER_LIBS)
 	$(LINK) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) $(LIBS) $(SC_LIBS) -o $@
 
 

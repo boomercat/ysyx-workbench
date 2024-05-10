@@ -12,13 +12,14 @@ void init_cpu(){
 
 void init_vtop(){
     VerilatedContext* contextp = new VerilatedContext;
-    VerilatedVcdC* tfp = new VerilatedVcdC;
-    Vtop* top = new Vtop{contextp};
+    tfp = new VerilatedVcdC;
+    top = new Vtop;
     contextp->traceEverOn(true);
+    top->pc = npc_cpu.pc;
     top->trace(tfp,0);
     top->clk = 0;
     top->rst = 0;
-    tfp->open("obj_dir/wave.vcd");
+    tfp->open("./wave.vcd");
 
 }
 

@@ -11,7 +11,7 @@ void isa_reg_display() {
   int reg_num = ARRLEN(regs);
   int i; 
   for (i = 0; i < reg_num; i++) {
-    printf("%-8s%-#20x%-20u\n", regs[i], n_cpu.gpr[i], n_cpu.gpr[i]);
+    printf("%-8s%-#20x%-20u\n", regs[i], npc_cpu.gpr[i], npc_cpu.gpr[i]);
   }
 }
 word_t isa_reg_str2val(const char *s, bool *success) {
@@ -22,11 +22,11 @@ word_t isa_reg_str2val(const char *s, bool *success) {
   for ( k = 0; k < rg_num ; k++)
   {
     if(strcmp("pc",s) == 0){
-      return n_cpu.pc;
+      return npc_cpu.pc;
     }
     if (strcmp(regs[k], s) == 0){
       *success = true;
-      return n_cpu.gpr[k];
+      return npc_cpu.gpr[k];
     }
   }
   *success = false;

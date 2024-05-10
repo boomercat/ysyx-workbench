@@ -6,9 +6,8 @@ static int is_batch_mode = false;
 
 #define NR_CMD ARRLEN(cmd_table)
 
-void init_regex();
 void init_wp_pool();
-void n_cpu_exec(uint64_t n);
+void npc_cpu_exec(uint64_t n);
 
 
 void sdb_set_batch_model(){
@@ -17,7 +16,7 @@ void sdb_set_batch_model(){
 }
 
 static int cmd_c(char *args) {
-  n_cpu_exec(-1);
+  npc_cpu_exec(15);
   return 0;
 }
 
@@ -48,7 +47,7 @@ static char* rl_gets() {
 }
 
 void sdb_mainloop(){
-    n_cpu_exec(10000);
+    npc_cpu_exec(10);
     return;
     if(is_batch_mode){
         cmd_c(NULL);

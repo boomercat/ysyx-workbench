@@ -11,12 +11,13 @@
 #include <stdlib.h>
 #include <debug.h>
 #include "v_sim.h"
+#include "macro.h"
 
 #define FMT_WORD "0x%08x"
 #define FMT_PADDR "0x%08x"
 typedef uint32_t word_t;
-
-typedef word_t vaddr_t;
+typedef int32_t sword_t;
+typedef uint32_t vaddr_t;
 typedef uint32_t paddr_t;
 extern Vtop* top;
 extern VerilatedVcdC* tfp ;

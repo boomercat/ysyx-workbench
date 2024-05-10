@@ -1,21 +1,23 @@
-#include <memory/paddr.h>
-#include <memory/vaddr.h>
 #include <debug.h>
 #include <utils.h>
 #include <cpu.h>
 #include <reg.h>
+#include <memory/paddr.h>
+#include <memory/vaddr.h>
 
 
 #define R(i) gpr(i)
-
 
 CPU_state npc_cpu = {};
 uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 vaddr_t pre_pc = 0;
 
-Vtop* top;
+Vtop *top;
 VerilatedVcdC* tfp;
+
+void isa_reg_display();
+
 uint64_t sim_time = 0;
 static int istrap = 0;
 static int isinv = 0;
@@ -25,11 +27,10 @@ vaddr_t pc;
 
 void isa_reg_display();
 
-word_t get_inst(vaddr_t addr) {
+int get_inst(long long addr) {
   inst = vaddr_read(addr, 4);
   return inst;
 }
-
 word_t read_mem(vaddr_t addr, int len){
     return vaddr_read(addr,len);
 }
@@ -43,6 +44,7 @@ void update_regs(int idx,word_t data){
 }
 
 void set_npctrap(int i){
+    printf("trap break");
     if(i) istrap = 1;
     else istrap = 0;
 
@@ -54,30 +56,42 @@ void set_npcinv(int i) {
 }
 
 static void npc_isa_exec_once(){
+    printf("this is 1\n");
+    
+    top->instruction = get_inst(top->pc);
+    printf("top->instruction is %p\n",top->instruction);
     for (int i = 0; i < 2; ++i) {
         top->clk ^= 1;
         top->eval();
         tfp->dump(sim_time);
         sim_time++;
-  }
+        //top->eval();
+        //tfp->dump(contextp->time());
+        //contextp->timeInc(1);
+}
+  
+  top->pc = top->next_pc;
 
   if(istrap){
-    NPCTRAP(n_cpu.pc, R(10));
+    NPCTRAP(npc_cpu.pc, R(10));
   }
 
   if(isinv){
-    INV(n_cpu.pc)
+    INV(npc_cpu.pc);
   }
 }
 
 static void npc_exec_once(){
+   printf("exe npc_exec \n");
     pre_pc = npc_cpu.pc;
+    printf("the npc_cpu.pc is %p\n",pre_pc);
     npc_isa_exec_once();
     npc_cpu.pc = top->pc;
 }
 
 
 static void npc_execute(uint64_t n){
+    printf("exe one\n");
     for(;n > 0; n--){
         npc_exec_once();
         g_nr_guest_inst++;
@@ -91,8 +105,9 @@ static void statistic() {
 #define NUMBERIC_FMT MUXDEF(CONFIG_TARGET_AM, "%", "%'") PRIu64
   Log("host time spent = " NUMBERIC_FMT " us", g_timer);
   Log("total guest instructions = " NUMBERIC_FMT, g_nr_guest_inst);
-  if (g_timer > 0) Log("simulation frequency = " NUMBERIC_FMT " inst/s", g_nr_guest_inst * 1000000 / g_timer);
-  else Log("Finish running in less than 1 us and can not calculate the simulation frequency");
+  if (g_timer > 0)
+    Log("simulation frequency = " NUMBERIC_FMT " inst/s", g_nr_guest_inst * 1000000 / g_timer);
+  else  Log("Finish running in less than 1 us and can not calculate the simulation frequency");
 }
 
 void assert_fail_msg() {
@@ -110,6 +125,8 @@ void npc_cpu_exec(uint64_t n){
     }
 
     uint64_t timer_start = get_time();
+    printf("this is a test to test execute\n");
+    printf("time start is %d\n",timer_start);
     npc_execute(n);
 
     uint64_t timer_end = get_time();

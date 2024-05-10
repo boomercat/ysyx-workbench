@@ -10,7 +10,7 @@ typedef struct
     vaddr_t pc;
 } CPU_state;
 
-extern CPU_state n_cpu;
+extern CPU_state npc_cpu;
 
 void npc_cpu_exec(uint64_t n);
 
@@ -26,4 +26,3 @@ void invalid_inst(vaddr_t thispc);
 
 
 
-#endif

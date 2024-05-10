@@ -17,10 +17,10 @@ wire [6:0] opcode;
 assign  opcode = instruction[6:0];
 assign  rs1_add = instruction[19:15] ;
 assign  rd_add = instruction[11:7];
-import "DPI-C" function void trap_ebreak();
+import "DPI-C" function void set_npctrap(int i);
 always @(*) begin
     if(opcode == 7'b1110011)begin
-    trap_ebreak();
+    set_npctrap(1);
     end
 end
 //auipc指令时ALUsrc为pc+imm
