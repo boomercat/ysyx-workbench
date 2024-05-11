@@ -16,14 +16,16 @@ static int difftest_port = 1234;
 
 
 
-/*static const uint32_t img [] = {
-  0x00000297,  // auipc t0,0
-  //0x0002b823,  // sd  zero,16(t0)
-  //0x0102b503,  // ld  a0,16(t0)
+static const uint32_t img [] = {
+  0x00000413,  // auipc t0,0
+  0xffc10113,  // sd  zero,16(t0)
+  0xff010113,  // ld  a0,16(t0)
+  0x00100513,
+  0x2f0b8b93,
   0x00100073,  // ebreak (used as nemu_trap)
   //0xdeadbeef,  // some data
-};*/
-
+};
+/*
 static const uint32_t img [] = {
  	//0b00000000110000000000001011101111, //jal   x5 12         0x80000000
   //0b00000000000000001000000001100111,
@@ -36,7 +38,7 @@ static const uint32_t img [] = {
 	0b00000000001000000000000100010011, //addi  x2 x0 2       0x80000018
 	0b00000000000001010000010100010011, //addi x10 x10 0      0x8000001c mv a0,a0;  
   0b00000000000100000000000001110011   
-};
+};*/
 
 
 static int parse_args(int argc, char *argv[]) {
