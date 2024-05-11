@@ -47,7 +47,7 @@ static char* rl_gets() {
 }
 
 void sdb_mainloop(){
-    npc_cpu_exec(100);
+    npc_cpu_exec(10000);
     return;
     if(is_batch_mode){
         cmd_c(NULL);
