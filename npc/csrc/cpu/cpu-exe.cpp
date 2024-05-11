@@ -55,9 +55,7 @@ void set_npcinv(int i) {
   else isinv = 0;
 }
 
-static void npc_isa_exec_once(){
-    printf("this is 1\n");
-    
+static void npc_isa_exec_once(){    
     top->instruction = get_inst(top->pc);
     printf("top->instruction is %p\n",top->instruction);
     for (int i = 0; i < 2; ++i) {
@@ -69,7 +67,7 @@ static void npc_isa_exec_once(){
         //tfp->dump(contextp->time());
         //contextp->timeInc(1);
 }
-  
+  printf("top->next_pc is %p\n\n\n",top->next_pc); 
   top->pc = top->next_pc;
 
   if(istrap){
@@ -82,7 +80,6 @@ static void npc_isa_exec_once(){
 }
 
 static void npc_exec_once(){
-   printf("exe npc_exec \n");
     pre_pc = npc_cpu.pc;
     printf("the npc_cpu.pc is %p\n",pre_pc);
     npc_isa_exec_once();
