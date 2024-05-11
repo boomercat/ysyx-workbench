@@ -19,6 +19,7 @@ void init_vtop(){
     top->trace(tfp,0);
     top->clk = 0;
     top->rst = 0;
+    top->wen = 1;
     tfp->open("./wave.vcd");
 
 }
