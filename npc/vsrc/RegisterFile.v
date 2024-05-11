@@ -10,7 +10,7 @@ module RegisterFile #(ADDR_WIDTH = 5, DATA_WIDTH = 32) (
   reg [DATA_WIDTH-1:0] rf [2**ADDR_WIDTH-1:0]; //寄存器文件数组
   //write operation
   always @(posedge clk) begin
-    if (wen ) rf[waddr] <= wdata;
+    if ((wen) && waddr != 0) rf[waddr] <= wdata;
   end
 
   //read operation and 0 register

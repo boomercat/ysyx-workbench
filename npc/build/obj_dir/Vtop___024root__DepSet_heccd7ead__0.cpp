@@ -430,7 +430,8 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__0(Vtop___024root* vlSelf) 
     __Vdlyvset__top__DOT__reg_file__DOT__rf__v0 = 0;
     // Body
     __Vdlyvset__top__DOT__reg_file__DOT__rf__v0 = 0U;
-    if (vlSelf->wen) {
+    if (((IData)(vlSelf->wen) & (0U != (0x1fU & (vlSelf->instruction 
+                                                 >> 7U))))) {
         __Vdlyvval__top__DOT__reg_file__DOT__rf__v0 
             = vlSelf->rd_data;
         __Vdlyvset__top__DOT__reg_file__DOT__rf__v0 = 1U;
