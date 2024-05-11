@@ -13,13 +13,13 @@ Area heap = RANGE(&_heap_start, PMEM_END);
 #define MAINARGS ""
 #endif
 static const char mainargs[] = MAINARGS;
-#define set_npctrap(code) if(code) istrap = 1;else istrap = 0;
+//#define set_npctrap(code) if(code) istrap = 1;else istrap = 0;
 void putch(char ch) {
 }
 
 void halt(int code) {
-  printf("this is halt's code%d\n",code);
-  set_npctrap(code);
+  //printf("this is halt's code%d\n",code);
+  //set_npctrap(code);
   while (1);
 }
 
