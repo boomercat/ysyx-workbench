@@ -67,7 +67,8 @@ static void npc_isa_exec_once(){
         //tfp->dump(contextp->time());
         //contextp->timeInc(1);
 }
-  printf("top->next_pc is %p\n\n\n",top->next_pc); 
+  printf("top->next_pc is %p\n",top->next_pc); 
+  printf("top->next_pc;s instruction is %p\n\n\n",get_inst(top->next_pc));
   top->pc = top->next_pc;
 
   if(istrap){
