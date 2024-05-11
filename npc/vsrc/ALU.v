@@ -11,7 +11,7 @@ MuxKeyWithDefault #(4, 2, 32) i0 (alu_result, alu_ctrl, 32'b0, {
     2'b00, src1 + imm,
     2'b01, imm,
     2'b10, src1 + imm,
-    2'b11, (src1 + imm)&~1
+    2'b11, (src1 + imm)& ~1
   });
 
 

@@ -3,7 +3,7 @@ module IDU(
     output reg [1:0] Ext_type,
     output reg  ALU_src,
     output reg [1:0] RegWrite,
-    output reg PC_src,
+    output reg [1:0] PC_src,
     output reg [4:0] rd_add,
     output reg [4:0] rs1_add,
     output reg [1:0] alu_ctrl
@@ -24,8 +24,7 @@ always @(*) begin
     end
 end
 //auipc指令时ALUsrc为pc+imm
-assign ALU_src  = ( opcode == 7'b0010111)                          ? 1 : 0;
-assign PC_src   = ((opcode == 7'b1101111)||(opcode == 7'b1100111)) ? 1 : 0;
+assign ALU_src  = ( opcode == 7'b0010111) ? 1 : 0;
 //ext_type
 Extnum_type ext_num_type(.opcode(opcode),
                     .Ext_type(Ext_type));
@@ -36,5 +35,9 @@ Reg_Write_num reg_num_type(.opcode(opcode),
 //alu_ctrl_num
 alu_ctrl_num ctrl_num_type(.opcode(opcode),
                     .alu_ctrl(alu_ctrl));
+
+//PC_src_num
+PC_src_num PC_src_num_type(.opcode(opcode),
+                    .PC_src(PC_src));
 endmodule
 

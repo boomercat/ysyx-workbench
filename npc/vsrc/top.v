@@ -19,7 +19,7 @@ wire [1:0]	Ext_type;
 wire ALU_src;
 wire [31:0] out_data1;
 wire [1:0] alu_ctrl;
-wire PC_src;
+wire [1:0] PC_src;
 wire [1:0] RegWrite;
 assign  opcode = instruction[6:0];
 
