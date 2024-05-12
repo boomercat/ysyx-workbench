@@ -14,6 +14,23 @@ void isa_reg_display() {
     printf("%-8s%-#20x%-20u\n", regs[i], npc_cpu.gpr[i], npc_cpu.gpr[i]);
   }
 }
+/*
+void top_reg_update(){
+  for (int j = 0; i < ARRLEN(regs); j++)
+  {
+    regs[j] = top->
+  }
+  
+*/
+
+
+
+
+
+
+
+
+
 word_t isa_reg_str2val(const char *s, bool *success) {
   s = s+1;
   int rg_num  = ARRLEN(regs);
