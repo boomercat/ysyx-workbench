@@ -19,6 +19,7 @@ class Vtop___024root final : public VerilatedModule {
         VL_IN8(rst,0,0);
         VL_IN8(wen,0,0);
         CData/*1:0*/ top__DOT__Ext_type;
+        CData/*0:0*/ top__DOT__ALU_src;
         CData/*1:0*/ top__DOT__alu_ctrl;
         CData/*1:0*/ top__DOT__PC_src;
         CData/*1:0*/ top__DOT__RegWrite;
@@ -78,9 +79,9 @@ class Vtop___024root final : public VerilatedModule {
         VlUnpacked<CData/*1:0*/, 3> top__DOT__instance1__DOT__test_2__DOT__i0__DOT__key_list;
         VlUnpacked<IData/*31:0*/, 3> top__DOT__instance1__DOT__test_2__DOT__i0__DOT__data_list;
         VlUnpacked<QData/*33:0*/, 4> top__DOT__alu__DOT__i0__DOT__i0__DOT__pair_list;
-        VlUnpacked<CData/*1:0*/, 4> top__DOT__alu__DOT__i0__DOT__i0__DOT__key_list;
     };
     struct {
+        VlUnpacked<CData/*1:0*/, 4> top__DOT__alu__DOT__i0__DOT__i0__DOT__key_list;
         VlUnpacked<IData/*31:0*/, 4> top__DOT__alu__DOT__i0__DOT__i0__DOT__data_list;
         VlUnpacked<QData/*33:0*/, 3> top__DOT__Write_rd_data__DOT__i0__DOT__pair_list;
         VlUnpacked<CData/*1:0*/, 3> top__DOT__Write_rd_data__DOT__i0__DOT__key_list;

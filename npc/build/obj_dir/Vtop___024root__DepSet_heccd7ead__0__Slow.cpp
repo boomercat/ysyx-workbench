@@ -233,6 +233,7 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->top__DOT__rs1_data = 0;
     vlSelf->top__DOT__ext_imm = 0;
     vlSelf->top__DOT__Ext_type = 0;
+    vlSelf->top__DOT__ALU_src = 0;
     vlSelf->top__DOT__out_data1 = 0;
     vlSelf->top__DOT__alu_ctrl = 0;
     vlSelf->top__DOT__PC_src = 0;

@@ -194,6 +194,9 @@ VL_INLINE_OPT void Vtop___024root___ico_sequent__TOP__0(Vtop___024root* vlSelf) 
     vlSelf->top__DOT__alu_ctrl = ((IData)(vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__hit)
                                    ? (IData)(vlSelf->top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__lut_out)
                                    : 0U);
+    vlSelf->top__DOT__ALU_src = ((0x17U == (0x7fU & vlSelf->instruction)) 
+                                 | (0x13U == (0x7fU 
+                                              & vlSelf->instruction)));
     vlSelf->top__DOT__test_1__DOT__i0__DOT__data_list[0U] 
         = vlSelf->pc;
     if ((0U == (0x1fU & (vlSelf->instruction >> 0xfU)))) {
@@ -263,29 +266,22 @@ VL_INLINE_OPT void Vtop___024root___ico_sequent__TOP__0(Vtop___024root* vlSelf) 
     vlSelf->top__DOT__test_1__DOT__i0__DOT__pair_list[1U] 
         = (QData)((IData)(vlSelf->top__DOT__rs1_data));
     vlSelf->top__DOT__test_1__DOT__i0__DOT__lut_out 
-        = ((- (IData)(((0x17U == (0x7fU & vlSelf->instruction)) 
+        = ((- (IData)(((IData)(vlSelf->top__DOT__ALU_src) 
                        == vlSelf->top__DOT__test_1__DOT__i0__DOT__key_list
                        [0U]))) & vlSelf->top__DOT__test_1__DOT__i0__DOT__data_list
            [0U]);
-    vlSelf->top__DOT__test_1__DOT__i0__DOT__hit = (
-                                                   (0x17U 
-                                                    == 
-                                                    (0x7fU 
-                                                     & vlSelf->instruction)) 
+    vlSelf->top__DOT__test_1__DOT__i0__DOT__hit = ((IData)(vlSelf->top__DOT__ALU_src) 
                                                    == 
                                                    vlSelf->top__DOT__test_1__DOT__i0__DOT__key_list
                                                    [0U]);
     vlSelf->top__DOT__test_1__DOT__i0__DOT__lut_out 
         = (vlSelf->top__DOT__test_1__DOT__i0__DOT__lut_out 
-           | ((- (IData)(((0x17U == (0x7fU & vlSelf->instruction)) 
+           | ((- (IData)(((IData)(vlSelf->top__DOT__ALU_src) 
                           == vlSelf->top__DOT__test_1__DOT__i0__DOT__key_list
                           [1U]))) & vlSelf->top__DOT__test_1__DOT__i0__DOT__data_list
               [1U]));
     vlSelf->top__DOT__test_1__DOT__i0__DOT__hit = ((IData)(vlSelf->top__DOT__test_1__DOT__i0__DOT__hit) 
-                                                   | ((0x17U 
-                                                       == 
-                                                       (0x7fU 
-                                                        & vlSelf->instruction)) 
+                                                   | ((IData)(vlSelf->top__DOT__ALU_src) 
                                                       == 
                                                       vlSelf->top__DOT__test_1__DOT__i0__DOT__key_list
                                                       [1U]));
@@ -536,29 +532,22 @@ VL_INLINE_OPT void Vtop___024root___nba_sequent__TOP__1(Vtop___024root* vlSelf) 
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___nba_sequent__TOP__1\n"); );
     // Body
     vlSelf->top__DOT__test_1__DOT__i0__DOT__lut_out 
-        = ((- (IData)(((0x17U == (0x7fU & vlSelf->instruction)) 
+        = ((- (IData)(((IData)(vlSelf->top__DOT__ALU_src) 
                        == vlSelf->top__DOT__test_1__DOT__i0__DOT__key_list
                        [0U]))) & vlSelf->top__DOT__test_1__DOT__i0__DOT__data_list
            [0U]);
-    vlSelf->top__DOT__test_1__DOT__i0__DOT__hit = (
-                                                   (0x17U 
-                                                    == 
-                                                    (0x7fU 
-                                                     & vlSelf->instruction)) 
+    vlSelf->top__DOT__test_1__DOT__i0__DOT__hit = ((IData)(vlSelf->top__DOT__ALU_src) 
                                                    == 
                                                    vlSelf->top__DOT__test_1__DOT__i0__DOT__key_list
                                                    [0U]);
     vlSelf->top__DOT__test_1__DOT__i0__DOT__lut_out 
         = (vlSelf->top__DOT__test_1__DOT__i0__DOT__lut_out 
-           | ((- (IData)(((0x17U == (0x7fU & vlSelf->instruction)) 
+           | ((- (IData)(((IData)(vlSelf->top__DOT__ALU_src) 
                           == vlSelf->top__DOT__test_1__DOT__i0__DOT__key_list
                           [1U]))) & vlSelf->top__DOT__test_1__DOT__i0__DOT__data_list
               [1U]));
     vlSelf->top__DOT__test_1__DOT__i0__DOT__hit = ((IData)(vlSelf->top__DOT__test_1__DOT__i0__DOT__hit) 
-                                                   | ((0x17U 
-                                                       == 
-                                                       (0x7fU 
-                                                        & vlSelf->instruction)) 
+                                                   | ((IData)(vlSelf->top__DOT__ALU_src) 
                                                       == 
                                                       vlSelf->top__DOT__test_1__DOT__i0__DOT__key_list
                                                       [1U]));
