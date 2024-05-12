@@ -94,7 +94,12 @@ void sdb_mainloop(){
     int i;
     for (i = 0; i < NR_CMD; i ++) {
       if (strcmp(cmd, cmd_table[i].name) == 0) {
-        if (cmd_table[i].handler(args) < 0) { return; }
+        if (cmd_table[i].handler(args) < 0) { 
+          if(strcmp(cmd,"q") == 0){
+            npc_state.state = NPC_QUIT;
+          }
+          return;
+         }
         break;
       }
     }
