@@ -24,7 +24,7 @@ always @(*) begin
     end
 end
 //auipc指令时ALUsrc为pc+imm
-assign ALU_src  = ( opcode == 7'b0010111) ? 1 : 0;
+assign ALU_src  = ( opcode == 7'b0010111|| opcode == 7'b0010011) ? 1 : 0;
 //ext_type
 Extnum_type ext_num_type(.opcode(opcode),
                     .Ext_type(Ext_type));

@@ -1,6 +1,7 @@
 #include <reg.h>
 #include <cpu.h>
-
+#include <Vtop.h>
+#include <Vtop___024root.h>
 const char *regs[] = {
   "$0", "ra", "sp", "gp", "tp", "t0", "t1", "t2",
   "s0", "s1", "a0", "a1", "a2", "a3", "a4", "a5",
@@ -14,6 +15,15 @@ void isa_reg_display() {
     printf("%-8s%-#20x%-20u\n", regs[i], npc_cpu.gpr[i], npc_cpu.gpr[i]);
   }
 }
+
+void npc_reg_update(){
+  for (int j = 0; j < ARRLEN(regs); j++)
+  {
+    npc_cpu.gpr[j] = top->rootp->top__DOT__reg_file__DOT__rf[j];
+  }
+}
+
+
 word_t isa_reg_str2val(const char *s, bool *success) {
   s = s+1;
   int rg_num  = ARRLEN(regs);
