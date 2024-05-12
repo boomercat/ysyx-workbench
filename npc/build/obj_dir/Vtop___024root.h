@@ -61,12 +61,12 @@ class Vtop___024root final : public VerilatedModule {
         VlUnpacked<SData/*8:0*/, 4> top__DOT__idu__DOT__ext_num_type__DOT__i_extnum__DOT__i0__DOT__pair_list;
         VlUnpacked<CData/*6:0*/, 4> top__DOT__idu__DOT__ext_num_type__DOT__i_extnum__DOT__i0__DOT__key_list;
         VlUnpacked<CData/*1:0*/, 4> top__DOT__idu__DOT__ext_num_type__DOT__i_extnum__DOT__i0__DOT__data_list;
-        VlUnpacked<SData/*8:0*/, 4> top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__pair_list;
-        VlUnpacked<CData/*6:0*/, 4> top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__key_list;
-        VlUnpacked<CData/*1:0*/, 4> top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__data_list;
-        VlUnpacked<SData/*8:0*/, 4> top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__pair_list;
-        VlUnpacked<CData/*6:0*/, 4> top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__key_list;
-        VlUnpacked<CData/*1:0*/, 4> top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__data_list;
+        VlUnpacked<SData/*8:0*/, 5> top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__pair_list;
+        VlUnpacked<CData/*6:0*/, 5> top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__key_list;
+        VlUnpacked<CData/*1:0*/, 5> top__DOT__idu__DOT__reg_num_type__DOT__Reg_num_inst__DOT__i0__DOT__data_list;
+        VlUnpacked<SData/*8:0*/, 5> top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__pair_list;
+        VlUnpacked<CData/*6:0*/, 5> top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__key_list;
+        VlUnpacked<CData/*1:0*/, 5> top__DOT__idu__DOT__ctrl_num_type__DOT__i_test__DOT__i0__DOT__data_list;
         VlUnpacked<SData/*8:0*/, 4> top__DOT__idu__DOT__PC_src_num_type__DOT__PC_src_num_mux__DOT__i0__DOT__pair_list;
         VlUnpacked<CData/*6:0*/, 4> top__DOT__idu__DOT__PC_src_num_type__DOT__PC_src_num_mux__DOT__i0__DOT__key_list;
         VlUnpacked<CData/*1:0*/, 4> top__DOT__idu__DOT__PC_src_num_type__DOT__PC_src_num_mux__DOT__i0__DOT__data_list;
