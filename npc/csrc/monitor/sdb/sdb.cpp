@@ -96,7 +96,7 @@ void sdb_mainloop(){
       if (strcmp(cmd, cmd_table[i].name) == 0) {
         if (cmd_table[i].handler(args) < 0) { 
           if(strcmp(cmd,"q") == 0){
-            printf("npc quit");
+            printf("npc quit\n");
             npc_state.state = NPC_QUIT;
           }
           return;
