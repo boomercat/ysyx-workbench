@@ -25,7 +25,6 @@ char logbuf[128];
 uint32_t inst;
 vaddr_t pc;
 
-void isa_reg_display();
 
 int get_inst(long long addr) {
   inst = vaddr_read(addr, 4);

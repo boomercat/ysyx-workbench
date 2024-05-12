@@ -3,7 +3,7 @@
 #include <readline/history.h>
 
 static int is_batch_mode = false;
-
+void isa_reg_display();
 #define NR_CMD ARRLEN(cmd_table)
 
 void init_wp_pool();
@@ -37,6 +37,18 @@ static int cmd_si(char *args){
 }
 
 
+static int cmd_info(char *args){
+  char *ar = strtok(args," ");
+  if (*ar == 'r')
+  { isa_reg_display();}
+
+  //else if (*ar == 'w')
+  //{  display_watchpoint();}
+  
+  return 0;
+}
+
+
 static struct {
   const char *name;
   const char *description;
@@ -46,7 +58,8 @@ static struct {
 
   { "q", "Exit NPC", cmd_q },
   { "c", "Continue the execution of the program", cmd_c },
-  { "si", "execute N commands and suspend, default N = 1", cmd_si}
+  { "si", "execute N commands and suspend, default N = 1", cmd_si},
+  { "info", "r is print the status of  monitor,w is print watchpoint's information",cmd_info}
 
 };
 
