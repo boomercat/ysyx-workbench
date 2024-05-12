@@ -12,8 +12,10 @@ void init_cpu(){
 
 void init_vtop(){
     VerilatedContext* contextp = new VerilatedContext;
+
     tfp = new VerilatedVcdC;
     top = new Vtop;
+    Verilated::traceEverOn(true);
     contextp->traceEverOn(true);
     top->pc = npc_cpu.pc;
     top->trace(tfp,0);

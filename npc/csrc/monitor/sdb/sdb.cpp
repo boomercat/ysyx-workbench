@@ -16,9 +16,26 @@ void sdb_set_batch_model(){
 }
 
 static int cmd_c(char *args) {
-  npc_cpu_exec(15);
+  npc_cpu_exec(-1);
   return 0;
 }
+
+static int cmd_q(char *args) {
+  return -1;
+}
+
+
+static int cmd_si(char *args){
+  int num_exe;
+  if (args == NULL)
+  {
+    num_exe = 1;
+  }
+  else num_exe = atoi(args);
+  npc_cpu_exec(num_exe);
+  return 0;
+}
+
 
 static struct {
   const char *name;
@@ -26,7 +43,11 @@ static struct {
   int (*handler) (char *);
 } cmd_table [] = {
 //   { "help", "Display information about all supported commands", cmd_help },
-  { "c", "Continue the execution of the program", cmd_c }
+
+  { "q", "Exit NPC", cmd_q },
+  { "c", "Continue the execution of the program", cmd_c },
+  { "si", "execute N commands and suspend, default N = 1", cmd_si}
+
 };
 
 static char* rl_gets() {
@@ -47,8 +68,8 @@ static char* rl_gets() {
 }
 
 void sdb_mainloop(){
-    npc_cpu_exec(10000);
-    return;
+    //npc_cpu_exec(10000);
+    //return;
     if(is_batch_mode){
         cmd_c(NULL);
         return;
