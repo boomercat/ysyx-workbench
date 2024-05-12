@@ -21,7 +21,8 @@ void putch(char ch) {
 void halt(int code) {
   //printf("this is halt's code%d\n",code);
   //set_npctrap(code);
-  //npc_trap(code);
+  npc_trap(code);
+  printf("this is npc_trap");
   while (1);
 }
 
