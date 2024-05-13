@@ -50,6 +50,7 @@ VM_USER_CLASSES = \
 	paddr \
 	vaddr \
 	monitor \
+	expr \
 	sdb \
 	npc-main \
 	logo \
@@ -85,6 +86,8 @@ paddr.o: /home/white/ysyx-workbench/npc/csrc/memory/paddr.cpp
 vaddr.o: /home/white/ysyx-workbench/npc/csrc/memory/vaddr.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 monitor.o: /home/white/ysyx-workbench/npc/csrc/monitor/monitor.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+expr.o: /home/white/ysyx-workbench/npc/csrc/monitor/sdb/expr.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 sdb.o: /home/white/ysyx-workbench/npc/csrc/monitor/sdb/sdb.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
