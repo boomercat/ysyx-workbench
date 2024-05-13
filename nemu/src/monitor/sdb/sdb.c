@@ -114,7 +114,7 @@ static int cmd_x(char *args){
   int n = strtol(arg1,NULL,10);
   int addr = strtol(arg2,NULL,16);
   uint8_t *raddr = guest_to_host(addr);
-  for(int i =0;i < n;i++ ,addr+=1,raddr++)
+  for(int i =0;i < n;i++ ,addr+=4,raddr+=4)
 	  printf("%#x    %02x\n",addr,*raddr);  
   return 0;
 }
