@@ -24,6 +24,7 @@ static int is_batch_mode = false;
 
 void init_regex();
 void init_wp_pool();
+uint8_t* guest_to_host(paddr_t paddr);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -87,7 +88,9 @@ static int cmd_x(char *args){
     addr += 4;
   }
   return 0; 
-  /*
+}
+/*
+  this is -------------------------------------
   if (args == NULL) {
         printf("Wrong Command!\n");
         return 0;
@@ -100,10 +103,20 @@ static int cmd_x(char *args){
       //C语言会自动执行类型提升以匹配表达式的操作数的类型。所以，4 被转换为 uint32_t，
       startAddress += 4;
   
-  }
-   return 0;
-  */
-}
+  }*/
+
+/*
+static int cmd_x(char *args){
+  char *arg1 = strtok(NULL," ");
+  char *arg2 = strtok(NULL," ");
+  int n = strtol(arg1,NULL,10);
+  int addr = strtol(arg2,NULL,16);
+  uint8_t *raddr = guest_to_host(addr);
+  for(int i =0;i < n;i++ ,addr+=4,raddr+=4)
+	  printf("%#x    %02x\n",addr,*raddr);  
+  return 0;
+}*/
+
 static int  cmd_p(char *args){
   printf("%s",args);
   

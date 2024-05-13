@@ -1,7 +1,7 @@
 #include <common.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-
+#include "sdb.h"
 static int is_batch_mode = false;
 void isa_reg_display();
 #define NR_CMD ARRLEN(cmd_table)
@@ -48,6 +48,15 @@ static int cmd_info(char *args){
   return 0;
 }
 
+static int  cmd_p(char *args){
+  //printf("%s",args);
+  
+  //char EXPR[1024] = strtog(NULL," ");
+  bool success = true;
+  word_t result = expr(args,&success);
+  printf("result is %u\n",result);
+  return 0;
+}
 
 static struct {
   const char *name;
@@ -59,7 +68,9 @@ static struct {
   { "q", "Exit NPC", cmd_q },
   { "c", "Continue the execution of the program", cmd_c },
   { "si", "execute N commands and suspend, default N = 1", cmd_si},
-  { "info", "r is print the status of  monitor,w is print watchpoint's information",cmd_info}
+  { "info", "r is print the status of  monitor,w is print watchpoint's information",cmd_info},
+  { "p", "calculate the value of EXPR ", cmd_p}
+
 
 };
 
