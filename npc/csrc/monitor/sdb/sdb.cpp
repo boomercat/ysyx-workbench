@@ -49,7 +49,7 @@ static int cmd_info(char *args){
 }
 
 static int  cmd_p(char *args){
-  printf("%s",args);
+  //printf("%s",args);
   
   //char EXPR[1024] = strtog(NULL," ");
   bool success = true;
@@ -69,7 +69,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "si", "execute N commands and suspend, default N = 1", cmd_si},
   { "info", "r is print the status of  monitor,w is print watchpoint's information",cmd_info},
-  { "p", "calculate the value of EXPR ", cmd_p},
+  { "p", "calculate the value of EXPR ", cmd_p}
 
 
 };
