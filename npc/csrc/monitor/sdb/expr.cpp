@@ -67,10 +67,10 @@ static bool make_token(char *e) {
     for (i = 0; i < NR_REGEX; i ++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
-        printf("this extractive num is %c",*substr_start);
+        printf("this extractive num is %c\n",*substr_start);
         int substr_len = pmatch.rm_eo;
 
-        Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
+        Log("match rules[%d] = \"%s\" at position %d with len %d\n: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
         position += substr_len;
@@ -254,12 +254,14 @@ word_t eval(int p,int q,bool *success){
 }
 
 word_t expr(char *e, bool *success) {
+  printf("this is one\n");
   if (!make_token(e)) {
     printf("shibai!!\n");
     *success = false;
     return 0;
   }
   else{
+  printf("access the expr function\n");
   /* TODO: Insert codes to evaluate the expression. */
   for (int j = 0; j < useful_num; j ++) { //judge the * is mul or other
   if (tokens[j].type == TK_MUL && (j == 0 || (tokens[j - 1].type == TK_PLUS) || (tokens[j - 1].type == TK_SUB) ||

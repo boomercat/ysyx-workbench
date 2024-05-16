@@ -23,7 +23,11 @@ void npc_reg_update(){
   }
 }
 
-
+void init_reg(){
+  for(int i = 0; i < ARRLEN(regs); i++){
+    npc_cpu.gpr[i] = 0;
+  }
+}
 word_t isa_reg_str2val(const char *s, bool *success) {
   s = s+1;
   int rg_num  = ARRLEN(regs);
@@ -35,6 +39,7 @@ word_t isa_reg_str2val(const char *s, bool *success) {
       return npc_cpu.pc;
     }
     if (strcmp(regs[k], s) == 0){
+      printf("match success,regs[k] is %s\n",regs[k]);
       *success = true;
       return npc_cpu.gpr[k];
     }

@@ -1,19 +1,35 @@
 module alu_ctrl_num(
-    input [6:0] opcode,
-    output reg [1:0] alu_ctrl
+    input clk,
+    input [31:0] instruction,
+    output reg [2:0] alu_ctrl
 );
 
+wire [14:0] right_inst;
+assign  right_inst = instruction[14:0];
 
 
-//00为auipc->pc+sext(imm),01为lui->sext(imm),10为jal->pc+sext(offset),11为jalr->(x[rs1]+sext(offset))&~1
+always @(posedge clk ) 
+begin
+  casez (right_inst)
+    15'b????????0010111 : alu_ctrl = 3'b000;     //auipc
+    15'b????????0110111 : alu_ctrl = 3'b001;    //lui
+    15'b????????1101111 : alu_ctrl = 3'b010;     //jal
+    15'b000?????1100111 : alu_ctrl = 3'b011;     //jalr
+    15'b011?????0010011 : alu_ctrl = 3'b100;     ///sltiu -> x[rd] = (x[rs1] < sext(imm))?1:0
+    15'b000?????0010011 : alu_ctrl = 3'b000;      //addi: 
+    default: alu_ctrl = 3'b000;
+  endcase
+  
+end
 
- MuxKeyWithDefault #(5, 7, 2) i_test (alu_ctrl, opcode, 2'b00, {
-    7'b0010111, 2'b00,
-    7'b0110111, 2'b01,
-    7'b1101111, 2'b10,
-    7'b1100111, 2'b11,
-    7'b0010011, 2'b00
-  });
+//  MuxKeyWithDefault #(6, 15, 3) i_test (alu_ctrl, right_inst, 3'b000, {
+//     15'bxxxxxxxx0010111, 3'b000,     //auipc
+//     15'bxxxxxxxx0110111, 3'b001,     //lui
+//     15'bxxxxxxxx1101111, 3'b010,     //jal
+//     15'b000xxxxx1100111, 3'b011,     //jalr
+//     15'b010xxxxx0010011, 3'b100,     ///sltiu -> x[rd] = (x[rs1] < sext(imm))?1:0
+//     15'b000xxxxx0010011, 3'b000      //addi
+//   });
 
 
 endmodule

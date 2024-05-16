@@ -5,7 +5,7 @@
 static int is_batch_mode = false;
 void isa_reg_display();
 #define NR_CMD ARRLEN(cmd_table)
-
+void init_regex();
 void init_wp_pool();
 void npc_cpu_exec(uint64_t n);
 
@@ -42,19 +42,34 @@ static int cmd_info(char *args){
   if (*ar == 'r')
   { isa_reg_display();}
 
-  //else if (*ar == 'w')
-  //{  display_watchpoint();}
+  else if (*ar == 'w')
+  {  display_watchpoint();}
   
   return 0;
 }
 
 static int  cmd_p(char *args){
-  //printf("%s",args);
+  printf("%s\n",args);
   
   //char EXPR[1024] = strtog(NULL," ");
   bool success = true;
   word_t result = expr(args,&success);
-  printf("result is %u\n",result);
+  printf("result is %p\n",result);
+  return 0;
+}
+
+
+static int cmd_w(char *args){
+  bool success = true;
+  word_t result = expr(args,&success);
+  set_WP(args,result);
+  return 0;
+  
+}
+
+static int cmd_d(char *args){
+  int num = atoi(strtok(args," "));
+  delete_point(num);
   return 0;
 }
 
@@ -69,7 +84,10 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "si", "execute N commands and suspend, default N = 1", cmd_si},
   { "info", "r is print the status of  monitor,w is print watchpoint's information",cmd_info},
-  { "p", "calculate the value of EXPR ", cmd_p}
+  { "p", "calculate the value of EXPR ", cmd_p},
+  { "w", "build the watchpoint and supervise this expression's value",cmd_w},
+  { "d", "delate a watchpoint",cmd_d},
+
 
 
 };
@@ -136,8 +154,8 @@ void sdb_mainloop(){
 
 void init_sdb() {
 //   /* Compile the regular expressions. */
-//   init_regex();
+   init_regex();
 
 //   /* Initialize the watchpoint pool. */
-//   init_wp_pool();
+   init_wp_pool();
 }

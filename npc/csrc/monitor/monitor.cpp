@@ -3,17 +3,21 @@
 #include <memory/vaddr.h>
 #include <getopt.h>
 #include <debug.h>
+#include <utils.h>
 
 
 void init_mem();
 void init_sdb();
 void sdb_set_batch_model();
 void restart();
+extern "C" void init_disasm(const char *triple);
+
 char *img_file = NULL;
-static char *log_file = NULL;
-static char *diff_so_file = NULL;
+static char *log_file;
+static char *diff_so_file; 
 static int difftest_port = 1234;
 
+void init_difftest(char *ref_so_file, long img_size, int port);
 /*
 static const uint32_t img [] = {
   0x00000413,  // auipc t0,0
@@ -26,20 +30,22 @@ static const uint32_t img [] = {
   //0xdeadbeef,  // some data
 };
 */
-
 static const uint32_t img [] = {
  	//0b00000000110000000000001011101111, //jal   x5 12         0x80000000
   //0b00000000000000001000000001100111,
   //0b00000000000000000000010100010011,
 	//0b00000000000000000001001000110111, //lui   x4 1          0x80000004
-	//0b00000000000000000000001010010111, //auipc x3 1          0x80000008
-	0b00000000010100000000000010010011, //addi  x1 x0 5       0x8000000c
-	0b00000000010100000000000010010011, //addi  x1 x0 5       0x80000010
+	0b00000000000000000000001010010111, //auipc x3 1          0x80000008
+	//0b01111111111100000000000010010011, //addi  x1 x0 2047    0x8000000c
+	0b00000000001100000000000010010011, //addi  x1 x0 5       0x80000010
+  0b00000011100000001011010110010011, //sltiu 
 	0b00000000000100000000000100010011, //addi  x2 x0 1       0x80000014
 	0b00000000001000000000000100010011, //addi  x2 x0 2       0x80000018
-	//0b00000000000001010000010100010011, //addi x10 x10 0      0x8000001c mv a0,a0;  
-  0b00000000000100000000000001110011   
+	0b00000000000001010000010100010011, //addi x10 x10 0      0x8000001c mv a0,a0;  
+  0b00000000000100000000000001110011
 };
+
+
 
 
 static int parse_args(int argc, char *argv[]) {
@@ -110,7 +116,10 @@ void init_monitor(int argc, char *argv[]){
   long img_size = load_img();
 
   restart();
-
-
+  init_sdb();
+  //init_disasm( "riscv32" "-pc-linux-gnu" );
+  IFDEF(CONFIG_ITRACE,init_disasm("riscv32-pc-linux-gnu"));
+  IFDEF(CONFIG_DIFF_NEMU,init_difftest(diff_so_file,img_size,difftest_port));
+  
   welcome();
 }

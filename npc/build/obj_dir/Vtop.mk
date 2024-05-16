@@ -38,21 +38,34 @@ VM_USER_CFLAGS = \
 	-I/home/white/ysyx-workbench/npc/include \
 	-I/home/white/ysyx-workbench/npc/include/memory \
 	-DTOP_NAME="Vtop" \
+	-I/usr/lib/llvm-14/include \
+	-std=c++14 \
+	-fno-exceptions \
+	-D_GNU_SOURCE \
+	-D__STDC_CONSTANT_MACROS \
+	-D__STDC_FORMAT_MACROS \
+	-D__STDC_LIMIT_MACROS \
+	-fPIE \
 
 # User LDLIBS (from -LDFLAGS on Verilator command line)
 VM_USER_LDLIBS = \
 	-lreadline \
+	-lLLVM-14 \
 
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
 	cpu-exe \
+	dut \
 	init \
 	paddr \
 	vaddr \
 	monitor \
 	expr \
 	sdb \
+	watchpoint \
 	npc-main \
+	disasm \
+	itrace \
 	logo \
 	reg \
 	state \
@@ -62,6 +75,7 @@ VM_USER_CLASSES = \
 VM_USER_DIR = \
 	/home/white/ysyx-workbench/npc/csrc \
 	/home/white/ysyx-workbench/npc/csrc/cpu \
+	/home/white/ysyx-workbench/npc/csrc/cpu/difftest \
 	/home/white/ysyx-workbench/npc/csrc/memory \
 	/home/white/ysyx-workbench/npc/csrc/monitor \
 	/home/white/ysyx-workbench/npc/csrc/monitor/sdb \
@@ -79,6 +93,8 @@ VPATH += $(VM_USER_DIR)
 
 cpu-exe.o: /home/white/ysyx-workbench/npc/csrc/cpu/cpu-exe.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+dut.o: /home/white/ysyx-workbench/npc/csrc/cpu/difftest/dut.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 init.o: /home/white/ysyx-workbench/npc/csrc/cpu/init.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 paddr.o: /home/white/ysyx-workbench/npc/csrc/memory/paddr.cpp
@@ -91,7 +107,13 @@ expr.o: /home/white/ysyx-workbench/npc/csrc/monitor/sdb/expr.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 sdb.o: /home/white/ysyx-workbench/npc/csrc/monitor/sdb/sdb.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+watchpoint.o: /home/white/ysyx-workbench/npc/csrc/monitor/sdb/watchpoint.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 npc-main.o: /home/white/ysyx-workbench/npc/csrc/npc-main.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+disasm.o: /home/white/ysyx-workbench/npc/csrc/utils/disasm.cc
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+itrace.o: /home/white/ysyx-workbench/npc/csrc/utils/itrace.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 logo.o: /home/white/ysyx-workbench/npc/csrc/utils/logo.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<

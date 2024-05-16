@@ -75,10 +75,11 @@ uint64_t get_time();
 
 
 #endif
-void trace_inst(word_t pc, uint32_t inst); //初始化trace 
+//void trace_inst(word_t pc, uint32_t inst); //初始化trace 
 void display_inst();                     
 void print_addread(paddr_t addr, int len);
-
+void trace_inst();
 void print_addwrite(paddr_t addr, int len,word_t data);
 void display_call_func(word_t pc,word_t func_addr);
 void display_ret_func(word_t pc);
+void  disassemble(char *str,int size,uint64_t pc,uint8_t *code, int nbyte);

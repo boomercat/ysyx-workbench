@@ -1,4 +1,5 @@
 module IDU(
+    input clk,
     input [31:0] instruction,
     output reg [1:0] Ext_type,
     output reg  ALU_src,
@@ -6,7 +7,7 @@ module IDU(
     output reg [1:0] PC_src,
     output reg [4:0] rd_add,
     output reg [4:0] rs1_add,
-    output reg [1:0] alu_ctrl
+    output reg [2:0] alu_ctrl
     //output reg [2:0] funct3
     // 还可以根据需要输出更多的控制信号
 );
@@ -24,7 +25,7 @@ always @(*) begin
     end
 end
 //auipc指令时ALUsrc为pc+imm
-assign ALU_src  = ( opcode == 7'b0010111|| opcode == 7'b0010011) ? 1 : 0;
+assign ALU_src  = ( opcode == 7'b0010111) ? 1 : 0;
 //ext_type
 Extnum_type ext_num_type(.opcode(opcode),
                     .Ext_type(Ext_type));
@@ -33,7 +34,8 @@ Reg_Write_num reg_num_type(.opcode(opcode),
                     .RegWrite(RegWrite));
 
 //alu_ctrl_num
-alu_ctrl_num ctrl_num_type(.opcode(opcode),
+alu_ctrl_num ctrl_num_type(.clk(clk),
+                    .instruction(instruction),
                     .alu_ctrl(alu_ctrl));
 
 //PC_src_num

@@ -68,3 +68,8 @@ u_int64_t get_time();
   } while (0)
 
 #endif
+
+void trace_inst(uint32_t pc,uint32_t inst);
+void display_inst();
+void print_addread(uint32_t addr, int len);
+void print_addwrite(uint32_t addr, int len,uint32_t data);

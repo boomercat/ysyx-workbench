@@ -12,7 +12,11 @@
 #include <debug.h>
 #include "v_sim.h"
 #include "macro.h"
-
+// #define CONFIG_ITRACE 1
+#define CONFIG_ISA_riscv 1
+// #define CONFIG_NPC_WATCHPOINT 1
+// #define CONFIG_NPC_TRACE 1
+// #define CONFIG_DIFF_NEMU 0
 #define FMT_WORD "0x%08x"
 #define FMT_PADDR "0x%08x"
 typedef uint32_t word_t;

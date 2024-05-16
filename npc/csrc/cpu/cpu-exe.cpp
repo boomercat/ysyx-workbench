@@ -4,27 +4,29 @@
 #include <reg.h>
 #include <memory/paddr.h>
 #include <memory/vaddr.h>
-
+#include <common.h>
 
 #define R(i) gpr(i)
+
+void disassemble(char *str,int size,uint64_t pc,uint8_t *code, int nbyte);
 
 CPU_state npc_cpu = {};
 uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 vaddr_t pre_pc = 0;
-
+void scan_wp();
 Vtop *top;
 VerilatedVcdC* tfp;
-
+void init_disasm(const char *triple);
 void isa_reg_display();
 void npc_reg_update();
+void difftest_step(vaddr_t pc, vaddr_t npc_pc);
 uint64_t sim_time = 0;
 static int istrap = 0;
 static int isinv = 0;
 char logbuf[128];
 uint32_t inst;
 vaddr_t pc;
-
 
 int get_inst(long long addr) {
   inst = vaddr_read(addr, 4);
@@ -62,14 +64,14 @@ static void npc_isa_exec_once(){
         top->eval();
         tfp->dump(sim_time);
         sim_time++;
-        //top->eval();
-        //tfp->dump(contextp->time());
-        //contextp->timeInc(1);
+
 }
-  npc_reg_update();
-  printf("top->next_pc is %p\n",top->next_pc); 
-  printf("top->next_pc'ss instruction is %p\n\n\n",get_inst(top->next_pc));
+
+  IFDEF(CONFIG_ITRACE,trace_inst(top->pc,top->instruction));
+  IFDEF(CONFIG_NPC_WATCHPOINT){scan_wp();}
   top->pc = top->next_pc;
+  npc_reg_update();
+
 
   if(istrap){
     NPCTRAP(npc_cpu.pc, R(10));
@@ -82,16 +84,17 @@ static void npc_isa_exec_once(){
 
 static void npc_exec_once(){
     pre_pc = npc_cpu.pc;
-    printf("the npc_cpu.pc is %p\n",pre_pc);
     npc_isa_exec_once();
     npc_cpu.pc = top->pc;
+    printf("npc_cpu_pc is %p\n\n",npc_cpu.pc);
+
 }
 
 
 static void npc_execute(uint64_t n){
-    printf("exe one\n");
     for(;n > 0; n--){
         npc_exec_once();
+        IFDEF(CONFIG_DIFF_NEMU,difftest_step(pre_pc,npc_cpu.pc);)
         g_nr_guest_inst++;
         if(npc_state.state != NPC_RUNNING) break;
     }
@@ -109,6 +112,7 @@ static void statistic() {
 }
 
 void assert_fail_msg() {
+  IFDEF(CONFIG_ITRACE,display_inst());
   isa_reg_display();
   statistic();
 }
@@ -117,7 +121,7 @@ void npc_cpu_exec(uint64_t n){
     switch (npc_state.state)
     {
     case NPC_END:case NPC_ABORT:
-        printf("program finished,and restart the program agai \n");
+        IFDEF(CONFIG_ITRACE,display_inst());
         return ;
     default: npc_state.state = NPC_RUNNING;
     }
@@ -137,6 +141,8 @@ void npc_cpu_exec(uint64_t n){
         npc_state.state = NPC_STOP;
         break;
      case NPC_END: case NPC_ABORT:
+      printf("this is finall test\n");
+      IFDEF(CONFIG_ITRACE,display_inst());
       Log("npc: %s at pc = " FMT_WORD,
           (npc_state.state == NPC_ABORT ? ANSI_FMT("ABORT", ANSI_FG_RED) :
            (npc_state.halt_ret == 0 ? ANSI_FMT("HIT GOOD TRAP", ANSI_FG_GREEN) :

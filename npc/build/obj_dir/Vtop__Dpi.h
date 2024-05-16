@@ -16,7 +16,7 @@ extern "C" {
 
 
     // DPI IMPORTS
-    // DPI import at /home/white/ysyx-workbench/npc/vsrc/IDU.v:20:30
+    // DPI import at /home/white/ysyx-workbench/npc/vsrc/IDU.v:21:30
     extern void set_npctrap(int i);
 
 #ifdef __cplusplus

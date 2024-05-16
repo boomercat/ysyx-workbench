@@ -1,7 +1,7 @@
 #include <common.h>
-#include <device/map.h>
-#include <utils.h>
-void  disassemble(char *str,int size,uint64_t pc,uint8_t *code, int nbyte);
+//#include <device/map.h>
+
+extern "C" void disassemble(char *str,int size,uint64_t pc,uint8_t *code, int nbyte);
 
 #define MAX_INST 15
 typedef struct {
@@ -18,6 +18,7 @@ void trace_inst(word_t pc, uint32_t inst){
     iringbuf[p_curr].pc = pc;
     iringbuf[p_curr].inst = inst;
     p_curr = (p_curr + 1) % MAX_INST;
+    printf("trace_inst successful\n");
 }
 
 void display_inst(){
@@ -30,7 +31,7 @@ void display_inst(){
         p += sprintf(buf, "%s" FMT_WORD ":  %08x\t",
          (i + 1) % MAX_INST == end ? "-->" : "   ", 
         iringbuf[i].pc, iringbuf[i].inst); 
-        
+        printf("p is %s\n",p); 
         disassemble(p,buf+sizeof(buf)-p,iringbuf[i].pc,(uint8_t *)&iringbuf[i].inst,4);
 
         puts(buf);

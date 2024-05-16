@@ -18,9 +18,10 @@ wire [31:0] ext_imm;
 wire [1:0]	Ext_type;
 wire ALU_src;
 wire [31:0] out_data1;
-wire [1:0] alu_ctrl;
+wire [2:0] alu_ctrl;
 wire [1:0] PC_src;
 wire [1:0] RegWrite;
+
 assign  opcode = instruction[6:0];
 
 //更新pc的值
@@ -34,6 +35,7 @@ addpc add_pc(
 );
 
 IDU idu(
+	.clk(clk),
 	.instruction(instruction),
 	.Ext_type(Ext_type),
 	.ALU_src(ALU_src),
@@ -50,6 +52,7 @@ RegisterFile #(5, 32) reg_file (
     .wdata(rd_data),
     .waddr(rd_add),
     .wen(wen),
+	.opcode(opcode),
     .Addr1(rs1_add), // 使用rs1_addr作为读地址
     .RData1(rs1_data) // 读取的数据存储在rs1_data
 );
