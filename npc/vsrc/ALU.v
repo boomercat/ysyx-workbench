@@ -13,7 +13,7 @@ MuxKeyWithDefault #(5, 3, 32) i0 (alu_result, alu_ctrl, 32'b0, {
     3'b001, imm,
     3'b010, src1 + imm,
     3'b011, (src1 + imm)& ~1 ,
-    3'b100, (src1 < imm) ? {{31'b0},1'b1} : 32'b0
+    3'b100, (src1 < imm) ? 32'h1 : 32'h0
   });
 // always @(posedge clk ) begin
 //   case (alu_ctrl)

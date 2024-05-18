@@ -15,9 +15,10 @@ reg [DATA_WIDTH-1:0] rf [2**ADDR_WIDTH-1:0]; //寄存器文件数组
 always @(posedge clk) begin
   if (wen && waddr != 0)  rf[waddr] <= wdata;
 end
-
-
   //read operation and 0 register
 assign RData1 = (Addr1==0) ? 0 : rf[Addr1];
+
+
+
 
 endmodule
