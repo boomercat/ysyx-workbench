@@ -2,7 +2,6 @@ module top(
 	input clk,
 	input rst,
 	input wen,
-	input [31:0] instruction,
 	input [31:0] pc,
 	output [31:0] rd_data,
 	output [31:0] next_pc,
@@ -18,9 +17,15 @@ wire [31:0] ext_imm;
 wire [1:0]	Ext_type;
 wire ALU_src;
 wire [31:0] out_data1;
-wire [2:0] alu_ctrl;
+wire [3:0] alu_ctrl;
 wire [1:0] PC_src;
 wire [1:0] RegWrite;
+wire vaild;
+wire [31:0] instruction;
+wire [31:0] memory_out_data;
+wire valid;
+pc_transfer_inst inst(.pc(pc),.instruction(instruction));
+
 
 assign  opcode = instruction[6:0];
 
@@ -43,7 +48,8 @@ IDU idu(
 	.PC_src(PC_src),
 	.rs1_add(rs1_add),
 	.rd_add(rd_add),
-	.alu_ctrl(alu_ctrl)
+	.alu_ctrl(alu_ctrl),
+	.memory_valid(valid)
 );
 //读取src1 寄存器中的地址，为ALU加法做准备
 
@@ -79,11 +85,17 @@ ALU alu(
 );
 
 //jal和jalr都为01，因为x[rd] =pc+4,auipc为 10，x[rd]=pc+sext(imm),lui为11 x[rd] = sext(imm << 12)
-MuxKeyWithDefault #(3,2,32) Write_rd_data (rd_data,RegWrite,32'b0,{
+MuxKeyWithDefault #(4,2,32) Write_rd_data (rd_data,RegWrite,32'b0,{
 	2'b01, pc+32'h4,
 	2'b10, alu_result,
-	2'b11, ext_imm
+	2'b11, ext_imm,
+	2'b00, memory_out_data
 });
 
+Data_memory memory_1(
+	.instruction(instruction),
+	.addr(alu_result),
+	.valid(valid),
+	.mout_data(memory_out_data));
 
 endmodule

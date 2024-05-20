@@ -22,9 +22,10 @@ __attribute__((noinline))
 void invalid_inst(vaddr_t thispc) {
   uint32_t temp[2];
   vaddr_t pc = thispc;
-  temp[0] = get_inst(pc);
-  temp[1] = get_inst(pc + 4);
-
+  // temp[0] = get_inst(pc);
+  // temp[1] = get_inst(pc + 4);
+     temp[0] = pmem_read(pc);
+     temp[1] = pmem_read(pc+4);
   uint8_t *p = (uint8_t *)temp;
   printf("invalid opcode(PC = " FMT_WORD "):\n"
       "\t%02x %02x %02x %02x %02x %02x %02x %02x ...\n"

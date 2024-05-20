@@ -28,10 +28,10 @@ char logbuf[128];
 uint32_t inst;
 vaddr_t pc;
 
-int get_inst(long long addr) {
-  inst = vaddr_read(addr, 4);
-  return inst;
-}
+// int get_inst(long long addr) {
+//   inst = vaddr_read(addr, 4);
+//   return inst;
+// }
 word_t read_mem(vaddr_t addr, int len){
     return vaddr_read(addr,len);
 }
@@ -57,8 +57,9 @@ void set_npcinv(int i) {
 }
 
 static void npc_isa_exec_once(){    
-    top->instruction = get_inst(top->pc);
-    printf("top->instruction is %p\n",top->instruction);
+    //top->instruction = pmem_read(top->pc);
+    printf("top->instruction is %p\n",pmem_read(top->pc));
+    top->clk = 1;
     for (int i = 0; i < 2; ++i) {
         top->clk ^= 1;
         top->eval();
@@ -67,7 +68,7 @@ static void npc_isa_exec_once(){
 
 }
 
-  IFDEF(CONFIG_ITRACE,trace_inst(top->pc,top->instruction));
+  IFDEF(CONFIG_ITRACE,trace_inst(top->pc,pmem_read(top->pc)));
   IFDEF(CONFIG_NPC_WATCHPOINT){scan_wp();}
   top->pc = top->next_pc;
   npc_reg_update();

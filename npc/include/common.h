@@ -12,7 +12,7 @@
 #include <debug.h>
 #include "v_sim.h"
 #include "macro.h"
-// #define CONFIG_ITRACE 1
+ #define CONFIG_ITRACE 1
 #define CONFIG_ISA_riscv 1
 // #define CONFIG_NPC_WATCHPOINT 1
 // #define CONFIG_NPC_TRACE 1

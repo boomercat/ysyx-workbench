@@ -15,14 +15,5 @@ MuxKeyWithDefault #(3, 2, 32) i2 (next_pc, PC_src, 32'h80000000, {
     2'b10, alu_result
 });
 
-/*
-// 使用Reg模块来保存下一个PC值
-Reg #(32, 32'h80000000) pc_reg(   // 更新pc，假设复位值为32'h80000000
-    .clk(clk),
-    .rst(rst),
-    .din(pc_plus_4), // 应该使用pc + 4的结果
-    .dout(next_pc),
-    .wen(1'b1)
-);
-*/
+
 endmodule
