@@ -7,23 +7,27 @@ module top(
 	output [31:0] next_pc,
 	output [31:0] alu_result
 );
-
-wire [4:0] rs1_add;
-wire [4:0] rd_add;
 wire [6:0] opcode;
+wire [4:0] rd_add;
+wire [4:0] rs1_add;
 wire [31:0] rs1_data;
+wire [4:0] rs2_add;
+wire [31:0] rs2_data;
 //wire [31:0] alu_result;
 wire [31:0] ext_imm;
 wire [1:0]	Ext_type;
 wire ALU_src;
-wire [31:0] out_data1;
+wire [31:0] src1_data;
+wire [31:0] src2_data;
 wire [3:0] alu_ctrl;
 wire [1:0] PC_src;
 wire [1:0] RegWrite;
 wire vaild;
 wire [31:0] instruction;
 wire [31:0] memory_out_data;
-wire valid;
+wire rs2_valid;
+wire memory_valid;
+
 pc_transfer_inst inst(.pc(pc),.instruction(instruction));
 
 
@@ -49,7 +53,8 @@ IDU idu(
 	.rs1_add(rs1_add),
 	.rd_add(rd_add),
 	.alu_ctrl(alu_ctrl),
-	.memory_valid(valid)
+	.memory_valid(memory_valid),
+	.rs2_valid(rs2_valid)
 );
 //读取src1 寄存器中的地址，为ALU加法做准备
 
@@ -61,13 +66,9 @@ RegisterFile #(5, 32) reg_file (
 	.opcode(opcode),
     .Addr1(rs1_add), // 使用rs1_addr作为读地址
     .RData1(rs1_data) // 读取的数据存储在rs1_data
+    .Addr2(rs2_add),
+    .RData2(rs2_data)
 );
-
-
-MuxKeyWithDefault #(2,1,32) test_1 (out_data1,ALU_src,32'b0,{
-	1'b0, rs1_data,
-	1'b1, pc
-});
 
 Extend instance1(
     .Ext_type(Ext_type),
@@ -75,12 +76,20 @@ Extend instance1(
     .ext_imm(ext_imm)
 );
 
+MuxKeyWithDefault #(2,1,32) src1_data_num (src1_data,ALU_src,32'b0,{
+	1'b0, rs1_data,
+	1'b1, pc
+});
 
+MuxKeyWithDefault #(2,1,32) src2_data_num (src2_data,rs2_valid,32'b0,{
+	1'b0, ext_imm,
+	1'b1, rs2_data
+});
 
 ALU alu(
-	.src1(out_data1),
+	.src1(src1_data),
 	.alu_ctrl(alu_ctrl),
-	.imm(ext_imm),
+	.src2(src2_data),
 	.alu_result(alu_result)
 );
 

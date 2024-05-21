@@ -7,9 +7,10 @@ module IDU(
     output reg [1:0] PC_src,
     output reg [4:0] rd_add,
     output reg [4:0] rs1_add,
-    output reg [2:0] alu_ctrl,
+    output reg [3:0] alu_ctrl,
     //output memory_wen,
-    output reg memory_valid
+    output reg memory_valid,
+    output reg rs2_valid
     //output reg [2:0] funct3
     // 还可以根据需要输出更多的控制信号
 );
@@ -26,23 +27,20 @@ always @(*) begin
     end
 end
 
-
+wire slli_cond = (opcode == 7'b0010011) && (instruction[14:12] == 3'b001) && (instruction[31:26] == 6'b000000) && (instruction[25] != 0);
+wire srli_cond = (opcode == 7'b0010011) && (instruction[14:12] == 3'b101) && (instruction[31:26] == 6'b000000) && (instruction[25] != 0);
+wire srai_cond = (opcode == 7'b0010011) && (instruction[14:12] == 3'b101) && (instruction[31:26] == 6'b100000) && (instruction[25] != 0);
 //slli 判断shamt[5] == 0
 import "DPI-C" function void set_npcinv(int i);
-
 always @(*) begin
     // slli 指令 shamt[4]
-    wire slli_cond = (opcode == 7'b0010011) && (instruction[14:12] == 3'b001) && (instruction[31:26] == 6'b000000) && (instruction[25] != 0);
-    wire srli_cond = (opcode == 7'b0010011) && (instruction[14:12] == 3'b101) && (instruction[31:26] == 6'b000000) && (instruction[25] != 0);
-    wire srai_cond = (opcode == 7'b0010011) && (instruction[14:12] == 3'b101) && (instruction[31:26] == 6'b100000) && (instruction[25] != 0);
-
     if (slli_cond || srli_cond || srai_cond) begin
         set_npcinv(1);
     end
 end
 
-
-
+ //B类 I类 R类 需要rs2                
+assign rs2_valid = ((opcode == 7'b1100011)||(opcode == 7'b0100011) ||(opcode == 7'b0110011)) ? 1 : 0;
 
 
 //auipc指令时ALUsrc为pc+imm
