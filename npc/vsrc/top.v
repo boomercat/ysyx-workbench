@@ -60,12 +60,13 @@ IDU idu(
 
 RegisterFile #(5, 32) reg_file (
     .clk(clk),
+	.rs2_valid(rs2_valid),
     .wdata(rd_data),
     .waddr(rd_add),
     .wen(wen),
 	.opcode(opcode),
     .Addr1(rs1_add), // 使用rs1_addr作为读地址
-    .RData1(rs1_data) // 读取的数据存储在rs1_data
+    .RData1(rs1_data), // 读取的数据存储在rs1_data
     .Addr2(rs2_add),
     .RData2(rs2_data)
 );
@@ -104,7 +105,7 @@ MuxKeyWithDefault #(4,2,32) Write_rd_data (rd_data,RegWrite,32'b0,{
 Data_memory memory_1(
 	.instruction(instruction),
 	.addr(alu_result),
-	.valid(valid),
+	.write_data(rs2_data),
 	.mout_data(memory_out_data));
 
 endmodule

@@ -50,6 +50,20 @@ VL_INLINE_OPT void Vtop___024root____Vdpiimwrap_top__DOT__memory_1__DOT__pmem_re
     pmem_read__Vfuncrtn = pmem_read__Vfuncrtn__Vcvt;
 }
 
+extern "C" void pmem_write(int addr, int write_data, char wmask);
+
+VL_INLINE_OPT void Vtop___024root____Vdpiimwrap_top__DOT__memory_1__DOT__pmem_write_TOP(IData/*31:0*/ addr, IData/*31:0*/ write_data, CData/*7:0*/ wmask) {
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root____Vdpiimwrap_top__DOT__memory_1__DOT__pmem_write_TOP\n"); );
+    // Body
+    int addr__Vcvt;
+    for (size_t addr__Vidx = 0; addr__Vidx < 1; ++addr__Vidx) addr__Vcvt = addr;
+    int write_data__Vcvt;
+    for (size_t write_data__Vidx = 0; write_data__Vidx < 1; ++write_data__Vidx) write_data__Vcvt = write_data;
+    char wmask__Vcvt;
+    for (size_t wmask__Vidx = 0; wmask__Vidx < 1; ++wmask__Vidx) wmask__Vcvt = wmask;
+    pmem_write(addr__Vcvt, write_data__Vcvt, wmask__Vcvt);
+}
+
 #ifdef VL_DEBUG
 VL_ATTR_COLD void Vtop___024root___dump_triggers__ico(Vtop___024root* vlSelf);
 #endif  // VL_DEBUG
