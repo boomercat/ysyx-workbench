@@ -1,16 +1,16 @@
 module IDU(
     input clk,
     input [31:0] instruction,
-    output reg [1:0] Ext_type,
+    output reg [2:0] Ext_type,
     output reg  ALU_src,
     output reg [1:0] RegWrite,
     output reg [1:0] PC_src,
     output reg [4:0] rd_add,
     output reg [4:0] rs1_add,
-    output reg [3:0] alu_ctrl,
+    output reg [4:0] alu_ctrl,
+    output reg [4:0] rs2_add,
     //output memory_wen,
-    output reg memory_valid,
-    output reg rs2_valid
+    output reg memory_valid
     //output reg [2:0] funct3
     // 还可以根据需要输出更多的控制信号
 );
@@ -19,10 +19,11 @@ wire [6:0] opcode;
 assign  opcode = instruction[6:0];
 assign  rs1_add = instruction[19:15] ;
 assign  rd_add = instruction[11:7];
-//ebreak 中断机制
+assign rs2_add = instruction[24:20];
+// ebreak 中断机制
 import "DPI-C" function void set_npctrap(int i);
 always @(*) begin
-    if(opcode == 7'b1110011)begin
+    if(instruction == 32'b00000000000100000000000001110011)begin
     set_npctrap(1);
     end
 end
@@ -40,7 +41,6 @@ always @(*) begin
 end
 
  //B类 I类 R类 需要rs2                
-assign rs2_valid = ((opcode == 7'b1100011)||(opcode == 7'b0100011) ||(opcode == 7'b0110011)) ? 1 : 0;
 
 
 //auipc指令时ALUsrc为pc+imm

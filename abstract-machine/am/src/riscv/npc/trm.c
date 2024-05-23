@@ -22,7 +22,7 @@ void halt(int code) {
   //printf("this is halt's code%d\n",code);
   //set_npctrap(code);
   npc_trap(code);
-  printf("this is npc_trap");
+  printf("this is npc_trap\n");
   while (1);
 }
 

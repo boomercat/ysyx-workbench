@@ -1,6 +1,5 @@
 module RegisterFile #(ADDR_WIDTH = 5, DATA_WIDTH = 32) (
   input clk,
-  input rs2_valid,
   input [6:0] opcode,
   input [DATA_WIDTH-1:0] wdata,//write data
   input [ADDR_WIDTH-1:0] waddr,//write address
@@ -18,7 +17,7 @@ end
 
   //read operation and 0 register
 assign RData1 = (Addr1==0) ? 0 : rf[Addr1];
-assign RData2 = ((Addr2==0)||(rs2_valid==0)) ? 0 : rf[Addr2];
+assign RData2 = (Addr2==0) ? 0 : rf[Addr2];
 
 
 

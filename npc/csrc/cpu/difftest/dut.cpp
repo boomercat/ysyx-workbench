@@ -18,19 +18,6 @@ static bool is_skip_ref = true;
 static int skip_dut_nr_inst = 0;
 
 
-// bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) { 
-//   int reg_num = ARRLEN(ref_r->gpr);
-//   for (int i = 0; i < reg_num; i++) {
-//     if (ref_r->gpr[i] != npc_cpu.gpr[i]) {
-//       return false;
-//     }
-//   }
-//   if (ref_r->pc != npc_cpu.pc) {
-//     return false;
-//   }
-//   return true;
-// }
-
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
   int i = 0;
   if (ref_r->pc != pc) printf("can not catch up with ref.pc = " FMT_WORD " at pc = " FMT_WORD "\n", ref_r->pc, pc);

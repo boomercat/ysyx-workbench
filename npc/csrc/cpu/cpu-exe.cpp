@@ -27,11 +27,12 @@ static int isinv = 0;
 char logbuf[128];
 uint32_t inst;
 vaddr_t pc;
-
 // int get_inst(long long addr) {
-//   inst = vaddr_read(addr, 4);
+//   inst = vaddr_read(addr, 3);
 //   return inst;
 // }
+
+
 word_t read_mem(vaddr_t addr, int len){
     return vaddr_read(addr,len);
 }
@@ -72,7 +73,7 @@ static void npc_isa_exec_once(){
   IFDEF(CONFIG_NPC_WATCHPOINT){scan_wp();}
   top->pc = top->next_pc;
   npc_reg_update();
-
+  printf("R(10) is %d\n",R(10));
 
   if(istrap){
     NPCTRAP(npc_cpu.pc, R(10));

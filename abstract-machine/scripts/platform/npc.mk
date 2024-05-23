@@ -13,9 +13,10 @@ LDFLAGS   += -T $(AM_HOME)/scripts/linker.ld \
 						 --defsym=_pmem_start=0x80000000 --defsym=_entry_offset=0x0
 LDFLAGS   += --gc-sections -e _start
 CFLAGS += -DMAINARGS=\"$(mainargs)\"
-#NPCFLAGS += -l $(shell dirname $(IMAGE).bin)/npc_log.txt
-.PHONY: $(AM_HOME)/am/src/riscv/npc/trm.c
 
+NPCFLAGS += -l $(shell dirname $(IMAGE).bin)/npc_log.txt   --diff=$(NEMU_HOME)/build/riscv32-nemu-interpreter-so
+.PHONY: $(AM_HOME)/am/src/riscv/npc/trm.c
+#--diff=$(NEMU_HOME)/build/riscv32-nemu-interpreter-so
 image: $(IMAGE).elf
 	@$(OBJDUMP) -d $(IMAGE).elf > $(IMAGE).txt
 	@echo + OBJCOPY "->" $(IMAGE_REL).bin

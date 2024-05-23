@@ -31,7 +31,7 @@ INCFLAGS = $(addprefix -I, $(INC_PATH))
 CFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\"" $(shell llvm-config --cxxflags) -fPIE
 LDFLAGS +=  -lreadline $(LIBS)
 
-override ARGS ?= --log=$(BUILD_DIR)/npc-log.txt $(ARGS_DIFF)
+override ARGS ?= --log=$(BUILD_DIR)/npc-log.txt $(ARGS_DIFF) 
 
 IMG ?=
 NPC_EXEC := $(BIN) $(ARGS)  $(IMG)

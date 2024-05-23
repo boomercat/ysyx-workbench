@@ -6,7 +6,7 @@
 
 static uint8_t pmem[CONFIG_MSIZE] = {};
 
-uint8_t* guest_to_host(paddr_t paddr) { return pmem + paddr - CONFIG_MBASE; }
+uint8_t* guest_to_host(paddr_t paddr) { return pmem + paddr - RESET_VECTOR; }
 paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 
 void init_mem() {
@@ -16,42 +16,44 @@ void init_mem() {
     p[i] = rand();
   }
 }
+// void init_mem(size_t size){ 
+// 	pmem = (uint8_t *)malloc(size * sizeof(uint8_t));
+// 	memcpy(pmem , img , sizeof(img));
+// 	if(pmem == NULL){exit(0);}
+// 	Log("npc physical memory area [%#x, %#lx]",RESET_VECTOR, RESET_VECTOR + size * sizeof(uint8_t));
+// }
 
 static void out_of_bound(paddr_t addr) {
   panic("address = " FMT_PADDR " is out of bound of pmem [" FMT_PADDR ", " FMT_PADDR "] at pc = " FMT_WORD "\n",
       addr, PMEM_LEFT, PMEM_RIGHT, npc_cpu.pc);
 }
+extern "C" void pmem_write(int waddr, int wdata, char wmask) {
+    if (in_pmem(waddr)) {
+        paddr_t adapt_addr = waddr & ~0x3u;
+        uint8_t *vaddr = guest_to_host(adapt_addr);
+        printf("Writing to address: 0x%x, data: 0x%x, wmask: 0x%x\n", waddr, wdata, wmask);
+        for (int i = 0; i < 4; i++) {
+            if (wmask & (1 << i)) {
+                vaddr[(waddr & 0x3) + i] = (wdata >> (i * 8)) & 0xFF;
+            }
+        }
+    } else {
+        printf("Write address invalid: 0x%x\n", waddr);
+        out_of_bound(waddr);
+    }
+}
 
-
-extern "C" uint32_t  pmem_read(uint32_t addr) {
-  if (in_pmem(addr)) {
-    // paddr_t adapt_addr = addr & ~0x3u;
-    // uint8_t *ret = guest_to_host(addr);
-    // uint32_t data = 0;
-    // for (int i = 0; i < 4; i++) {
-    //     data |= ret[i] << (i * 8);
-    // }
-    // return data;
-    uint32_t *inst_paddr = (uint32_t *) guest_to_host(addr);
-    return *inst_paddr;
-  }
-   printf("address invalid!\n");
+extern "C" uint32_t pmem_read(uint32_t addr) {
+    if (in_pmem(addr)) {
+        uint32_t data = host_read(guest_to_host(addr), 4);
+        printf("Reading from address: 0x%x, data: 0x%x\n", addr, data);
+        return data;
+    }
+    printf("Read address invalid: 0x%x\n", addr);
     out_of_bound(addr);
     return 0;
 }
 
-extern "C" void pmem_write(int waddr, int wdata, char wmask) {
-    //host_write(guest_to_host(addr), len, data);
-  paddr_t adapt_addr = waddr & ~0x3u;
-  uint8_t *vaddr = guest_to_host(adapt_addr);
-
-  for(int i = 0; i < 4; i++){
-    if (wmask & (1 << i)) {
-      vaddr[i] = (wdata >> (i * 8)) & 0xFF;
-    }    
-  }
-
-}
 
 word_t paddr_read(paddr_t addr, int len) {
   if (in_pmem(addr)) {

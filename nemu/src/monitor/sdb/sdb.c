@@ -77,18 +77,18 @@ static int cmd_d(char *args){
 }
 
 
-static int cmd_x(char *args){  
-  int num_a = atoi(strtok(args," "));
-  printf("%d",num_a);
-  word_t addr = strtoul(strtok(NULL," "),NULL, 0); // 32位
-  //printf(" %x \n %d this is a test",addr,num_a);
-  for (int i = 0; i < num_a; i++)
-  {
-    printf("0x%x:%08x\n",addr,paddr_read(addr,4));
-    addr += 4;
-  }
-  return 0; 
-}
+// static int cmd_x(char *args){  
+//   int num_a = atoi(strtok(args," "));
+//   printf("%d",num_a);
+//   word_t addr = strtoul(strtok(NULL," "),NULL, 0); // 32位
+//   //printf(" %x \n %d this is a test",addr,num_a);
+//   for (int i = 0; i < num_a; i++)
+//   {
+//     printf("0x%x:%08x\n",addr,paddr_read(addr,4));
+//     addr += 4;
+//   }
+//   return 0; 
+// }
 /*
   this is -------------------------------------
   if (args == NULL) {
@@ -105,7 +105,7 @@ static int cmd_x(char *args){
   
   }*/
 
-/*
+
 static int cmd_x(char *args){
   char *arg1 = strtok(NULL," ");
   char *arg2 = strtok(NULL," ");
@@ -115,7 +115,7 @@ static int cmd_x(char *args){
   for(int i =0;i < n;i++ ,addr+=4,raddr+=4)
 	  printf("%#x    %02x\n",addr,*raddr);  
   return 0;
-}*/
+}
 
 static int  cmd_p(char *args){
   printf("%s",args);
