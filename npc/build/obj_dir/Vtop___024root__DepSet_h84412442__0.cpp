@@ -8,15 +8,17 @@
 #include "Vtop__Syms.h"
 #include "Vtop___024root.h"
 
-extern "C" unsigned int pmem_read(unsigned int raddr);
+extern "C" unsigned int pmem_read(unsigned int raddr, int len);
 
-VL_INLINE_OPT void Vtop___024root____Vdpiimwrap_top__DOT__inst__DOT__pmem_read_TOP(IData/*31:0*/ raddr, IData/*31:0*/ &pmem_read__Vfuncrtn) {
+VL_INLINE_OPT void Vtop___024root____Vdpiimwrap_top__DOT__inst__DOT__pmem_read_TOP(IData/*31:0*/ raddr, IData/*31:0*/ len, IData/*31:0*/ &pmem_read__Vfuncrtn) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root____Vdpiimwrap_top__DOT__inst__DOT__pmem_read_TOP\n"); );
     // Body
     unsigned int raddr__Vcvt;
     for (size_t raddr__Vidx = 0; raddr__Vidx < 1; ++raddr__Vidx) raddr__Vcvt = raddr;
+    int len__Vcvt;
+    for (size_t len__Vidx = 0; len__Vidx < 1; ++len__Vidx) len__Vcvt = len;
     unsigned int pmem_read__Vfuncrtn__Vcvt;
-    pmem_read__Vfuncrtn__Vcvt = pmem_read(raddr__Vcvt);
+    pmem_read__Vfuncrtn__Vcvt = pmem_read(raddr__Vcvt, len__Vcvt);
     pmem_read__Vfuncrtn = pmem_read__Vfuncrtn__Vcvt;
 }
 
@@ -40,28 +42,18 @@ VL_INLINE_OPT void Vtop___024root____Vdpiimwrap_top__DOT__idu__DOT__set_npcinv_T
     set_npcinv(i__Vcvt);
 }
 
-VL_INLINE_OPT void Vtop___024root____Vdpiimwrap_top__DOT__memory_1__DOT__pmem_read_TOP(IData/*31:0*/ addr, IData/*31:0*/ &pmem_read__Vfuncrtn) {
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root____Vdpiimwrap_top__DOT__memory_1__DOT__pmem_read_TOP\n"); );
-    // Body
-    unsigned int addr__Vcvt;
-    for (size_t addr__Vidx = 0; addr__Vidx < 1; ++addr__Vidx) addr__Vcvt = addr;
-    unsigned int pmem_read__Vfuncrtn__Vcvt;
-    pmem_read__Vfuncrtn__Vcvt = pmem_read(addr__Vcvt);
-    pmem_read__Vfuncrtn = pmem_read__Vfuncrtn__Vcvt;
-}
+extern "C" void pmem_write(int addr, int data, int len);
 
-extern "C" void pmem_write(int addr, int write_data, char wmask);
-
-VL_INLINE_OPT void Vtop___024root____Vdpiimwrap_top__DOT__memory_1__DOT__pmem_write_TOP(IData/*31:0*/ addr, IData/*31:0*/ write_data, CData/*7:0*/ wmask) {
+VL_INLINE_OPT void Vtop___024root____Vdpiimwrap_top__DOT__memory_1__DOT__pmem_write_TOP(IData/*31:0*/ addr, IData/*31:0*/ data, IData/*31:0*/ len) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root____Vdpiimwrap_top__DOT__memory_1__DOT__pmem_write_TOP\n"); );
     // Body
     int addr__Vcvt;
     for (size_t addr__Vidx = 0; addr__Vidx < 1; ++addr__Vidx) addr__Vcvt = addr;
-    int write_data__Vcvt;
-    for (size_t write_data__Vidx = 0; write_data__Vidx < 1; ++write_data__Vidx) write_data__Vcvt = write_data;
-    char wmask__Vcvt;
-    for (size_t wmask__Vidx = 0; wmask__Vidx < 1; ++wmask__Vidx) wmask__Vcvt = wmask;
-    pmem_write(addr__Vcvt, write_data__Vcvt, wmask__Vcvt);
+    int data__Vcvt;
+    for (size_t data__Vidx = 0; data__Vidx < 1; ++data__Vidx) data__Vcvt = data;
+    int len__Vcvt;
+    for (size_t len__Vidx = 0; len__Vidx < 1; ++len__Vidx) len__Vcvt = len;
+    pmem_write(addr__Vcvt, data__Vcvt, len__Vcvt);
 }
 
 #ifdef VL_DEBUG
@@ -92,7 +84,21 @@ void Vtop___024root___eval_triggers__act(Vtop___024root* vlSelf) {
     // Body
     vlSelf->__VactTriggered.at(0U) = ((IData)(vlSelf->clk) 
                                       & (~ (IData)(vlSelf->__Vtrigrprev__TOP__clk)));
+    vlSelf->__VactTriggered.at(1U) = (((IData)(vlSelf->top__DOT__memory_1__DOT__write_valid) 
+                                       != (IData)(vlSelf->__Vtrigrprev__TOP__top__DOT__memory_1__DOT__write_valid)) 
+                                      | ((IData)(vlSelf->top__DOT__memory_valid) 
+                                         != (IData)(vlSelf->__Vtrigrprev__TOP__top__DOT__memory_valid)));
+    vlSelf->__VactTriggered.at(2U) = ((IData)(vlSelf->clk) 
+                                      ^ (IData)(vlSelf->__Vtrigrprev__TOP__clk));
     vlSelf->__Vtrigrprev__TOP__clk = vlSelf->clk;
+    vlSelf->__Vtrigrprev__TOP__top__DOT__memory_1__DOT__write_valid 
+        = vlSelf->top__DOT__memory_1__DOT__write_valid;
+    vlSelf->__Vtrigrprev__TOP__top__DOT__memory_valid 
+        = vlSelf->top__DOT__memory_valid;
+    if (VL_UNLIKELY((1U & (~ (IData)(vlSelf->__VactDidInit))))) {
+        vlSelf->__VactDidInit = 1U;
+        vlSelf->__VactTriggered.at(1U) = 1U;
+    }
 #ifdef VL_DEBUG
     if (VL_UNLIKELY(vlSymsp->_vm_contextp__->debug())) {
         Vtop___024root___dump_triggers__act(vlSelf);

@@ -27,17 +27,17 @@ static int isinv = 0;
 char logbuf[128];
 uint32_t inst;
 vaddr_t pc;
-// int get_inst(long long addr) {
-//   inst = vaddr_read(addr, 3);
-//   return inst;
-// }
+int get_inst(long long addr) {
+  inst = vaddr_read(addr, 3);
+  return inst;
+}
 
 
-word_t read_mem(vaddr_t addr, int len){
+ word_t read_mem(vaddr_t addr, int len){
     return vaddr_read(addr,len);
 }
 
-void write_mem(vaddr_t addr,int len,word_t data){
+ void  write_mem(vaddr_t addr,int len,word_t data){
     vaddr_write(addr,len,data);
 }
 
@@ -59,7 +59,7 @@ void set_npcinv(int i) {
 
 static void npc_isa_exec_once(){    
     //top->instruction = pmem_read(top->pc);
-    printf("top->instruction is %p\n",pmem_read(top->pc));
+    printf("top->instruction is %p\n",pmem_read(top->pc,4));
     top->clk = 1;
     for (int i = 0; i < 2; ++i) {
         top->clk ^= 1;
@@ -68,11 +68,10 @@ static void npc_isa_exec_once(){
         sim_time++;
 
 }
-
-  IFDEF(CONFIG_ITRACE,trace_inst(top->pc,pmem_read(top->pc)));
+  npc_reg_update();
+  IFDEF(CONFIG_ITRACE,trace_inst(top->pc,pmem_read(top->pc,4)));
   IFDEF(CONFIG_NPC_WATCHPOINT){scan_wp();}
   top->pc = top->next_pc;
-  npc_reg_update();
   printf("R(10) is %d\n",R(10));
 
   if(istrap){

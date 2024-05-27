@@ -75,28 +75,30 @@ static int cmd_d(char *args){
   return 0;
 }
 
-// static int cmd_x(char *args){  
-//   int num_a = atoi(strtok(args," "));
-//   printf("%d",num_a);
-//   word_t addr = strtoul(strtok(NULL," "),NULL, 0); // 32位
-//   for (int i = 0; i < num_a; i++)
-//   {
-//     printf("0x%x:%08x\n",addr,paddr_read(addr,4));
-//     addr += 4;
-//   }
-//   return 0; 
-// }
+static int cmd_x(char *args){  
+  int num_a = atoi(strtok(args," "));
+  printf("%d",num_a);
+  word_t addr = strtoul(strtok(NULL," "),NULL, 0); // 32位
+  printf("0x%x:%08x\n",addr,pmem_read(addr,num_a));
 
-static int cmd_x(char *args){
-  char *arg1 = strtok(NULL," ");
-  char *arg2 = strtok(NULL," ");
-  int n = strtol(arg1,NULL,10);
-  int addr = strtol(arg2,NULL,16);
-  uint8_t *raddr = guest_to_host(addr);
-  for(int i =0;i < n;i++ ,addr+=1,raddr++)
-	  printf("%#x    %02x\n",addr,*raddr);  
-  return 0;
+  // for (int i = 0; i < num_a; i++)
+  // {
+  //   printf("0x%x:%08x\n",addr,pmem_read(addr,num));
+  //   addr += 4;
+  // }
+   return 0; 
 }
+
+// static int cmd_x(char *args){
+//   char *arg1 = strtok(NULL," ");
+//   char *arg2 = strtok(NULL," ");
+//   int n = strtol(arg1,NULL,10);
+//   int addr = strtol(arg2,NULL,16);
+//   uint8_t *raddr = guest_to_host(addr);
+//   for(int i =0;i < n;i++ ,addr+=1,raddr++)
+// 	  printf("%#x    %02x\n",addr,*raddr);  
+//   return 0;
+// }
 static struct {
   const char *name;
   const char *description;

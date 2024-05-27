@@ -19,15 +19,11 @@ void isa_reg_display() {
 void npc_reg_update(){
   for (int j = 0; j < ARRLEN(regs); j++)
   {
-    npc_cpu.gpr[j] = top->rootp->top__DOT__reg_file__DOT__rf[j];
+      npc_cpu.gpr[j] = top->rootp->top__DOT__reg_file__DOT__rf[j];
   }
 }
 
-void init_reg(){
-  for(int i = 0; i < ARRLEN(regs); i++){
-    npc_cpu.gpr[i] = 0;
-  }
-}
+
 word_t isa_reg_str2val(const char *s, bool *success) {
   s = s+1;
   int rg_num  = ARRLEN(regs);

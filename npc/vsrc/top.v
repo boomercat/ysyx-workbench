@@ -16,18 +16,17 @@ wire [31:0] rs2_data;
 //wire [31:0] alu_result;
 wire [31:0] ext_imm;
 wire [2:0]	Ext_type;
-wire ALU_src;
 wire [31:0] src1_data;
 wire [31:0] src2_data;
 wire [4:0] alu_ctrl;
-wire [1:0] PC_src;
-wire [1:0] RegWrite;
+wire [2:0] PC_src;
+wire [2:0] RegWrite;
 wire vaild;
 wire [31:0] instruction;
 wire [31:0] memory_out_data;
-wire rs2_valid;
 wire memory_valid;
-
+wire [9:0] opcode_plus;
+assign opcode_plus = {instruction[14:12],instruction[6:0]};
 pc_transfer_inst inst(.pc(pc),.instruction(instruction));
 
 
@@ -48,7 +47,6 @@ IDU idu(
 	.clk(clk),
 	.instruction(instruction),
 	.Ext_type(Ext_type),
-	.ALU_src(ALU_src),
 	.RegWrite(RegWrite),
 	.PC_src(PC_src),
 	.rs1_add(rs1_add),
@@ -77,36 +75,56 @@ Extend instance1(
     .ext_imm(ext_imm)
 );
 
-MuxKeyWithDefault #(2,1,32) src1_data_num (src1_data,ALU_src,32'b0,{
-	1'b0, rs1_data,
-	1'b1, pc
+//auipc指令时ALUsrc为pc+imm
+MuxKeyWithDefault #(9,7,32) src1_data_num (src1_data,opcode,32'b0,{
+	7'b0110111 , 32'b0   ,  //lui
+	7'b1101111 , pc     ,  //jal
+	7'b1100111, rs1_data,  //jalr
+	7'b0010111, pc		,  //auipc
+	7'b1100011, rs1_data,  //bne beq blt bge bltu bgeu
+	7'b0000011, rs1_data, // lb lh lw lbu lhu
+	7'b0100011, rs1_data, //sb sh sw
+	7'b0010011, rs1_data, // addi slti sltiu xori andi
+	7'b0110011, rs1_data //add sub sll slt sltu xor srl sra or and
 });
-assign rs2_valid = ((opcode == 7'b1100011) ||(opcode == 7'b0110011)) ? 1 : 0;
 
-MuxKeyWithDefault #(2,1,32) src2_data_num (src2_data,rs2_valid,32'b0,{
-	1'b0, ext_imm,
-	1'b1, rs2_data
+
+
+MuxKeyWithDefault #(9,7,32) src2_data_num (src2_data,opcode,32'b0,{
+	7'b0110111 , ext_imm ,  //lui
+	7'b0010111 , ext_imm   ,  //auipc
+	7'b1101111 , 32'h4 ,   //jal
+	7'b1100111 , 32'h4,   //jalr
+	7'b1100011 , rs2_data, //beq bne blt bge bltu bgeu
+	7'b0000011 , ext_imm,  // lb lh lw lbu lhu
+	7'b0100011 , ext_imm, // sb sh sw
+	7'b0010011 , ext_imm, // addi slti xori ori andi slli srli srai
+	7'b0110011 , rs2_data// add sub sll slt sltu xor srl sra or and
 });
 
 ALU alu(
+	.instruction(instruction),
 	.src1(src1_data),
 	.alu_ctrl(alu_ctrl),
 	.src2(src2_data),
 	.alu_result(alu_result)
 );
 
-//jal和jalr都为01，因为x[rd] =pc+4,auipc为 10，x[rd]=pc+sext(imm),lui为11 x[rd] = sext(imm << 12)
-MuxKeyWithDefault #(4,2,32) Write_rd_data (rd_data,RegWrite,32'b0,{
-	2'b01, pc+32'h4,
-	2'b10, alu_result,
-	2'b11, ext_imm,
-	2'b00, memory_out_data
-});
 
 Data_memory memory_1(
+	.clk(clk),
 	.instruction(instruction),
 	.addr(alu_result),
 	.write_data(rs2_data),
 	.mout_data(memory_out_data));
+
+//jal和jalr都为01，因为x[rd] =pc+4,auipc为 10，x[rd]=pc+sext(imm),lui为11 x[rd] = sext(imm << 12)
+MuxKeyWithDefault #(4,3,32) Write_rd_data (rd_data,RegWrite,32'b0,{
+	3'b001, pc+32'h4,
+	3'b010, alu_result,
+	3'b011, ext_imm,
+	3'b000, memory_out_data
+});
+
 
 endmodule
