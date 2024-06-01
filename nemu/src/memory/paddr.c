@@ -32,12 +32,12 @@ paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 
 static word_t pmem_read(paddr_t addr, int len) {
   word_t ret = host_read(guest_to_host(addr), len);
-  printf("NEMU Reading from address: 0x%x, data: 0x%x\n", addr, ret);
+  // printf("NEMU Reading from address: 0x%x, data: 0x%x\n", addr, ret);
   return ret;
 }
 
 static void pmem_write(paddr_t addr, int len, word_t data) {
-  printf("  NEMU  Writing to address: 0x%x, data: 0x%x, len: 0x%x\n\n", addr, data, len);
+  // printf("  NEMU  Writing to address: 0x%x, data: 0x%x, len: 0x%x\n\n", addr, data, len);
   host_write(guest_to_host(addr), len, data);
 
 }

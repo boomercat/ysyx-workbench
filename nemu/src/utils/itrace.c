@@ -20,6 +20,7 @@ void trace_inst(word_t pc, uint32_t inst){
     p_curr = (p_curr + 1) % MAX_INST;
 }
 
+#ifdef CONFIG_ITRACE
 void display_inst(){
     int end = p_curr;
     int i = p_curr;
@@ -39,6 +40,7 @@ void display_inst(){
     
     
     }
+#endif
 
 
 void print_addread(paddr_t addr, int len){

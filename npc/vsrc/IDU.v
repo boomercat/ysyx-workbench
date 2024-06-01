@@ -14,11 +14,10 @@ module IDU(
     // 还可以根据需要输出更多的控制信号
 );
 
-wire [6:0] opcode;
+wire  [6:0] opcode;
 assign  opcode = instruction[6:0];
-assign  rs1_add = (opcode != 7'b0110111 || opcode != 7'b0010111 || opcode != 7'b1101111) ? instruction[19:15]  : 0 ;
-assign  rd_add  = (opcode != 7'b1100011|| opcode != 7'b0100011 ) ? instruction[11:7] : 0;
-assign  rs2_add = (opcode == 7'b1100011|| opcode == 7'b0100011 || opcode == 7'b0110011) ? instruction[24:20] : 0;
+assign  rs1_add = (opcode != 7'b0110111 || opcode != 7'b0010111 || opcode != 7'b1101111) ? instruction[19:15]  : 5'b0 ;
+assign  rs2_add = (opcode == 7'b1100011|| opcode == 7'b0100011 || opcode == 7'b0110011) ? instruction[24:20] : 5'b0;
 // ebreak 中断机制
 import "DPI-C" function void set_npctrap(int i);
 always @(*) begin
@@ -36,6 +35,13 @@ always @(*) begin
     // slli 指令 shamt[4]
     if (slli_cond || srli_cond || srai_cond) begin
         set_npcinv(1);
+    end
+end
+always @(posedge clk or negedge clk) begin
+    if (opcode == 7'b1100011 || instruction[6:0] == 7'b0100011) begin
+        rd_add <= 5'b0;
+    end else begin
+        rd_add <= instruction[11:7];
     end
 end
 

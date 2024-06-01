@@ -63,14 +63,12 @@ extern "C" void pmem_write(int waddr, int wdata, int len) {
 
 
 extern "C" uint32_t pmem_read(uint32_t addr,int len) {
-
     if (in_pmem(addr)) {
         // uint32_t data = host_read(guest_to_host(addr), 4);
         // uint32_t *data = (uint32_t *) guest_to_host(addr);
         printf("Reading from address: 0x%x, data: 0x%x\n", addr, paddr_read(addr,len));
         // return *data;
         return host_read(guest_to_host(addr),len);
-
     }
     printf("Read address invalid: 0x%x\n", addr);
     out_of_bound(addr);

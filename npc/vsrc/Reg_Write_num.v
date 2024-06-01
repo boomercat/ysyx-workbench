@@ -14,9 +14,9 @@ parameter pc_plus4 = 3'b001,
     7'b0010011, 3'b010, //addi
     7'b0110111, 3'b011, //lui
     7'b1101111, 3'b001, //jal
-    7'b1100111, 3'b001,
+    7'b1100111, 3'b001,  //jalr
     7'b0000011, 3'b000,  //lb lh lw lbu lhu
-    7'b0110011, 3'b010   //add sub... 
-    
+    7'b0110011, 3'b010   //add sub.. 
+
   });
 endmodule

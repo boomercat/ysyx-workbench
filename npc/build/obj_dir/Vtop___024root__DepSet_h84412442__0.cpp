@@ -83,13 +83,15 @@ void Vtop___024root___eval_triggers__act(Vtop___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_triggers__act\n"); );
     // Body
     vlSelf->__VactTriggered.at(0U) = ((IData)(vlSelf->clk) 
+                                      ^ (IData)(vlSelf->__Vtrigrprev__TOP__clk));
+    vlSelf->__VactTriggered.at(1U) = ((IData)(vlSelf->clk) 
                                       & (~ (IData)(vlSelf->__Vtrigrprev__TOP__clk)));
-    vlSelf->__VactTriggered.at(1U) = (((IData)(vlSelf->top__DOT__memory_1__DOT__write_valid) 
-                                       != (IData)(vlSelf->__Vtrigrprev__TOP__top__DOT__memory_1__DOT__write_valid)) 
+    vlSelf->__VactTriggered.at(2U) = ((((IData)(vlSelf->clk) 
+                                        != (IData)(vlSelf->__Vtrigrprev__TOP__clk)) 
+                                       | ((IData)(vlSelf->top__DOT__memory_1__DOT__write_valid) 
+                                          != (IData)(vlSelf->__Vtrigrprev__TOP__top__DOT__memory_1__DOT__write_valid))) 
                                       | ((IData)(vlSelf->top__DOT__memory_valid) 
                                          != (IData)(vlSelf->__Vtrigrprev__TOP__top__DOT__memory_valid)));
-    vlSelf->__VactTriggered.at(2U) = ((IData)(vlSelf->clk) 
-                                      ^ (IData)(vlSelf->__Vtrigrprev__TOP__clk));
     vlSelf->__Vtrigrprev__TOP__clk = vlSelf->clk;
     vlSelf->__Vtrigrprev__TOP__top__DOT__memory_1__DOT__write_valid 
         = vlSelf->top__DOT__memory_1__DOT__write_valid;
@@ -97,7 +99,7 @@ void Vtop___024root___eval_triggers__act(Vtop___024root* vlSelf) {
         = vlSelf->top__DOT__memory_valid;
     if (VL_UNLIKELY((1U & (~ (IData)(vlSelf->__VactDidInit))))) {
         vlSelf->__VactDidInit = 1U;
-        vlSelf->__VactTriggered.at(1U) = 1U;
+        vlSelf->__VactTriggered.at(2U) = 1U;
     }
 #ifdef VL_DEBUG
     if (VL_UNLIKELY(vlSymsp->_vm_contextp__->debug())) {

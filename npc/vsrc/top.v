@@ -94,7 +94,7 @@ MuxKeyWithDefault #(9,7,32) src2_data_num (src2_data,opcode,32'b0,{
 	7'b0110111 , ext_imm ,  //lui
 	7'b0010111 , ext_imm   ,  //auipc
 	7'b1101111 , 32'h4 ,   //jal
-	7'b1100111 , 32'h4,   //jalr
+	7'b1100111 , ext_imm ,   //jalr
 	7'b1100011 , rs2_data, //beq bne blt bge bltu bgeu
 	7'b0000011 , ext_imm,  // lb lh lw lbu lhu
 	7'b0100011 , ext_imm, // sb sh sw
@@ -103,6 +103,7 @@ MuxKeyWithDefault #(9,7,32) src2_data_num (src2_data,opcode,32'b0,{
 });
 
 ALU alu(
+	.clk(clk),
 	.instruction(instruction),
 	.src1(src1_data),
 	.alu_ctrl(alu_ctrl),

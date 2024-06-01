@@ -22,7 +22,7 @@
 
 enum {
   TK_NOTYPE = 256, TK_EQ,TK_LBR,TK_RBR,TK_DIV,TK_MUL,TK_SUB,TK_NUM,TK_PLUS,
-  TK_HEX,TK_REG,TK_AND,TK_NEQ,TK_DEREF
+  TK_HEX,TK_REG,TK_AND,TK_NEQ,TK_DEREF,TK_MOD
   /* TODO: Add more token types */
 
 };
@@ -117,6 +117,7 @@ static bool make_token(char *e) {
           case TK_DIV:
           case TK_MUL:
           case TK_AND:
+          case TK_MOD:
           case TK_SUB: 
           case TK_NEQ:
           case TK_PLUS:
@@ -263,6 +264,7 @@ word_t eval(int p,int q,bool *success){
       case TK_EQ  : return (val1 == val2);
       case TK_NEQ : return (val1 != val2);
       case TK_AND : return (val1 && val2);
+      case TK_MOD : return (val1  % val2);
       default:  *success = false;
                 assert(0);
 
@@ -281,7 +283,7 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   for (int j = 0; j < useful_num; j ++) { //judge the * is mul or other
   if (tokens[j].type == TK_MUL && (j == 0 || (tokens[j - 1].type == TK_PLUS) || (tokens[j - 1].type == TK_SUB) ||
-   (tokens[j - 1].type == TK_MUL) || (tokens[j - 1].type == TK_DIV))) {
+   (tokens[j - 1].type == TK_MUL) || (tokens[j - 1].type == TK_DIV) || (tokens[j-1].type == TK_MOD))) {
     tokens[j].type = TK_DEREF;
   }
 } 
