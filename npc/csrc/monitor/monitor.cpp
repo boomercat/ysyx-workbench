@@ -60,19 +60,6 @@ static const uint32_t img[] = {
     0b00000000000000000000110010110011, // add x12, x0, x1 (x12 = 0)
     0b00000000010100000000001110010011, // addi x12, x0, 5 (x12 = 5)
 
-    // 存储指令测试
-    0b00000000110000001000001000100011, // sb x12, 0(x4) (store byte from x12 to memory at x4)
-    0b00000000110000001001001010100011, // sh x12, 2(x4) (store halfword from x12 to memory at x4+2)
-    0b00000000110000001010001100100011, // sw x12, 4(x4) (store word from x12 to memory at x4+4)
-
-    // 加载指令测试
-    0b00000000000000000000000000010011,  // nop (alignment)
-    0b00000000000000000000000000010011, // nop (alignment)
-    0b00000000000000000000000000010011, // nop (alignment)
-    0b00000000110000001000001000000011, // lb x5, 0(x4) (load byte to x5 from memory at x4)
-    0b00000000110000001001001010000011, // lh x5, 2(x4) (load halfword to x5 from memory at x4+2)
-    0b00000000110000001010001100000011, // lw x5, 4(x4) (load word to x5 from memory at x4+4)
-
     // 结束
     0b00000000000100000000000001110011  // EBREAK
 };

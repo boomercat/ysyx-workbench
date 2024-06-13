@@ -58,8 +58,6 @@ void set_npcinv(int i) {
 }
 
 static void npc_isa_exec_once(){    
-    //top->instruction = pmem_read(top->pc);
-    printf("top->instruction is %p\n",pmem_read(top->pc,4));
     top->clk = 1;
     for (int i = 0; i < 2; ++i) {
         top->clk ^= 1;
@@ -72,7 +70,6 @@ static void npc_isa_exec_once(){
   IFDEF(CONFIG_ITRACE,trace_inst(top->pc,pmem_read(top->pc,4)));
   IFDEF(CONFIG_NPC_WATCHPOINT){scan_wp();}
   top->pc = top->next_pc;
-  printf("R(10) is %d\n",R(10));
 
   if(istrap){
     NPCTRAP(npc_cpu.pc, R(10));
@@ -87,7 +84,6 @@ static void npc_exec_once(){
     pre_pc = npc_cpu.pc;
     npc_isa_exec_once();
     npc_cpu.pc = top->pc;
-    printf("npc_cpu_pc is %p\n\n",npc_cpu.pc);
 
 }
 

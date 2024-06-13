@@ -83,7 +83,7 @@ void set_WP(char *args,word_t value){
 // scan all watchpoint
 void scan_wp(){
   WP *s_point = head;
-  printf("scaning poing...\n");
+  // printf("scaning poing...\n");
   while(s_point != NULL){
     bool success = 1;
     uint32_t new_result = expr(s_point->str,&success);

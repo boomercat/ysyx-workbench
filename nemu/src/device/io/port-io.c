@@ -22,7 +22,8 @@ static IOMap maps[NR_MAP] = {};
 static int nr_map = 0;
 
 /* device interface */
-//建立映射关系,后续map_read和map_write会根据这个映射关系进行访问
+//建立映射关系,后续map_read和map_write会根据这个映射关系进行访问,
+//将映射的信息存储到maps的数组中，设置最大的映射数量是16(NR_MAP=16)
 void add_pio_map(const char *name, ioaddr_t addr, void *space, uint32_t len, io_callback_t callback) {
   assert(nr_map < NR_MAP);
   assert(addr + len <= PORT_IO_SPACE_MAX);

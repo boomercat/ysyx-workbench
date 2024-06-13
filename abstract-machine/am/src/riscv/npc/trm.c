@@ -1,6 +1,7 @@
 #include <am.h>
 #include <klib-macros.h>
 #include <stdio.h>
+#include "npc.h"
 extern char _heap_start;
 int main(const char *args);
 
@@ -16,6 +17,8 @@ Area heap = RANGE(&_heap_start, PMEM_END);
 static const char mainargs[] = MAINARGS;
 //#define set_npctrap(code) if(code) istrap = 1;else istrap = 0;
 void putch(char ch) {
+  outb(SERIAL_PORT, ch);
+
 }
 
 void halt(int code) {

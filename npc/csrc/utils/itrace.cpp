@@ -18,7 +18,7 @@ void trace_inst(word_t pc, uint32_t inst){
     iringbuf[p_curr].pc = pc;
     iringbuf[p_curr].inst = inst;
     p_curr = (p_curr + 1) % MAX_INST;
-    printf("trace_inst successful,and inst is %p\n",inst);
+    // printf("trace_inst successful,and inst is %p\n",inst);
 }
 
 void display_inst(){

@@ -14,7 +14,7 @@ void (*ref_difftest_exec)(uint64_t n) = NULL;
 void (*ref_difftest_raise_intr)(uint64_t NO) = NULL;
 
 void  isa_reg_display();
-static bool is_skip_ref = true;
+ bool is_skip_ref = true;
 static int skip_dut_nr_inst = 0;
 
 
@@ -103,7 +103,7 @@ static void checkregs(CPU_state *ref, vaddr_t pc) {
 }
 
 void difftest_step(vaddr_t pc, vaddr_t npc_pc) {
-  printf("is skip ref is %d\n",is_skip_ref);
+  // printf("is skip ref is %d\n",is_skip_ref);
   CPU_state ref_r;
   //ref_difftest_exec(1);
   if (skip_dut_nr_inst > 0) {

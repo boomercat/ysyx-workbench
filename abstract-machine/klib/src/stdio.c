@@ -1,208 +1,27 @@
-
-// #include <am.h>
-// #include <klib.h>
-// #include <klib-macros.h>
-// #include <stdarg.h>
-// #include <math.h>
-
-// #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
-
-// #define BUFSIZE 1024
-
-
-
-// static int width_int(int32_t n, int base) {
-//     int ret = n < 0 + (base==8?1:(base==16?2:0));
-//     do ++ret; while ((n /= base) != 0);
-//     return ret;
-// }
-
-// static int width_uint(uint32_t n, int base) {
-//     int ret = base==8?1:(base==16?2:0);
-//     do ++ret; while ((n /= base) != 0);
-//     return ret;
-// }
-
-// static void out_int(char *out, int32_t n, int base, int width) {
-//     int prefix = 0;
-//     if (n < 0) {
-//         out[prefix] = '-';
-//         n = -n;
-//         ++prefix;
-//     }
-//     if (base == 8) {
-//         out[prefix++] = '0';
-//     } else if (base == 16) {
-//         out[prefix++] = '0';
-//         out[prefix++] = 'x';
-//     }
-//     prefix += base==8?1:(base==16?2:0);
-//     for (int i = width-1; i >= prefix; i--, n /= base) {
-//         int digit = n % base;
-//         out[i] = (digit>=10)?('a'+digit-10):('0'+digit);
-//     }
-// }
-
-// static void out_uint(char *out, uint32_t n, int base, int width) {
-//     int prefix = 0;
-//     if (base == 8) {
-//         out[prefix++] = '0';
-//     } else if (base == 16) {
-//         out[prefix++] = '0';
-//         out[prefix++] = 'x';
-//     }
-//     for (int i = width-1; i >= prefix; i--, n /= base) {
-//         int digit = n % base;
-//         out[i] = (digit>=10)?('a'+digit-10):('0'+digit);
-//     }
-// }
-
-// int printf(const char *fmt, ...) {
-//   char buffer[BUFSIZE];
-//   va_list pArgs;
-//   va_start(pArgs, fmt);
-//   int ret = vsprintf(buffer, fmt, pArgs);
-//   va_end(pArgs);
-//   for (int i = 0; i < ret; i++) putch(buffer[i]);
-//   return ret;
-// }
-
-// int sprintf(char *out, const char *fmt, ...) {
-//   va_list pArgs;
-//   va_start(pArgs, fmt);
-//   int ret = vsprintf(out, fmt, pArgs);
-//   va_end(pArgs);
-//   return ret;
-// }
-
-// int snprintf(char *out, size_t n, const char *fmt, ...) {
-//   va_list pArgs;
-//   va_start(pArgs, fmt);
-//   int ret = vsnprintf(out, n, fmt, pArgs);
-//   va_end(pArgs);
-//   return ret;
-// }
-
-// int vsprintf(char *out, const char *fmt, va_list ap) {
-//   return vsnprintf(out, -1, fmt, ap);
-// }
-
-// int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
-//     char *start = out;
-//     bool ps = false; // has meet percent sign '%'
-//     --n; // for '\0'
-//     char placeholder = ' ';
-//     int fmt_width = 0;
-
-//     for (; n && *fmt; ++fmt) {
-//         if (!ps) {
-//             if (*fmt == '%') ps = true;
-//             else {
-//                 *out++ = *fmt;
-//                 --n;
-//             }
-//             continue;
-//         }
-//         switch (*fmt) {
-//             case '%': *out++ = *fmt; --n; break;
-//             case 'd': {
-//                 int32_t arg = va_arg(ap, int32_t);
-//                 int arg_width = width_int(arg, 10);
-//                 MAKE_BUF;
-//                 out_int(buf_start, arg, 10, arg_width);
-//                 OUT_BUF;
-//                 break;
-//             }
-//             case 'u': {
-//                 uint32_t arg = va_arg(ap, uint32_t);
-//                 int arg_width = width_uint(arg, 10);
-//                 MAKE_BUF;
-//                 out_int(buf_start, arg, 10, arg_width);
-//                 OUT_BUF;
-//                 break;
-//             }
-//             case 'x': case 'p': {
-//                 uint32_t arg = va_arg(ap, uint32_t);
-//                 int arg_width = width_uint(arg, 16);
-//                 MAKE_BUF;
-//                 out_uint(buf_start, arg, 16, arg_width);
-//                 OUT_BUF;
-//                 break;
-//             }
-//             case 's': {
-//                 char *arg = va_arg(ap, char*);
-//                 int arg_width = strlen(arg);
-//                 MAKE_BUF;
-//                 strcpy(buf_start, arg);
-//                 OUT_BUF;
-//                 break;
-//             }
-//             case 'c': {
-//                 char arg = va_arg(ap, int);
-//                 *out++ = arg;
-//                 --n;
-//                 break;
-//             }
-//             default: {
-//                 char c = *fmt;
-//                 if (c >= '0' && c <= '9') { // e.g. %09d, %9d, %6s
-//                     placeholder = c=='0'?'0':' ';
-//                     fmt_width = 0;
-//                     if (placeholder == '0') ++fmt;
-//                     while (*fmt >= '0' && *fmt <= '9') {
-//                         fmt_width *= 10;
-//                         fmt_width += *fmt-'0';
-//                         ++fmt;
-//                     }
-//                     --fmt;
-//                 }
-//                 continue;
-//             }
-//         }
-//         ps = false;
-//         fmt_width = 0;
-//     }
-//     *out++ = '\0';
-//     return out-start;
-// }
-
-// int puts(const char * str) {
-//   for (const char *c = str; *c; c++) putch(*c);
-//   putch('\n');
-//   return 0;
-// }
-
-// #endif
-
 #include <am.h>
 #include <klib.h>
 #include <klib-macros.h>
 #include <stdarg.h>
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
+#define MAXDEC 64
+static char *__out;
+void sputch(char ch){*__out++ = ch;}
 
-int printf(const char *fmt, ...) {
-  // va_list args;
-  // va_start(args,fmt);
-  // while(*fmt){
-  //   putch(*fmt);
-  //   fmt++;
-  // }
-  // va_end(args);
-  // return 0;
-    va_list args;
-    va_start(args, fmt);
-    char buffer[1024]; // 假设缓冲区大小足够大来存放格式化字符串
-    vsprintf(buffer, fmt, args); // 使用vsprintf格式化字符串
-    va_end(args);
+// int printf(const char *fmt, ...) {
+//     va_list args;
+//     va_start(args, fmt);
+//     char buffer[1024]; // 假设缓冲区大小足够大来存放格式化字符串
+//     vsprintf(buffer, fmt, args); // 使用vsprintf格式化字符串
+//     va_end(args);
 
-    char *str = buffer;
-    while (*str) {
-        putch(*str);
-        str++;
-    }
-    return 0;
- }
+//     char *str = buffer;
+//     while (*str) {
+//         putch(*str);
+//         str++;
+//     }
+//     return 0;
+//  }
 
 int vsprintf(char *out, const char *fmt, va_list args) {
     char *out_start = out;
@@ -487,7 +306,106 @@ int sprintf(char *out, const char *fmt, ...) {
   return 0;
 }
 
+int vprintf( void(*gputch)(char) , const char *fmt, va_list ap){
+	int i;
+	bool in_format = false;
+	int long_flags = 0;
+	int pos = 0;
+	for( ;*fmt != '\0';fmt++){
+		if(*fmt != '%' && in_format == false){
+			gputch(*fmt);pos++;
+		}
+		else{
+			if(in_format == false && (*fmt == '%')){
+				fmt++;
+				in_format = true;
+			}
+			switch(*fmt){
+				case 'l':  //para
+					long_flags += 1;
+					break;
+				case 's':  //%s
+					char *s;
+					assert(long_flags == 0);
+					s = va_arg(ap , char *);
+					for(i = 0; s[i] != '\0'; i++){
+						gputch(s[i]);pos++;
+					}
+					in_format = false;
+					break;
+				case 'c':  //%c
+					int c;
+					assert(long_flags == 0);
+					c = va_arg(ap , int);
+					gputch((char)c);pos++;
+					in_format = false;
+					break;
+				case 'd':{//%d
+					assert(long_flags <= 2);
+					int64_t d = 0;
+					if(long_flags == 2)    //get d
+						d = va_arg(ap , int64_t);
+					else
+						d = va_arg(ap , int32_t);
 
+					if(d < 0){
+						d = -d;
+						gputch('-');pos++;
+					}
+					if(d == 0){
+						gputch('0');pos++;
+					};
+					char invert[MAXDEC];
+					i = 0;
+					for( ; d != 0 ; i++ , d/=10){
+						invert[i] = d%10 + '0';
+					}
+					for(i-=1 ;i >= 0 ; i--){
+						gputch(invert[i]);pos++;
+					}
+					long_flags = 0;
+					in_format = false;
+					break;
+					}
+				case 'u':{  //%u
+					uint64_t u = 0;
+					assert(long_flags <= 2);
+					if(long_flags == 2)    //get d
+						u = va_arg(ap , uint64_t);
+					else
+						u = va_arg(ap , uint32_t);
+
+					if(u == 0){
+						gputch('0');pos++;
+					};
+					char invert[MAXDEC];
+					i = 0;
+					for( ; u != 0 ; i++ , u/=10){
+						invert[i] = u%10 + '0';
+					}
+					for(i-=1 ;i >= 0 ; i--){
+						gputch(invert[i]);pos++;
+					}
+					long_flags = 0;
+					in_format = false;
+					break;
+					}
+				case '%':
+					gputch('%');
+					in_format = false;
+					break;
+			}
+		}
+	}
+	return pos;
+}
+int printf(const char *fmt, ...) {
+	va_list ap;
+	va_start(ap, fmt);
+	int res = vprintf(putch , fmt , ap);
+	va_end(ap);
+	return res;
+}
 int snprintf(char *out, size_t n, const char *fmt, ...) {
   panic("Not implemented");
 }
