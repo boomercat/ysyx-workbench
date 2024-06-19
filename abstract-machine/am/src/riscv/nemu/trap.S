@@ -40,23 +40,23 @@ f(30) f(31)
 .align 3
 .globl __am_asm_trap
 __am_asm_trap:
+//堆栈指针sp向下移动CONTEXT_SIZE，为保存上下文腾出空间
   addi sp, sp, -CONTEXT_SIZE
-
+//保存所有寄存器的内容push到堆栈中
   MAP(REGS, PUSH)
-
   csrr t0, mcause
   csrr t1, mstatus
   csrr t2, mepc
 
+//将读取到的三个寄存器值存储到堆栈对应的偏移量
   STORE t0, OFFSET_CAUSE(sp)
   STORE t1, OFFSET_STATUS(sp)
   STORE t2, OFFSET_EPC(sp)
-
   # set mstatus.MPRV to pass difftest
   li a0, (1 << 17)
   or t1, t1, a0
   csrw mstatus, t1
-
+//sp移动到a0，跳转并链接到_am_irq_handle的中断处理函数
   mv a0, sp
   jal __am_irq_handle
 

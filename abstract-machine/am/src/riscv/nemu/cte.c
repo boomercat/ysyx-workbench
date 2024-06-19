@@ -1,16 +1,19 @@
 #include <am.h>
 #include <riscv/riscv.h>
 #include <klib.h>
-
+//提供事件处理的抽象，Context* 存储了系统发生异常时的状态，arch/riscv.h
 static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
   if (user_handler) {
+    //事件初始化为0
     Event ev = {0};
+    //根据异常号打包成不同的事件类型
     switch (c->mcause) {
       default: ev.event = EVENT_ERROR; break;
     }
-
+    printf("now in the handle function\n\n");
+    //传回之前注册的回调函数
     c = user_handler(ev, c);
     assert(c != NULL);
   }
