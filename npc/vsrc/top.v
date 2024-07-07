@@ -28,14 +28,21 @@ wire memory_valid;
 wire [9:0] opcode_plus;
 assign opcode_plus = {instruction[14:12],instruction[6:0]};
 pc_transfer_inst inst(.pc(pc),.instruction(instruction));
-
-
+wire [31:0] odata;
+wire [31:0] irq_no;
+wire [11:0] csr_imm;
+wire [31:0] w_data;
+wire [31:0] mtvec;
+wire [31:0] mepc;
 assign  opcode = instruction[6:0];
 
 //更新pc的值
 addpc add_pc(
     .clk(clk),
     .rst(rst),
+	.instruction(instruction),
+	.mtvec(mtvec),
+	.mepc(mepc),
     .PC_src(PC_src),
     .alu_result(alu_result),
 	.ext_imm(ext_imm),
@@ -53,7 +60,9 @@ IDU idu(
 	.rd_add(rd_add),
 	.alu_ctrl(alu_ctrl),
 	.memory_valid(memory_valid),
-	.rs2_add(rs2_add)
+	.rs2_add(rs2_add),
+	.csr_imm(csr_imm),
+    .irq_no(irq_no)
 );
 //读取src1 寄存器中的地址，为ALU加法做准备
 
@@ -76,7 +85,7 @@ Extend instance1(
 );
 
 //auipc指令时ALUsrc为pc+imm
-MuxKeyWithDefault #(9,7,32) src1_data_num (src1_data,opcode,32'b0,{
+MuxKeyWithDefault #(10,7,32) src1_data_num (src1_data,opcode,32'b0,{
 	7'b0110111 , 32'b0   ,  //lui
 	7'b1101111 , pc     ,  //jal
 	7'b1100111, rs1_data,  //jalr
@@ -85,7 +94,8 @@ MuxKeyWithDefault #(9,7,32) src1_data_num (src1_data,opcode,32'b0,{
 	7'b0000011, rs1_data, // lb lh lw lbu lhu
 	7'b0100011, rs1_data, //sb sh sw
 	7'b0010011, rs1_data, // addi slti sltiu xori andi
-	7'b0110011, rs1_data //add sub sll slt sltu xor srl sra or and
+	7'b0110011, rs1_data, //add sub sll slt sltu xor srl sra or and
+	7'b1110011, rs1_data
 });
 
 
@@ -105,11 +115,24 @@ MuxKeyWithDefault #(9,7,32) src2_data_num (src2_data,opcode,32'b0,{
 ALU alu(
 	.clk(clk),
 	.instruction(instruction),
+	.csr_input(odata),
 	.src1(src1_data),
 	.alu_ctrl(alu_ctrl),
 	.src2(src2_data),
 	.alu_result(alu_result)
 );
+
+CSR csrregister(
+	.clk(clk),
+    .instruction(instruction),
+    .irq_no(irq_no),
+    .csr_imm(csr_imm),
+    .w_data (alu_result),
+    .pc(pc),
+    .odata(odata),
+    .mtvec(mtvec),
+	.mepc(mepc)
+);	
 
 
 Data_memory memory_1(
@@ -120,11 +143,12 @@ Data_memory memory_1(
 	.mout_data(memory_out_data));
 
 //jal和jalr都为01，因为x[rd] =pc+4,auipc为 10，x[rd]=pc+sext(imm),lui为11 x[rd] = sext(imm << 12)
-MuxKeyWithDefault #(4,3,32) Write_rd_data (rd_data,RegWrite,32'b0,{
+MuxKeyWithDefault #(5,3,32) Write_rd_data (rd_data,RegWrite,32'b0,{
 	3'b001, pc+32'h4,
 	3'b010, alu_result,
 	3'b011, ext_imm,
-	3'b000, memory_out_data
+	3'b000, memory_out_data,
+	3'b100, odata
 });
 
 

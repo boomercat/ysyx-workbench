@@ -30,38 +30,39 @@ int atoi(const char* nptr) {
   }
   return x;
 }
+// #ifndef ITOA_DEFINED
+// #define ITOA_DEFINED
+// int itoa(int value, char *str, int base) {
+//     char *ptr = str, *ptr1 = str, tmp_char;
+//     int tmp_value;
+//     int len = 0;
+//     // 处理负数情况，只针对10进制有效
+//     if (value < 0 && base == 10) {
+//         *ptr++ = '-';
+//         value = -value;
+//         len++;
+//     }
+//     tmp_value = value;
+//     // 将整数转换为指定进制的字符串
+//     do {
+//         int rem = tmp_value % base;
+//         *ptr++ = (rem < 10) ? (rem + '0') : (rem - 10 + 'a');
+//         len++;
+//     } while (tmp_value /= base);
 
-int itoa(int value, char *str, int base) {
-    char *ptr = str, *ptr1 = str, tmp_char;
-    int tmp_value;
-    int len = 0;
-    // 处理负数情况，只针对10进制有效
-    if (value < 0 && base == 10) {
-        *ptr++ = '-';
-        value = -value;
-        len++;
-    }
-    tmp_value = value;
-    // 将整数转换为指定进制的字符串
-    do {
-        int rem = tmp_value % base;
-        *ptr++ = (rem < 10) ? (rem + '0') : (rem - 10 + 'a');
-        len++;
-    } while (tmp_value /= base);
-
-    *ptr = '\0';
-    // 反转字符串
-    if (str[0] == '-') {
-        ptr1++;
-    }
-    while (ptr1 < --ptr) {
-        tmp_char = *ptr;
-        *ptr = *ptr1;
-        *ptr1 = tmp_char;
-    }
-    return len;
-}
-
+//     *ptr = '\0';
+//     // 反转字符串
+//     if (str[0] == '-') {
+//         ptr1++;
+//     }
+//     while (ptr1 < --ptr) {
+//         tmp_char = *ptr;
+//         *ptr = *ptr1;
+//         *ptr1 = tmp_char;
+//     }
+//     return len;
+// }
+// #endif
 
 void *malloc(size_t size) {
   // On native, malloc() will be called during initializaion of C runtime.

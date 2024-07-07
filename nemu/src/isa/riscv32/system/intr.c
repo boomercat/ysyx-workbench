@@ -15,12 +15,23 @@
 
 #include <isa.h>
 
+
 word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   /* TODO: Trigger an interrupt/exception with ``NO''.
    * Then return the address of the interrupt/exception vector.
    */
   cpu.mcause = NO;
   cpu.mepc = epc;
+  //清楚MPIE位
+  cpu.mstatus &= ~(1<<7);
+  //将当前的MIE位赋值到MPIE位
+  cpu.mstatus |= ((cpu.mstatus&(1<<3))<<4); // MPIE = MIE
+  //清楚MIE位
+  cpu.mstatus &= ~(1<<3); // MIE = 0
+  //设置MPP位为11 （机器模式）
+  cpu.mstatus |= ((1<<11)+(1<<12)); // MPP = 011 (m-mode)
+
+
   return cpu.mtvec;
 }
 

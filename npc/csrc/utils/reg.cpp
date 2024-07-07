@@ -10,10 +10,14 @@ const char *regs[] = {
 };
 void isa_reg_display() {
   int reg_num = ARRLEN(regs);
-  int i; 
+  int i;
   for (i = 0; i < reg_num; i++) {
     printf("%-8s%-#20x%-20u\n", regs[i], npc_cpu.gpr[i], npc_cpu.gpr[i]);
   }
+  printf("%-8s%-#20x%-20u\n", "mstatus", npc_cpu.mstatus, npc_cpu.mstatus);
+  printf("%-8s%-#20x%-20u\n", "mtvec", npc_cpu.mtvec, npc_cpu.mtvec);
+  printf("%-8s%-#20x%-20u\n", "mcause", npc_cpu.mcause, npc_cpu.mcause);
+  printf("%-8s%-#20x%-20u\n", "mepc", npc_cpu.mepc, npc_cpu.mepc);
 }
 
 void npc_reg_update(){
@@ -21,6 +25,10 @@ void npc_reg_update(){
   {
       npc_cpu.gpr[j] = top->rootp->top__DOT__reg_file__DOT__rf[j];
   }
+    npc_cpu.mstatus = top->rootp->top__DOT__csrregister__DOT__csr_register[0];   
+    npc_cpu.mtvec = top->rootp->top__DOT__csrregister__DOT__csr_register[1];
+    npc_cpu.mcause = top->rootp->top__DOT__csrregister__DOT__csr_register[2];
+    npc_cpu.mepc = top->rootp->top__DOT__csrregister__DOT__csr_register[3];
 }
 
 

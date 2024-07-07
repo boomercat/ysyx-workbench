@@ -61,7 +61,7 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
   int reg_num = ARRLEN(cpu.gpr);
   for (int i = 0; i < reg_num; i++) {
     if (ref_r->gpr[i] != cpu.gpr[i]) {
-      printf("reg %d is wrong\n",i);
+      printf("reg %d is wrong,right value is %x\n",i,ref_r->gpr[i]);
       return false;
     }
   }
@@ -70,8 +70,8 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
   }
   CHECKDIFF(mstatus);
   CHECKDIFF(mcause);
-  //CHECKDIFF(mepc);
-  //CHECKDIFF(mtvec);
+  CHECKDIFF(mepc);
+  CHECKDIFF(mtvec);
   return true;
 }
 

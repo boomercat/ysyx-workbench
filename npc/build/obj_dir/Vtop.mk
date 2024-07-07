@@ -64,6 +64,7 @@ VM_USER_CLASSES = \
 	sdb \
 	watchpoint \
 	npc-main \
+	intr \
 	disasm \
 	itrace \
 	logo \
@@ -79,6 +80,7 @@ VM_USER_DIR = \
 	/home/white/ysyx-workbench/npc/csrc/memory \
 	/home/white/ysyx-workbench/npc/csrc/monitor \
 	/home/white/ysyx-workbench/npc/csrc/monitor/sdb \
+	/home/white/ysyx-workbench/npc/csrc/system \
 	/home/white/ysyx-workbench/npc/csrc/utils \
 
 
@@ -110,6 +112,8 @@ sdb.o: /home/white/ysyx-workbench/npc/csrc/monitor/sdb/sdb.cpp
 watchpoint.o: /home/white/ysyx-workbench/npc/csrc/monitor/sdb/watchpoint.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 npc-main.o: /home/white/ysyx-workbench/npc/csrc/npc-main.cpp
+	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
+intr.o: /home/white/ysyx-workbench/npc/csrc/system/intr.c
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 disasm.o: /home/white/ysyx-workbench/npc/csrc/utils/disasm.cc
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<

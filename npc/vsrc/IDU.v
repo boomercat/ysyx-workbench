@@ -9,7 +9,9 @@ module IDU(
     output reg [4:0] alu_ctrl,
     output reg [4:0] rs2_add,
     //output memory_wen,
-    output reg memory_valid
+    output reg memory_valid,
+    output [11:0] csr_imm,
+    output [31:0] irq_no
     //output reg [2:0] funct3
     // 还可以根据需要输出更多的控制信号
 );
@@ -47,8 +49,8 @@ end
 
  //B类 I类 R类 需要rs2                
 
-
-
+assign irq_no = (instruction == 32'b00000000000000000000000001110011) ? 32'hb : 0;
+assign csr_imm = (opcode == 7'b1110011) ? instruction[31:20] : 0;
 //data_memory控制读数据
 assign  memory_valid = (  opcode == 7'b0000011) ? 1 : 0;
 

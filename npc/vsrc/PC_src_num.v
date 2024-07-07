@@ -16,6 +16,7 @@ parameter pc_plus = 3'b000,
     7'b1100111, ALU_result, //jalr
     7'b1100011, branch ,   //beq bne blt bge bgeu
     7'b1101111, pc_jal  //jal
+
   });
 
 endmodule

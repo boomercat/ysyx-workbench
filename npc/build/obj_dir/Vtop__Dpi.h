@@ -20,9 +20,9 @@ extern "C" {
     extern unsigned int pmem_read(unsigned int raddr, int len);
     // DPI import at /home/white/ysyx-workbench/npc/vsrc/Data_memory.v:15:30
     extern void pmem_write(int addr, int data, int len);
-    // DPI import at /home/white/ysyx-workbench/npc/vsrc/IDU.v:33:30
+    // DPI import at /home/white/ysyx-workbench/npc/vsrc/IDU.v:35:30
     extern void set_npcinv(int i);
-    // DPI import at /home/white/ysyx-workbench/npc/vsrc/IDU.v:22:30
+    // DPI import at /home/white/ysyx-workbench/npc/vsrc/IDU.v:24:30
     extern void set_npctrap(int i);
 
 #ifdef __cplusplus

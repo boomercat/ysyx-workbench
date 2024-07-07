@@ -59,7 +59,10 @@ __am_asm_trap:
 //sp移动到a0，跳转并链接到_am_irq_handle的中断处理函数
   mv a0, sp
   jal __am_irq_handle
-
+  //TODO:
+  //从__am_irq_handle返回，将sp切换到新的上下文结构
+  mv sp, a0
+  //恢复上下文
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
   csrw mstatus, t1

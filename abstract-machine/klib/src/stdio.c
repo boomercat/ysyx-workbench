@@ -8,21 +8,6 @@
 static char *__out;
 void sputch(char ch){*__out++ = ch;}
 
-// int printf(const char *fmt, ...) {
-//     va_list args;
-//     va_start(args, fmt);
-//     char buffer[1024]; // 假设缓冲区大小足够大来存放格式化字符串
-//     vsprintf(buffer, fmt, args); // 使用vsprintf格式化字符串
-//     va_end(args);
-
-//     char *str = buffer;
-//     while (*str) {
-//         putch(*str);
-//         str++;
-//     }
-//     return 0;
-//  }
-
 int vsprintf(char *out, const char *fmt, va_list args) {
     char *out_start = out;
     while (*fmt) { // 遍历格式字符串fmt
@@ -98,36 +83,6 @@ int vsprintf(char *out, const char *fmt, va_list args) {
                 }
 
 
-                //     int d = va_arg(args, int);
-                //     int d_tmp = d;
-                //     char buf[20];
-                //     char *tmp = buf;
-                //     int length = 0;
-                //     int negative = 0;
-                //     if (d == 0) {
-                //         *tmp++ = '0';
-                //         *tmp = '\0';
-                //     } else {
-                //         while (d_tmp != 0) {
-                //             length++;
-                //             d_tmp /= 10;
-                //         }
-                //         if (d < 0) {
-                //             negative = 1;
-                //             d = -d;
-                //             *(tmp) = '-';
-                //         }
-                //         for (int i = length - 1; i >= 0; i--) {
-                //             tmp[i + negative] = d % 10 + '0';
-                //             d /= 10;
-                //         }
-                //         *(tmp + length + negative) = '\0';
-                //     }
-                //     while (*tmp) {
-                //         *out++ = *tmp++;
-                //     }
-                //     break;
-                // }
                 case 'u': { // %u 无符号整数
                     uint32_t d = va_arg(args, uint32_t);
                     char buf[20];
@@ -306,98 +261,248 @@ int sprintf(char *out, const char *fmt, ...) {
   return 0;
 }
 
-int vprintf( void(*gputch)(char) , const char *fmt, va_list ap){
-	int i;
-	bool in_format = false;
-	int long_flags = 0;
-	int pos = 0;
-	for( ;*fmt != '\0';fmt++){
-		if(*fmt != '%' && in_format == false){
-			gputch(*fmt);pos++;
-		}
-		else{
-			if(in_format == false && (*fmt == '%')){
-				fmt++;
-				in_format = true;
-			}
-			switch(*fmt){
-				case 'l':  //para
-					long_flags += 1;
-					break;
-				case 's':  //%s
-					char *s;
-					assert(long_flags == 0);
-					s = va_arg(ap , char *);
-					for(i = 0; s[i] != '\0'; i++){
-						gputch(s[i]);pos++;
-					}
-					in_format = false;
-					break;
-				case 'c':  //%c
-					int c;
-					assert(long_flags == 0);
-					c = va_arg(ap , int);
-					gputch((char)c);pos++;
-					in_format = false;
-					break;
-				case 'd':{//%d
-					assert(long_flags <= 2);
-					int64_t d = 0;
-					if(long_flags == 2)    //get d
-						d = va_arg(ap , int64_t);
-					else
-						d = va_arg(ap , int32_t);
+// int vprintf( void(*gputch)(char) , const char *fmt, va_list ap){
+// 	int i;
+// 	bool in_format = false;
+// 	int long_flags = 0;
+// 	int pos = 0;
+// 	for( ;*fmt != '\0';fmt++){
+// 		if(*fmt != '%' && in_format == false){
+// 			gputch(*fmt);pos++;
+// 		}
+// 		else{
+// 			if(in_format == false && (*fmt == '%')){
+// 				fmt++;
+// 				in_format = true;
+// 			}
+// 			switch(*fmt){
+// 				case 'l':  //para
+// 					long_flags += 1;
+// 					break;
+// 				case 's':  //%s
+// 					char *s;
+// 					assert(long_flags == 0);
+// 					s = va_arg(ap , char *);
+// 					for(i = 0; s[i] != '\0'; i++){
+// 						gputch(s[i]);pos++;
+// 					}
+// 					in_format = false;
+// 					break;
+// 				case 'c':  //%c
+// 					int c;
+// 					assert(long_flags == 0);
+// 					c = va_arg(ap , int);
+// 					gputch((char)c);pos++;
+// 					in_format = false;
+// 					break;
+// 				case 'd':{//%d
+// 					assert(long_flags <= 2);
+// 					int64_t d = 0;
+// 					if(long_flags == 2)    //get d
+// 						d = va_arg(ap , int64_t);
+// 					else
+// 						d = va_arg(ap , int32_t);
 
-					if(d < 0){
-						d = -d;
-						gputch('-');pos++;
-					}
-					if(d == 0){
-						gputch('0');pos++;
-					};
-					char invert[MAXDEC];
-					i = 0;
-					for( ; d != 0 ; i++ , d/=10){
-						invert[i] = d%10 + '0';
-					}
-					for(i-=1 ;i >= 0 ; i--){
-						gputch(invert[i]);pos++;
-					}
-					long_flags = 0;
-					in_format = false;
-					break;
-					}
-				case 'u':{  //%u
-					uint64_t u = 0;
-					assert(long_flags <= 2);
-					if(long_flags == 2)    //get d
-						u = va_arg(ap , uint64_t);
-					else
-						u = va_arg(ap , uint32_t);
+// 					if(d < 0){
+// 						d = -d;
+// 						gputch('-');pos++;
+// 					}
+// 					if(d == 0){
+// 						gputch('0');pos++;
+// 					};
+// 					char invert[MAXDEC];
+// 					i = 0;
+// 					for( ; d != 0 ; i++ , d/=10){
+// 						invert[i] = d%10 + '0';
+// 					}
+// 					for(i-=1 ;i >= 0 ; i--){
+// 						gputch(invert[i]);pos++;
+// 					}
+// 					long_flags = 0;
+// 					in_format = false;
+// 					break;
+// 					}
+                
+// 				case 'u':{  //%u
+// 					uint64_t u = 0;
+// 					assert(long_flags <= 2);
+// 					if(long_flags == 2)    //get d
+// 						u = va_arg(ap , uint64_t);
+// 					else
+// 						u = va_arg(ap , uint32_t);
 
-					if(u == 0){
-						gputch('0');pos++;
-					};
-					char invert[MAXDEC];
-					i = 0;
-					for( ; u != 0 ; i++ , u/=10){
-						invert[i] = u%10 + '0';
-					}
-					for(i-=1 ;i >= 0 ; i--){
-						gputch(invert[i]);pos++;
-					}
-					long_flags = 0;
-					in_format = false;
-					break;
-					}
-				case '%':
-					gputch('%');
-					in_format = false;
-					break;
-			}
-		}
-	}
-	return pos;
+// 					if(u == 0){
+// 						gputch('0');pos++;
+// 					};
+// 					char invert[MAXDEC];
+// 					i = 0;
+// 					for( ; u != 0 ; i++ , u/=10){
+// 						invert[i] = u%10 + '0';
+// 					}
+// 					for(i-=1 ;i >= 0 ; i--){
+// 						gputch(invert[i]);pos++;
+// 					}
+// 					long_flags = 0;
+// 					in_format = false;
+// 					break;
+// 					}
+// 				case '%':
+// 					gputch('%');
+// 					in_format = false;
+// 					break;
+// 			}
+// 		}
+// 	}
+// 	return pos;
+// }
+
+#define HEXDIGITS "0123456789abcdef"
+int vprintf(void(*gputch)(char), const char *fmt, va_list ap) {
+    int i;
+    bool in_format = false;
+    int long_flags = 0;
+    int pos = 0;
+
+    for (; *fmt != '\0'; fmt++) {
+        if (*fmt != '%' && !in_format) {
+            gputch(*fmt); pos++;
+        } else {
+            if (!in_format && (*fmt == '%')) {
+                fmt++;
+                in_format = true;
+            }
+
+            switch (*fmt) {
+                case 'l':  // long flag
+                    long_flags++;
+                    break;
+                
+                case 's': { // %s
+                    char *s = va_arg(ap, char *);
+                    assert(long_flags == 0);
+                    for (i = 0; s[i] != '\0'; i++) {
+                        gputch(s[i]); pos++;
+                    }
+                    in_format = false;
+                    break;
+                }
+                
+                case 'c': { // %c
+                    int c = va_arg(ap, int);
+                    assert(long_flags == 0);
+                    gputch((char)c); pos++;
+                    in_format = false;
+                    break;
+                }
+                
+                case 'd': { // %d
+                    int64_t d = 0;
+                    if (long_flags == 2) {
+                        d = va_arg(ap, int64_t);
+                    } else {
+                        d = va_arg(ap, int32_t);
+                    }
+                    
+                    if (d < 0) {
+                        gputch('-'); pos++;
+                        d = -d;
+                    }
+                    
+                    if (d == 0) {
+                        gputch('0'); pos++;
+                    } else {
+                        char invert[MAXDEC];
+                        i = 0;
+                        while (d != 0) {
+                            invert[i++] = d % 10 + '0';
+                            d /= 10;
+                        }
+                        while (--i >= 0) {
+                            gputch(invert[i]); pos++;
+                        }
+                    }
+                    long_flags = 0;
+                    in_format = false;
+                    break;
+                }
+                
+                case 'u': { // %u
+                    uint64_t u = 0;
+                    if (long_flags == 2) {
+                        u = va_arg(ap, uint64_t);
+                    } else {
+                        u = va_arg(ap, uint32_t);
+                    }
+                    
+                    if (u == 0) {
+                        gputch('0'); pos++;
+                    } else {
+                        char invert[MAXDEC];
+                        i = 0;
+                        while (u != 0) {
+                            invert[i++] = u % 10 + '0';
+                            u /= 10;
+                        }
+                        while (--i >= 0) {
+                            gputch(invert[i]); pos++;
+                        }
+                    }
+                    long_flags = 0;
+                    in_format = false;
+                    break;
+                }
+
+                case 'p': { // %p
+                    uintptr_t p = (uintptr_t)va_arg(ap, void *);
+                    gputch('0'); pos++;
+                    gputch('x'); pos++;
+                    for (i = (sizeof(p) * 2) - 1; i >= 0; i--) {
+                        gputch(HEXDIGITS[(p >> (i * 4)) & 0xF]);
+                        pos++;
+                    }
+                    in_format = false;
+                    break;
+                }
+
+                case 'x': { // %x
+                    uint64_t x = 0;
+                    if (long_flags == 2) {
+                        x = va_arg(ap, uint64_t);
+                    } else {
+                        x = va_arg(ap, uint32_t);
+                    }
+                    
+                    if (x == 0) {
+                        gputch('0'); pos++;
+                    } else {
+                        char hex[MAXDEC];
+                        i = 0;
+                        while (x != 0) {
+                            hex[i++] = HEXDIGITS[x % 16];
+                            x /= 16;
+                        }
+                        while (--i >= 0) {
+                            gputch(hex[i]); pos++;
+                        }
+                    }
+                    long_flags = 0;
+                    in_format = false;
+                    break;
+                }
+                
+                case '%': // %%
+                    gputch('%'); pos++;
+                    in_format = false;
+                    break;
+                
+                default:
+                    // Handle unexpected format specifiers
+                    in_format = false;
+                    break;
+            }
+        }
+    }
+    return pos;
 }
 int printf(const char *fmt, ...) {
 	va_list ap;

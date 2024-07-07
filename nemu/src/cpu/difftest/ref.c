@@ -65,12 +65,12 @@ __EXPORT void difftest_regcpy(void *dut, bool direction) {
     cpu.mstatus = dut_state->mstatus;
     cpu.mtvec = dut_state->mtvec;
   }
-  printf("nemu difftest reg cpoy finish\n");
+  // printf("nemu difftest reg cpoy finish\n");
 }
 
 __EXPORT void difftest_exec(uint64_t n) {
   cpu_exec(n); 
-  printf("nemu exe one\n");
+  // printf("nemu exe one\n");
 }
 
 __EXPORT void difftest_raise_intr(word_t NO) {
