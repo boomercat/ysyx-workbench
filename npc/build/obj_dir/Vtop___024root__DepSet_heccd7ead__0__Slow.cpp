@@ -52,7 +52,6 @@ VL_ATTR_COLD void Vtop___024root___eval_initial(Vtop___024root* vlSelf) {
     vlSelf->__Vm_traceActivity[1U] = 1U;
     vlSelf->__Vm_traceActivity[0U] = 1U;
     vlSelf->__Vtrigrprev__TOP__clk = vlSelf->clk;
-    vlSelf->__Vtrigrprev__TOP__rst = vlSelf->rst;
     vlSelf->__Vtrigrprev__TOP__top__DOT__memory_1__DOT__read_valid 
         = vlSelf->top__DOT__memory_1__DOT__read_valid;
     vlSelf->__Vtrigrprev__TOP__top__DOT__memory_1__DOT__write_valid 
@@ -1311,16 +1310,19 @@ VL_ATTR_COLD void Vtop___024root___dump_triggers__act(Vtop___024root* vlSelf) {
         VL_DBG_MSGF("         No triggers active\n");
     }
     if (vlSelf->__VactTriggered.at(0U)) {
-        VL_DBG_MSGF("         'act' region trigger index 0 is active: @(edge clk)\n");
+        VL_DBG_MSGF("         'act' region trigger index 0 is active: @([changed] clk)\n");
     }
     if (vlSelf->__VactTriggered.at(1U)) {
-        VL_DBG_MSGF("         'act' region trigger index 1 is active: @(edge clk or negedge rst)\n");
+        VL_DBG_MSGF("         'act' region trigger index 1 is active: @(negedge clk)\n");
     }
     if (vlSelf->__VactTriggered.at(2U)) {
-        VL_DBG_MSGF("         'act' region trigger index 2 is active: @(posedge clk)\n");
+        VL_DBG_MSGF("         'act' region trigger index 2 is active: @(edge clk)\n");
     }
     if (vlSelf->__VactTriggered.at(3U)) {
-        VL_DBG_MSGF("         'act' region trigger index 3 is active: @([changed] clk or [changed] top.memory_1.read_valid or [changed] top.memory_1.write_valid)\n");
+        VL_DBG_MSGF("         'act' region trigger index 3 is active: @(posedge clk)\n");
+    }
+    if (vlSelf->__VactTriggered.at(4U)) {
+        VL_DBG_MSGF("         'act' region trigger index 4 is active: @([changed] clk or [changed] top.memory_1.read_valid or [changed] top.memory_1.write_valid)\n");
     }
 }
 #endif  // VL_DEBUG
@@ -1335,16 +1337,19 @@ VL_ATTR_COLD void Vtop___024root___dump_triggers__nba(Vtop___024root* vlSelf) {
         VL_DBG_MSGF("         No triggers active\n");
     }
     if (vlSelf->__VnbaTriggered.at(0U)) {
-        VL_DBG_MSGF("         'nba' region trigger index 0 is active: @(edge clk)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 0 is active: @([changed] clk)\n");
     }
     if (vlSelf->__VnbaTriggered.at(1U)) {
-        VL_DBG_MSGF("         'nba' region trigger index 1 is active: @(edge clk or negedge rst)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 1 is active: @(negedge clk)\n");
     }
     if (vlSelf->__VnbaTriggered.at(2U)) {
-        VL_DBG_MSGF("         'nba' region trigger index 2 is active: @(posedge clk)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 2 is active: @(edge clk)\n");
     }
     if (vlSelf->__VnbaTriggered.at(3U)) {
-        VL_DBG_MSGF("         'nba' region trigger index 3 is active: @([changed] clk or [changed] top.memory_1.read_valid or [changed] top.memory_1.write_valid)\n");
+        VL_DBG_MSGF("         'nba' region trigger index 3 is active: @(posedge clk)\n");
+    }
+    if (vlSelf->__VnbaTriggered.at(4U)) {
+        VL_DBG_MSGF("         'nba' region trigger index 4 is active: @([changed] clk or [changed] top.memory_1.read_valid or [changed] top.memory_1.write_valid)\n");
     }
 }
 #endif  // VL_DEBUG
@@ -1508,7 +1513,6 @@ VL_ATTR_COLD void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->top__DOT__Write_rd_data__DOT__i0__DOT__hit = 0;
     vlSelf->__Vdly__top__DOT__IDU_done = 0;
     vlSelf->__Vtrigrprev__TOP__clk = 0;
-    vlSelf->__Vtrigrprev__TOP__rst = 0;
     vlSelf->__Vtrigrprev__TOP__top__DOT__memory_1__DOT__read_valid = 0;
     vlSelf->__Vtrigrprev__TOP__top__DOT__memory_1__DOT__write_valid = 0;
     vlSelf->__VactDidInit = 0;

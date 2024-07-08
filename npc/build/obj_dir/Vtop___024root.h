@@ -16,9 +16,9 @@ class Vtop___024root final : public VerilatedModule {
     // Anonymous structures to workaround compiler member-count bugs
     struct {
         VL_IN8(clk,0,0);
-        VL_IN8(rst,0,0);
         CData/*0:0*/ top__DOT__memory_1__DOT__read_valid;
         CData/*0:0*/ top__DOT__memory_1__DOT__write_valid;
+        VL_IN8(rst,0,0);
         VL_IN8(wen,0,0);
         CData/*6:0*/ top__DOT__opcode;
         CData/*4:0*/ top__DOT__rd_add;
@@ -52,7 +52,6 @@ class Vtop___024root final : public VerilatedModule {
         CData/*0:0*/ top__DOT__Write_rd_data__DOT__i0__DOT__hit;
         CData/*0:0*/ __Vdly__top__DOT__IDU_done;
         CData/*0:0*/ __Vtrigrprev__TOP__clk;
-        CData/*0:0*/ __Vtrigrprev__TOP__rst;
         CData/*0:0*/ __Vtrigrprev__TOP__top__DOT__memory_1__DOT__read_valid;
         CData/*0:0*/ __Vtrigrprev__TOP__top__DOT__memory_1__DOT__write_valid;
         CData/*0:0*/ __VactDidInit;
@@ -79,9 +78,9 @@ class Vtop___024root final : public VerilatedModule {
         IData/*31:0*/ top__DOT__memory_1__DOT__mem_out;
         IData/*31:0*/ top__DOT__Write_rd_data__DOT__i0__DOT__lut_out;
         IData/*31:0*/ __VstlIterCount;
+        IData/*31:0*/ __VicoIterCount;
     };
     struct {
-        IData/*31:0*/ __VicoIterCount;
         IData/*31:0*/ __VactIterCount;
         VlUnpacked<QData/*34:0*/, 7> top__DOT__add_pc__DOT__i2__DOT__i0__DOT__pair_list;
         VlUnpacked<CData/*2:0*/, 7> top__DOT__add_pc__DOT__i2__DOT__i0__DOT__key_list;
@@ -119,8 +118,8 @@ class Vtop___024root final : public VerilatedModule {
     };
     VlTriggerVec<1> __VstlTriggered;
     VlTriggerVec<1> __VicoTriggered;
-    VlTriggerVec<4> __VactTriggered;
-    VlTriggerVec<4> __VnbaTriggered;
+    VlTriggerVec<5> __VactTriggered;
+    VlTriggerVec<5> __VnbaTriggered;
 
     // INTERNAL VARIABLES
     Vtop__Syms* const vlSymsp;

@@ -18,14 +18,13 @@ module IDU(
 );
 
 
-always @(posedge clk or negedge clk or negedge rst) begin
-    if(rst)begin
-        IDU_done <= 0;
-        opcode <= 0;
-    end
+always @(negedge  clk) begin
     if(IFU_done) begin
         opcode <= instruction[6:0];
         IDU_done <= 1;
+    end
+    else begin
+        IDU_done <= 0;
     end
 end
 assign rs1_add = (opcode != 7'b0110111 && opcode != 7'b0010111 && opcode != 7'b1101111) ? instruction[19:15] : 5'b0;

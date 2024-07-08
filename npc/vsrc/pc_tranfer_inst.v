@@ -9,7 +9,7 @@ module pc_transfer_inst(
 
 import "DPI-C" function int unsigned pmem_read(input int unsigned raddr,int len);
 
-always @(posedge clk or negedge clk ) begin
+always @(clk ) begin
     if(rst)begin
         IFU_done <= 0;
     end else begin
