@@ -28,5 +28,4 @@ MuxKeyWithDefault #(7, 3, 32) i2 (next_pc, next_pc_type, 32'h80000000, {
     3'b110, mepc
 });
 
-
 endmodule

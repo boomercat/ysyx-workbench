@@ -1,6 +1,6 @@
 #include <cpu.h>
 #include <memory/paddr.h>
-// #define WAVE_TRACE
+#define WAVE_TRACE
 extern CPU_state npc_cpu ;
 
 void init_cpu(){
@@ -22,8 +22,10 @@ void init_vtop(){
     #endif
     top->pc = npc_cpu.pc;
     top->clk = 0;
-    top->rst = 0;
+    top->rst = 1;
     top->wen = 1;
+
+
 
 }
 

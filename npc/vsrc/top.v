@@ -27,16 +27,32 @@ wire [31:0] memory_out_data;
 wire memory_valid;
 wire [9:0] opcode_plus;
 assign opcode_plus = {instruction[14:12],instruction[6:0]};
-pc_transfer_inst inst(.pc(pc),.instruction(instruction));
+
+
 wire [31:0] odata;
 wire [31:0] irq_no;
 wire [11:0] csr_imm;
 wire [31:0] w_data;
 wire [31:0] mtvec;
 wire [31:0] mepc;
-assign  opcode = instruction[6:0];
 
+reg IFU_done = 0;
+reg IDU_done = 0;
+reg ALU_done = 1;
 //更新pc的值
+// initial begin
+// 	ALU_done = 1;
+// 	IDU_done = 0;
+// 	IFU_done = 0;
+// end
+ 
+pc_transfer_inst inst(.clk(clk),
+					  .rst(rst),
+					  .ALU_done(ALU_done),
+					  .pc(pc),
+					  .instruction(instruction),
+					  .IFU_done(IFU_done));				
+					
 addpc add_pc(
     .clk(clk),
     .rst(rst),
@@ -51,7 +67,9 @@ addpc add_pc(
 );
 
 IDU idu(
+	.rst(rst),
 	.clk(clk),
+	.IFU_done(IFU_done),
 	.instruction(instruction),
 	.Ext_type(Ext_type),
 	.RegWrite(RegWrite),
@@ -62,7 +80,9 @@ IDU idu(
 	.memory_valid(memory_valid),
 	.rs2_add(rs2_add),
 	.csr_imm(csr_imm),
-    .irq_no(irq_no)
+    .irq_no(irq_no),
+	.IDU_done(IDU_done),
+	.opcode(opcode)
 );
 //读取src1 寄存器中的地址，为ALU加法做准备
 
@@ -114,12 +134,14 @@ MuxKeyWithDefault #(9,7,32) src2_data_num (src2_data,opcode,32'b0,{
 
 ALU alu(
 	.clk(clk),
+	.IDU_done(IDU_done),
 	.instruction(instruction),
 	.csr_input(odata),
 	.src1(src1_data),
 	.alu_ctrl(alu_ctrl),
 	.src2(src2_data),
-	.alu_result(alu_result)
+	.alu_result(alu_result),
+	.ALU_done(ALU_done)
 );
 
 CSR csrregister(
