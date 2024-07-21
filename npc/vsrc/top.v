@@ -35,16 +35,10 @@ wire [11:0] csr_imm;
 wire [31:0] w_data;
 wire [31:0] mtvec;
 wire [31:0] mepc;
+reg IFU_done ;
+reg IDU_done ;
+reg ALU_done ;
 
-reg IFU_done = 0;
-reg IDU_done = 0;
-reg ALU_done = 1;
-//更新pc的值
-// initial begin
-// 	ALU_done = 1;
-// 	IDU_done = 0;
-// 	IFU_done = 0;
-// end
  
 pc_transfer_inst inst(.clk(clk),
 					  .rst(rst),

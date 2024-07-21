@@ -60,7 +60,7 @@ void set_npcinv(int i) {
 static void npc_isa_exec_once(){    
     top->clk = 1;
     top->rst = 0;
-    for (int i = 0; i < 2; ++i) {
+    for (int i = 0; i < 3; ++i) {
         top->clk ^= 1;
         top->eval();
         tfp->dump(sim_time);

@@ -24,8 +24,7 @@ void init_vtop(){
     top->clk = 0;
     top->rst = 1;
     top->wen = 1;
-
-
+    top->eval();
 
 }
 

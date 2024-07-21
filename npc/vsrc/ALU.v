@@ -10,7 +10,7 @@ module ALU (
 	output reg [31:0] alu_result,
   output reg ALU_done
 );
-always @(clk ) begin
+always @(posedge clk or negedge clk) begin
   if(IDU_done) begin
     casez (alu_ctrl) 
     5'b00000: alu_result = src1 + src2;

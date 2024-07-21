@@ -17,8 +17,7 @@ module IDU(
     output reg [6:0] opcode
 );
 
-
-always @(negedge  clk) begin
+always @(posedge clk or negedge clk) begin
     if(IFU_done) begin
         opcode <= instruction[6:0];
         IDU_done <= 1;

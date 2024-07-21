@@ -32,6 +32,7 @@ class Vtop___024root final : public VerilatedModule {
         CData/*0:0*/ top__DOT__IFU_done;
         CData/*0:0*/ top__DOT__IDU_done;
         CData/*0:0*/ top__DOT__ALU_done;
+        CData/*0:0*/ top__DOT__inst__DOT__count;
         CData/*2:0*/ top__DOT__add_pc__DOT__next_pc_type;
         CData/*0:0*/ top__DOT__add_pc__DOT__i2__DOT__i0__DOT__hit;
         CData/*2:0*/ top__DOT__idu__DOT__ext_num_inst__DOT__i_extnum__DOT__i0__DOT__lut_out;
@@ -50,7 +51,7 @@ class Vtop___024root final : public VerilatedModule {
         CData/*1:0*/ top__DOT__csrregister__DOT__raddr_mux__DOT__i0__DOT__lut_out;
         CData/*0:0*/ top__DOT__csrregister__DOT__raddr_mux__DOT__i0__DOT__hit;
         CData/*0:0*/ top__DOT__Write_rd_data__DOT__i0__DOT__hit;
-        CData/*0:0*/ __Vdly__top__DOT__IDU_done;
+        CData/*0:0*/ __Vdly__top__DOT__IFU_done;
         CData/*0:0*/ __Vtrigrprev__TOP__clk;
         CData/*0:0*/ __Vtrigrprev__TOP__top__DOT__memory_1__DOT__read_valid;
         CData/*0:0*/ __Vtrigrprev__TOP__top__DOT__memory_1__DOT__write_valid;
@@ -78,9 +79,9 @@ class Vtop___024root final : public VerilatedModule {
         IData/*31:0*/ top__DOT__memory_1__DOT__mem_out;
         IData/*31:0*/ top__DOT__Write_rd_data__DOT__i0__DOT__lut_out;
         IData/*31:0*/ __VstlIterCount;
-        IData/*31:0*/ __VicoIterCount;
     };
     struct {
+        IData/*31:0*/ __VicoIterCount;
         IData/*31:0*/ __VactIterCount;
         VlUnpacked<QData/*34:0*/, 7> top__DOT__add_pc__DOT__i2__DOT__i0__DOT__pair_list;
         VlUnpacked<CData/*2:0*/, 7> top__DOT__add_pc__DOT__i2__DOT__i0__DOT__key_list;
@@ -114,12 +115,12 @@ class Vtop___024root final : public VerilatedModule {
         VlUnpacked<QData/*34:0*/, 5> top__DOT__Write_rd_data__DOT__i0__DOT__pair_list;
         VlUnpacked<CData/*2:0*/, 5> top__DOT__Write_rd_data__DOT__i0__DOT__key_list;
         VlUnpacked<IData/*31:0*/, 5> top__DOT__Write_rd_data__DOT__i0__DOT__data_list;
-        VlUnpacked<CData/*0:0*/, 8> __Vm_traceActivity;
+        VlUnpacked<CData/*0:0*/, 6> __Vm_traceActivity;
     };
     VlTriggerVec<1> __VstlTriggered;
     VlTriggerVec<1> __VicoTriggered;
-    VlTriggerVec<5> __VactTriggered;
-    VlTriggerVec<5> __VnbaTriggered;
+    VlTriggerVec<3> __VactTriggered;
+    VlTriggerVec<3> __VnbaTriggered;
 
     // INTERNAL VARIABLES
     Vtop__Syms* const vlSymsp;
