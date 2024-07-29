@@ -4,7 +4,7 @@
 # Execute this makefile from the object directory:
 #    make -f Vtop.mk
 
-default: /home/white/ysyx-workbench/npc/build/top
+default: /home/white/ysyx-workbench/npc_verilog/build/top
 
 ### Constants...
 # Perl executable (from $PERL)
@@ -35,8 +35,8 @@ VM_PREFIX = Vtop
 VM_MODPREFIX = Vtop
 # User CFLAGS (from -CFLAGS on Verilator command line)
 VM_USER_CFLAGS = \
-	-I/home/white/ysyx-workbench/npc/include \
-	-I/home/white/ysyx-workbench/npc/include/memory \
+	-I/home/white/ysyx-workbench/npc_verilog/include \
+	-I/home/white/ysyx-workbench/npc_verilog/include/memory \
 	-DTOP_NAME="Vtop" \
 	-I/usr/lib/llvm-14/include \
 	-std=c++14 \
@@ -74,14 +74,14 @@ VM_USER_CLASSES = \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
-	/home/white/ysyx-workbench/npc/csrc \
-	/home/white/ysyx-workbench/npc/csrc/cpu \
-	/home/white/ysyx-workbench/npc/csrc/cpu/difftest \
-	/home/white/ysyx-workbench/npc/csrc/memory \
-	/home/white/ysyx-workbench/npc/csrc/monitor \
-	/home/white/ysyx-workbench/npc/csrc/monitor/sdb \
-	/home/white/ysyx-workbench/npc/csrc/system \
-	/home/white/ysyx-workbench/npc/csrc/utils \
+	/home/white/ysyx-workbench/npc_verilog/csrc \
+	/home/white/ysyx-workbench/npc_verilog/csrc/cpu \
+	/home/white/ysyx-workbench/npc_verilog/csrc/cpu/difftest \
+	/home/white/ysyx-workbench/npc_verilog/csrc/memory \
+	/home/white/ysyx-workbench/npc_verilog/csrc/monitor \
+	/home/white/ysyx-workbench/npc_verilog/csrc/monitor/sdb \
+	/home/white/ysyx-workbench/npc_verilog/csrc/system \
+	/home/white/ysyx-workbench/npc_verilog/csrc/utils \
 
 
 ### Default rules...
@@ -93,43 +93,43 @@ include $(VERILATOR_ROOT)/include/verilated.mk
 ### Executable rules... (from --exe)
 VPATH += $(VM_USER_DIR)
 
-cpu-exe.o: /home/white/ysyx-workbench/npc/csrc/cpu/cpu-exe.cpp
+cpu-exe.o: /home/white/ysyx-workbench/npc_verilog/csrc/cpu/cpu-exe.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-dut.o: /home/white/ysyx-workbench/npc/csrc/cpu/difftest/dut.cpp
+dut.o: /home/white/ysyx-workbench/npc_verilog/csrc/cpu/difftest/dut.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-init.o: /home/white/ysyx-workbench/npc/csrc/cpu/init.cpp
+init.o: /home/white/ysyx-workbench/npc_verilog/csrc/cpu/init.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-paddr.o: /home/white/ysyx-workbench/npc/csrc/memory/paddr.cpp
+paddr.o: /home/white/ysyx-workbench/npc_verilog/csrc/memory/paddr.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-vaddr.o: /home/white/ysyx-workbench/npc/csrc/memory/vaddr.cpp
+vaddr.o: /home/white/ysyx-workbench/npc_verilog/csrc/memory/vaddr.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-monitor.o: /home/white/ysyx-workbench/npc/csrc/monitor/monitor.cpp
+monitor.o: /home/white/ysyx-workbench/npc_verilog/csrc/monitor/monitor.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-expr.o: /home/white/ysyx-workbench/npc/csrc/monitor/sdb/expr.cpp
+expr.o: /home/white/ysyx-workbench/npc_verilog/csrc/monitor/sdb/expr.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-sdb.o: /home/white/ysyx-workbench/npc/csrc/monitor/sdb/sdb.cpp
+sdb.o: /home/white/ysyx-workbench/npc_verilog/csrc/monitor/sdb/sdb.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-watchpoint.o: /home/white/ysyx-workbench/npc/csrc/monitor/sdb/watchpoint.cpp
+watchpoint.o: /home/white/ysyx-workbench/npc_verilog/csrc/monitor/sdb/watchpoint.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-npc-main.o: /home/white/ysyx-workbench/npc/csrc/npc-main.cpp
+npc-main.o: /home/white/ysyx-workbench/npc_verilog/csrc/npc-main.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-intr.o: /home/white/ysyx-workbench/npc/csrc/system/intr.c
+intr.o: /home/white/ysyx-workbench/npc_verilog/csrc/system/intr.c
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-disasm.o: /home/white/ysyx-workbench/npc/csrc/utils/disasm.cc
+disasm.o: /home/white/ysyx-workbench/npc_verilog/csrc/utils/disasm.cc
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-itrace.o: /home/white/ysyx-workbench/npc/csrc/utils/itrace.cpp
+itrace.o: /home/white/ysyx-workbench/npc_verilog/csrc/utils/itrace.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-logo.o: /home/white/ysyx-workbench/npc/csrc/utils/logo.cpp
+logo.o: /home/white/ysyx-workbench/npc_verilog/csrc/utils/logo.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-reg.o: /home/white/ysyx-workbench/npc/csrc/utils/reg.cpp
+reg.o: /home/white/ysyx-workbench/npc_verilog/csrc/utils/reg.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-state.o: /home/white/ysyx-workbench/npc/csrc/utils/state.cpp
+state.o: /home/white/ysyx-workbench/npc_verilog/csrc/utils/state.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-timer.o: /home/white/ysyx-workbench/npc/csrc/utils/timer.cpp
+timer.o: /home/white/ysyx-workbench/npc_verilog/csrc/utils/timer.cpp
 	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
 
 ### Link rules... (from --exe)
-/home/white/ysyx-workbench/npc/build/top: $(VK_USER_OBJS) $(VK_GLOBAL_OBJS) $(VM_PREFIX)__ALL.a $(VM_HIER_LIBS)
+/home/white/ysyx-workbench/npc_verilog/build/top: $(VK_USER_OBJS) $(VK_GLOBAL_OBJS) $(VM_PREFIX)__ALL.a $(VM_HIER_LIBS)
 	$(LINK) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) $(LIBS) $(SC_LIBS) -o $@
 
 
