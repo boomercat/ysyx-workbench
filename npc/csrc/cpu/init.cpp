@@ -2,6 +2,7 @@
 #include <memory/paddr.h>
 #define WAVE_TRACE
 extern CPU_state npc_cpu ;
+extern uint64_t sim_time;
 
 void init_cpu(){
     npc_cpu.pc = RESET_VECTOR;
@@ -27,11 +28,17 @@ void init_vtop(){
         top->clock ^= 1;
         top->reset = 1;
         n++;
+        top->eval();
+        tfp->dump(sim_time);
+        sim_time++;
     }
     
     top->eval();
     top->reset = 0;
     top->eval();
+    tfp->dump(sim_time);
+    sim_time++;
+    
     // top->wen = 1;
 
 

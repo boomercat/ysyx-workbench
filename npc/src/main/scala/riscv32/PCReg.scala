@@ -4,9 +4,6 @@ import chisel3._
 import chisel3.util._
 
 class PCRegIO extends Bundle{
-    // val resultBranch = Input(Bool())
-    // // val pcJump       = Input(Bool())
-    // val resultpc     = Input(UInt(32.W))
     val pc           = Output(UInt(32.W))
 }
 

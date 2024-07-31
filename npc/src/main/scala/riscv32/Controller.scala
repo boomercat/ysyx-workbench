@@ -2,20 +2,72 @@ package riscv32
 
 import chisel3._
 import chisel3.util._
-
+import riscv32.Alu_OP._
+import Instructions._
 import ctrlwire._
+object Control{
+    val Y = true.B
+    val N = false.B
 
-class ControlIO extends Bundle{
-    val bundleCtrlIn     = Flipped(new BundleCtrl())
-    val bundleAluctrl    = Flipped(new BundleAlu())
-    val bundleControlOut = new BundleCtrl()
+    //alu src select 
+    
+    val SRC1_RS1 = 1.U(2.W)
+    val SRC1_PC  = 2.U(2.W)
+    val SRC1_X   = 0.U(2.W)
+
+    val SRC2_IMM = 0.U(1.W)
+    val SRC2_RS2 = 1.U(1.W)
+    val SRC2_X   = 0.U(1.W)
+
+
+    //imm type
+    val IMM_X    = 0.U(3.W)
+    val IMM_S    = 1.U(3.W)
+    val IMM_B    = 2.U(3.W)
+    val IMM_U    = 3.U(3.W)
+    val IMM_J    = 4.U(3.W)
+    val IMM_I    = 5.U(3.W)
+
+    //register write or read
+    val ALU_WRITE  = 1.U(1.W)
+    val NOT_WRITE  = 0.U(1.W)
+
+
+val default = 
+//
+//                  
+//              src1   src2    imm_sel   alu_op  regster write
+//               |       |       |        |          |       
+            List(SRC1_X, SRC2_X, IMM_X, ALU_XXX , NOT_WRITE)
+  val map = Array(
+    AUIPC -> List(SRC1_PC,SRC2_IMM,IMM_U,ALU_ADD,ALU_WRITE),
+    LUI   -> List(SRC1_X ,SRC2_IMM,IMM_U,ALI_ADD,ALU_WRITE)
+  )
+
+
 
 }
 
-class Controller extends  Module{
-    val io = IO (new ControlIO)
-    
-    io.bundleAluctrl.alu_ctrl_op := io.bundleCtrlIn.alu_ctrl_op
+class ControlSignals extends  Bundle{
+    val instruction = Input(UInt(32.W))
+    val src1_sel = Output(UInt(2.W))
+    val src2_sel = Output(UInt(1.W))
+    val imm_type = Output(UInt(3.W))
+    val alu_op   = Output(UInt(4.W))
+    val reg_write = Output(UInt(1.W))
 
-    io.bundleControlOut <> io.bundleCtrlIn
+}
+
+class Control extends  Module{
+    val io  = IO(new ControlSignals)
+    val ctrlSignals = ListLookup(io.instruction, Control.default,Control.map)
+    
+    //control signla for alu
+    io.src1_sel := ctrlSignals(0)
+    io.src2_sel := ctrlSignals(1)
+    
+    //control signal for execute
+    io.imm_type := ctrlSignals(2)
+    io.alu_op   := ctrlSignals(3)
+    io.reg_write:= ctrlSignals(4)
 }

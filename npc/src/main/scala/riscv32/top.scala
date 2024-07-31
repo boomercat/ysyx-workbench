@@ -8,50 +8,80 @@ import ctrlwire._
 
 class TopIO extends Bundle {
   val pc = Output(UInt(DATA_WIDTH.W))
-  val instruction = Output(UInt(DATA_WIDTH.W))
-  val bundleCtrl = new BundleCtrl()
-  val rs1 = Output(UInt(ADDR_WIDTH.W))
-  val rs2 = Output(UInt(DATA_WIDTH.W))
-  val imm = Output(UInt(DATA_WIDTH.W))
-  val alu_result = Output(UInt(DATA_WIDTH.W))
+//   // val instruction = Output(UInt(DATA_WIDTH.W))
+//   // val rs1 = Output(UInt(ADDR_WIDTH.W))
+//   // val rs2 = Output(UInt(DATA_WIDTH.W))
+//   // val imm = Output(UInt(DATA_WIDTH.W))
+//   val alu_result = Output(UInt(DATA_WIDTH.W))
 }
 
 class top extends Module {
   val io = IO(new TopIO)
   val pcReg = Module(new PCReg())
+  val ifu = Module(new IFU())
   val decoder = Module(new IDU())
   val register = Module(new Register())
   val alu = Module(new ALU())
-  val controller = Module(new Controller())
-  val ifu = Module(new IFU())
-
-  // Connecting IFU
+  val controller = Module(new Control())
+ 
+  // 连接 IFU
   ifu.io.pc := pcReg.io.pc
   ifu.io.clock := clock
   ifu.io.reset := reset
-  io.instruction := ifu.io.instruction
+  dontTouch(ifu.io.pc)
+  dontTouch(ifu.io.instruction)
+
+  // 连接 Controller
+  controller.io.instruction := ifu.io.instruction
+  dontTouch(controller.io.instruction)
+  dontTouch(controller.io.src1_sel)
+  dontTouch(controller.io.src2_sel)
+  dontTouch(controller.io.imm_type)
+  dontTouch(controller.io.alu_op)
+  dontTouch(controller.io.reg_write)
+
+  // 连接 IDU
+  decoder.io.imm_type := controller.io.imm_type
   decoder.io.instruction := ifu.io.instruction
+  dontTouch(decoder.io.imm_type)
+  dontTouch(decoder.io.instruction)
+  dontTouch(decoder.io.rs1)
+  dontTouch(decoder.io.rs2)
+  dontTouch(decoder.io.rd)
+  dontTouch(decoder.io.imm)
 
-  // Connecting Register
-  register.io.reg_ctrl_write := controller.io.bundleControlOut.reg_ctrl_write
-  register.io.bundleReg := decoder.io.regAdd
+  // 连接寄存器文件
+  register.io.rd := decoder.io.rd
+  register.io.rs1 := decoder.io.rs1
+  register.io.rs2 := decoder.io.rs2
+  register.io.reg_write := controller.io.reg_write
   register.io.writedata := alu.io.alu_result
-  io.rs1 := register.io.dataRead1
-  io.rs2 := register.io.dataRead2
+  dontTouch(register.io.rd)
+  dontTouch(register.io.rs1)
+  dontTouch(register.io.rs2)
+  dontTouch(register.io.reg_write)
+  dontTouch(register.io.writedata)
+  dontTouch(register.io.rs1_data)
+  dontTouch(register.io.rs2_data)
 
-  // Connecting ALU
+  // 连接 ALU
   alu.io.imm := decoder.io.imm
   alu.io.pc := pcReg.io.pc
-  alu.io.bundleAluControl := controller.io.bundleAluctrl
-  alu.io.dataRead1 := register.io.dataRead1
-  alu.io.dataRead2 := register.io.dataRead2
-  io.alu_result := alu.io.alu_result
+  alu.io.src1_sel := controller.io.src1_sel
+  alu.io.src2_sel := controller.io.src2_sel
+  alu.io.rs1_data := register.io.rs1_data
+  alu.io.rs2_data := register.io.rs2_data
+  alu.io.alu_op := controller.io.alu_op
+  dontTouch(alu.io.imm)
+  dontTouch(alu.io.pc)
+  dontTouch(alu.io.src1_sel)
+  dontTouch(alu.io.src2_sel)
+  dontTouch(alu.io.rs1_data)
+  dontTouch(alu.io.rs2_data)
+  dontTouch(alu.io.alu_op)
+  dontTouch(alu.io.alu_result)
 
-  // Connecting Controller
-  controller.io.bundleCtrlIn := decoder.io.bundleCtrl
-
-  // Connecting outputs
+  // 输出 PC
   io.pc := pcReg.io.pc
-  io.bundleCtrl := decoder.io.bundleCtrl
-  io.imm := decoder.io.imm
+  dontTouch(io.pc)
 }

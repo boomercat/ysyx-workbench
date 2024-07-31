@@ -9,7 +9,7 @@ class IFU extends BlackBox with HasBlackBoxInline {
   val io = IO(new Bundle {
     val reset = Input(Bool())
     val clock = Input(Clock())
-    val pc = Input(UInt(32.W))
+    val pc    = Input(UInt(32.W))
     val instruction = Output(UInt(32.W))
   })
 

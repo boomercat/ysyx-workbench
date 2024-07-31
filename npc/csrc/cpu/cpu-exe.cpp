@@ -21,12 +21,12 @@ void init_disasm(const char *triple);
 void isa_reg_display();
 void npc_reg_update();
 void difftest_step(vaddr_t pc, vaddr_t npc_pc);
-uint64_t sim_time = 0;
 static int istrap = 0;
 static int isinv = 0;
 char logbuf[128];
 uint32_t inst;
 vaddr_t pc;
+uint64_t sim_time = 0;
 int get_inst(long long addr) {
   inst = vaddr_read(addr, 3);
   return inst;
