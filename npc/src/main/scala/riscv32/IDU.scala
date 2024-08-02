@@ -34,6 +34,8 @@ class IDU extends Module {
     imm := imm_j
   }.elsewhen(io.imm_type === 5.U) {
     imm := imm_i
+  }.otherwise{
+    imm := 0.U
   }
   io.rs1 := io.instruction(19,15)
   io.rs2 := io.instruction(24,20)

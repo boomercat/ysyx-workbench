@@ -12,6 +12,10 @@ object Alu_OP{
   val ALU_ADD = 1.U(4.W)
   val ALU_CSU = 2.U(4.W) //compare small unsigned
   val ALU_CSS = 3.U(4.W) 
+  val ALU_SUB = 4.U(4.W)
+  val ALU_XOR = 5.U(4.W)
+  val ALU_AND = 6.U(4.W)
+  val ALU_OR  = 7.U(4.W)
 
 }
 class AluIO extends Bundle {
@@ -52,8 +56,11 @@ class ALU extends Module {
     is(ALU_NOP) { alu_result := 0.U }
     is(ALU_ADD) { alu_result := src1 + src2 }
     is(ALU_CSS) { alu_result := src1.asSInt < src2.asSInt}
-    is(ALU_CSU) { alu_result := Mux((src1 - src2 < 0.U) ,1.U,0.U)}
-
+    is(ALU_CSU) { alu_result := src1 < src2}
+    is(ALU_SUB) { alu_result := src1 - src2}
+    is(ALU_XOR) { alu_result := src1 ^ src2}
+    is(ALU_AND) { alu_result := src1 & src2}
+    is(ALU_OR)  { alu_result := src1 | src2}
   }
   io.alu_result := alu_result
 }
