@@ -3,7 +3,6 @@ package riscv32
 import chisel3._
 import chisel3.util._
 import chisel3.util.experimental.decode._
-import ctrlwire._
 
 class IDUIO extends Bundle {
   val instruction = Input(UInt(32.W))

@@ -4,7 +4,6 @@ import chisel3._
 import chisel3.util._
 
 import config.Configs._
-import ctrlwire._
 
 class TopIO extends Bundle {
   val pc = Output(UInt(DATA_WIDTH.W))
@@ -17,14 +16,29 @@ class TopIO extends Bundle {
 
 class top extends Module {
   val io = IO(new TopIO)
+  val pcctrl = Module(new BranchCond())
   val pcReg = Module(new PCReg())
   val ifu = Module(new IFU())
   val decoder = Module(new IDU())
   val register = Module(new Register())
   val alu = Module(new ALU())
   val controller = Module(new Control())
- 
+  val ebreak   = Module(new Ebreak())
+
+
+
+  ebreak.io.clock := clock
+  ebreak.io.instruction := ifu.io.instruction
+  //链接BranchCond
+  pcctrl.io.rs1 := register.io.rs1_data
+  pcctrl.io.imm := decoder.io.imm
+  pcctrl.io.pc  := pcReg.io.pc
+  pcctrl.io.branch := controller.io.branch
+  pcctrl.io.alu_result := alu.io.alu_result
+
+
   // 连接 IFU
+  pcReg.io.nextpc := pcctrl.io.nextpc
   ifu.io.pc := pcReg.io.pc
   ifu.io.clock := clock
   ifu.io.reset := reset

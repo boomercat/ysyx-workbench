@@ -4,7 +4,6 @@ import chisel3._
 import chisel3.util._
 
 import config.Configs._
-import ctrlwire._
 
 class RegisterIO extends Bundle {
   val reg_write = Input(UInt(1.W))
@@ -21,19 +20,22 @@ class Register extends Module {
   val io = IO(new RegisterIO())
   
   val regs = Mem(32, UInt(32.W))
-  when(io.rs1 === 0.U) {
-    io.rs1_data := 0.U
-  } .otherwise {
-    io.rs1_data := regs(io.rs1)
-  }
+  // when(io.rs1 === 0.U) {
+  //   io.rs1_data := 0.U
+  // } .otherwise {
+  //   io.rs1_data := regs(io.rs1)
+  // }
   
-  when(io.rs2 === 0.U) {
-    io.rs2_data := 0.U
-  } .otherwise {
-    io.rs2_data := regs(io.rs2)
-  }
+  // when(io.rs2 === 0.U) {
+  //   io.rs2_data := 0.U
+  // } .otherwise {
+  //   io.rs2_data := regs(io.rs2)
+  // }
+  io.rs1_data := Mux(io.rs1 === 0.U, 0.U, regs(io.rs1))
 
-  when(io.reg_write=== 1.U && (io.rd =/= 0.U)) {
+  io.rs2_data := Mux(io.rs2 === 0.U, 0.U, regs(io.rs2))
+
+  when(io.reg_write === 1.U && (io.rd =/= 0.U)) {
     regs(io.rd) := io.writedata
   }
 }

@@ -4,6 +4,7 @@ import chisel3._
 import chisel3.util._
 
 class PCRegIO extends Bundle{
+    val nextpc       = Input(UInt(32.W))
     val pc           = Output(UInt(32.W))
 }
 
@@ -17,7 +18,7 @@ class PCReg extends Module {
   when (reset.asBool) {
     regPC := "h80000000".U
   } .otherwise {
-    regPC := regPC + 4.U
+    regPC := io.nextpc
   }
 
   io.pc := regPC
