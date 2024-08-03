@@ -52,6 +52,7 @@ class top extends Module {
   // 连接 IDU
   decoder.io.imm_type := controller.io.imm_type
   decoder.io.instruction := ifu.io.instruction
+  
   // dontTouch(decoder.io.imm_type)
   // dontTouch(decoder.io.instruction)
   // dontTouch(decoder.io.rs1)
@@ -92,7 +93,11 @@ class top extends Module {
   // dontTouch(alu.io.alu_result)
 
   //连接mem
-  mem.io.addr
+  mem.io.clock := clock
+  mem.io.memRead := decoder.io.mem_read
+  mem.io.memWrite := decoder.io.mem
+  mem.io.addr  := alu.io.alu_result
+  mem.io.memop := controller.io.memop
   // 输出 PC
   io.pc := pcReg.io.pc
   dontTouch(io.pc)

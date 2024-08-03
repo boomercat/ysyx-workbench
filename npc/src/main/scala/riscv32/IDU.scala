@@ -11,6 +11,8 @@ class IDUIO extends Bundle {
   val rs1         = Output(UInt(5.W))
   val rs2         = Output(UInt(5.W))
   val rd          = Output(UInt(5.W))
+  val mem_write   = Output(UInt(1.W))
+  val mem_read    = Output(UInt(1.W))
 }
 
 class IDU extends Module {
@@ -41,6 +43,8 @@ class IDU extends Module {
   io.rs2 := io.instruction(24,20)
   io.rd  := io.instruction(11,7)
   io.imm := imm
+  io.mem_read  := (io.instruction(6, 0) === "b0000011".U)
+  io.mem_write := (io.instruction(6, 0) === "b0100011".U)
 
 
 }
