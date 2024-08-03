@@ -30,27 +30,38 @@ object Control{
     val IMM_I    = 5.U(3.W)
 
     //register write or read
-    val ALU_WRITE  = 1.U(1.W)
-    val NOT_WRITE  = 0.U(1.W)
+    val NOT_WRITE  = 0.U(2.W)
+    val ALU_WRITE  = 1.U(2.W)
+    val MEM_WRITE  = 2.U(2.W)
 
     //jump pc
     val BRANCH_X    = 0.U(4.W)
     val BRANCH_JAL  = 1.U(4.W)
     val BRANCH_JALR = 2.U(4.W)
-    // val BRANCH_BEQ  = 3.U(4.W)
-    // val BRANCH_BNE  = 4.U(4.W)
-    // val BRANCH_BLT  = 5.U(4.W)
-    // val BRANCH_BGE  = 6.U(4.W)
-    // val BRANCH_BLTU = 7.U(4.W)
-    // val BRANCH_BGEU = 8.U(4.W)
+    val BRANCH_BEQ  = 3.U(4.W)
+    val BRANCH_BGE  = 3.U(4.W)
+    val BRANCH_BGEU = 3.U(4.W)
+    val BRANCH_BLTU = 3.U(4.W)
+    val BRANCH_BLT  = 3.U(4.W)
+    val BRANCH_BNE  = 3.U(4.W)
+    //memory 
+    val MEM_NO  = 0.U(4.W)
+    val MEM_LB  = 1.U(4.W)
+    val MEM_LH  = 2.U(4.W)
+    val MEM_LW  = 3.U(4.W)
+    val MEM_LBU = 4.U(4.W)
+    val MEM_LHU = 5.U(4.W)
+    val MEM_SB  = 6.U(4.W)
+    val MEM_SH  = 7.U(4.W)
+    val MEM_SW  = 8.U(4.W)
 
 
 val default = 
 //
 //                  
-//              src1   src2    imm_sel   alu_op  regster write  Branch
-//               |       |       |        |          |          |
-            List(SRC1_X, SRC2_X, IMM_X, ALU_XXX , NOT_WRITE, BRANCH_X)
+//              src1   src2    imm_sel   alu_op  regster write  Branch Mem_op
+//               |       |       |        |          |          |        |
+            List(SRC1_X, SRC2_X, IMM_X, ALU_XXX , NOT_WRITE, BRANCH_X, MEM_NO)
   val map = Array(
     AUIPC -> List(SRC1_PC ,SRC2_IMM ,IMM_U ,ALU_ADD ,ALU_WRITE ,BRANCH_X),
     LUI   -> List(SRC1_X  ,SRC2_IMM ,IMM_U ,ALU_ADD ,ALU_WRITE ,BRANCH_X),
@@ -71,8 +82,20 @@ val default =
     ANDI  -> List(SRC1_RS1,SRC2_IMM ,IMM_I ,ALU_AND ,ALU_WRITE ,BRANCH_X),
     OR    -> List(SRC1_RS1,SRC2_RS2 ,IMM_X ,ALU_OR  ,ALU_WRITE ,BRANCH_X),
     ORI   -> List(SRC1_RS1,SRC2_IMM ,IMM_I ,ALU_OR  ,ALU_WRITE ,BRANCH_X),
-
-
+    //shift
+    SLL   -> List(SRC1_RS1,SRC2_RS2 ,IMM_X ,ALU_LS  ,ALU_WRITE ,BRANCH_X),
+    SLLI  -> List(SRC1_RS1,SRC2_IMM ,IMM_I ,ALU_LS  ,ALU_WRITE ,BRANCH_X),
+    SRL   -> List(SRC1_RS1,SRC2_RS2 ,IMM_X ,ALU_RS  ,ALU_WRITE ,BRANCH_X),
+    SRLI  -> List(SRC1_RS1,SRC2_IMM ,IMM_I ,ALU_RS  ,ALU_WRITE ,BRANCH_X),
+    SRA   -> List(SRC1_RS1,SRC2_RS2 ,IMM_X ,ALU_RSI ,ALU_WRITE ,BRANCH_X),
+    SRAI  -> List(SRC1_RS1,SRC2_IMM ,IMM_I ,ALU_RSI ,ALU_WRITE ,BRANCH_X),
+    //branch
+    BEQ   -> List(SRC1_RS1,SRC2_RS2 ,IMM_B ,ALU_BEQ ,NOT_WRITE ,BRANCH_BEQ),
+    BGE   -> List(SRC1_RS1,SRC2_RS2 ,IMM_B ,ALU_BGE ,NOT_WRITE ,BRANCH_BGE),
+    BGEU  -> List(SRC1_RS1,SRC2_RS2 ,IMM_B ,ALU_BGE ,NOT_WRITE ,BRANCH_BGEU),
+    BLT   -> List(SRC1_RS1,SRC2_RS2 ,IMM_B ,ALU_BLT ,NOT_WRITE ,BRANCH_BLT),
+    BLTU  -> List(SRC1_RS1,SRC2_RS2 ,IMM_B ,ALU_BLTU,NOT_WRITE ,BRANCH_BLTU),
+    BNE   -> List(SRC1_RS1,SRC2_RS2 ,IMM_B ,ALU_BNE ,NOT_WRITE ,BRANCH_BNE),
   )
 
 

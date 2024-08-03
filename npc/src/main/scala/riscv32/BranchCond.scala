@@ -20,6 +20,7 @@ class BranchCond extends Module{
         is(BRANCH_X)    { io.nextpc := io.pc + 4.U}
         is(BRANCH_JAL)  { io.nextpc := io.pc + io.imm}
         is(BRANCH_JALR) { io.nextpc := io.imm + io.rs1}
+        is(BRANCH_BEQ)  { io.nextpc := Mux(io.alu_result === 1.U,io.pc+io.imm,io.pc+4.U)}
         
     }
 }

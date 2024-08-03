@@ -16,6 +16,15 @@ object Alu_OP{
   val ALU_XOR = 5.U(4.W)
   val ALU_AND = 6.U(4.W)
   val ALU_OR  = 7.U(4.W)
+  val ALU_LS  = 8.U(4.W)
+  val ALU_RS  = 9.U(4.W)
+  val ALU_RSI = 10.U(4.W)
+  val ALU_BEQ = 11.U(4.W)
+  val ALU_BGE = 12.U(4.W)
+  val ALU_BGEU= 13.U(4.W)
+  val ALU_BLT = 3.U(4.W)
+  val ALU_BLTU = 2.U(4.W)
+  val ALU_BNE = 14.U(4.W)
 
 }
 class AluIO extends Bundle {
@@ -27,7 +36,7 @@ class AluIO extends Bundle {
   val pc               = Input(UInt(32.W))
   val alu_op           = Input(UInt(4.W))
   val alu_result       = Output(UInt(32.W))
-
+  
 
 }
 import riscv32.Alu_OP._
@@ -55,12 +64,19 @@ class ALU extends Module {
   switch(io.alu_op) {
     is(ALU_NOP) { alu_result := 0.U }
     is(ALU_ADD) { alu_result := src1 + src2 }
-    is(ALU_CSS) { alu_result := src1.asSInt < src2.asSInt}
+    is(ALU_CSS) { alu_result := src1.asSInt < src2.asSInt} 
     is(ALU_CSU) { alu_result := src1 < src2}
     is(ALU_SUB) { alu_result := src1 - src2}
     is(ALU_XOR) { alu_result := src1 ^ src2}
     is(ALU_AND) { alu_result := src1 & src2}
     is(ALU_OR)  { alu_result := src1 | src2}
+    is(ALU_LS)  { alu_result := src1 << src2(4,0)}
+    is(ALU_RS)  { alu_result := src1 >> src2(4,0)}
+    is(ALU_RSI) { alu_result := (src1.asSInt >> src2(4, 0)).asUInt } // 算术右移  
+    is(ALU_BEQ) { alu_result := src1 === src2}
+    is(ALU_BGE) { alu_result := (src1.asSInt >= src2.asSInt).asUInt } // 有符号大于等于
+    is(ALU_BGEU){ alu_result := (src1 >= src2).asUInt } // 无符号大于等于
+    is(ALU_BNE) { alu_result := src1 =/= src2}
   }
   io.alu_result := alu_result
 }
