@@ -14,8 +14,10 @@ class BranchCondIO extends Bundle{
 
 class BranchCond extends Module{
     val io = IO(new BranchCondIO())
-    io.nextpc := io.pc + 4.U
-
+    // when(reset.asBool){
+    //     io.nextpc := "h80000000".U
+    // }
+    io.nextpc := "h80000000".U
     switch(io.branch){
         is(BRANCH_X)    { io.nextpc := io.pc + 4.U}
         is(BRANCH_JAL)  { io.nextpc := io.pc + io.imm}

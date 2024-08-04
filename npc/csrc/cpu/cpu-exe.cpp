@@ -83,9 +83,9 @@ static void npc_isa_exec_once(){
 
 static void npc_exec_once(){
     pre_pc = npc_cpu.pc;
-    npc_cpu.pc = top->io_pc;
     printf("io_pc is 0x%x\n",top->io_pc);
     npc_isa_exec_once();
+    npc_cpu.pc = top->io_pc;
 
 }
 

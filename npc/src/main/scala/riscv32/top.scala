@@ -66,7 +66,7 @@ class top extends Module {
   register.io.rs2 := decoder.io.rs2
   register.io.reg_write := controller.io.reg_write
   register.io.alu_result := alu.io.alu_result
-  register.io.memRead := mem.io.readData
+  register.io.memData := mem.io.readData
   // dontTouch(register.io.rd)
   // dontTouch(register.io.rs1)
   // dontTouch(register.io.rs2)
@@ -95,9 +95,11 @@ class top extends Module {
   //连接mem
   mem.io.clock := clock
   mem.io.memRead := decoder.io.mem_read
-  mem.io.memWrite := decoder.io.mem
+  mem.io.memWrite := decoder.io.mem_write
   mem.io.addr  := alu.io.alu_result
   mem.io.memop := controller.io.memop
+  mem.io.writedata := register.io.rs2_data
+
   // 输出 PC
   io.pc := pcReg.io.pc
   dontTouch(io.pc)

@@ -96,6 +96,15 @@ val default =
     BLT   -> List(SRC1_RS1,SRC2_RS2 ,IMM_B ,ALU_BLT ,NOT_WRITE ,BRANCH_BLT,MEM_NO),
     BLTU  -> List(SRC1_RS1,SRC2_RS2 ,IMM_B ,ALU_BLTU,NOT_WRITE ,BRANCH_BLTU,MEM_NO),
     BNE   -> List(SRC1_RS1,SRC2_RS2 ,IMM_B ,ALU_BNE ,NOT_WRITE ,BRANCH_BNE,MEM_NO),
+    //memory
+    LB    -> List(SRC1_RS1,SRC2_IMM ,IMM_I ,ALU_ADD ,MEM_WRITE ,BRANCH_X,MEM_LB),
+    LBU   -> List(SRC1_RS1,SRC2_IMM ,IMM_I ,ALU_ADD ,MEM_WRITE ,BRANCH_X,MEM_LBU),
+    LH    -> List(SRC1_RS1,SRC2_IMM ,IMM_I ,ALU_ADD ,MEM_WRITE ,BRANCH_X,MEM_LH),
+    LHU   -> List(SRC1_RS1,SRC2_IMM ,IMM_I ,ALU_ADD ,MEM_WRITE ,BRANCH_X,MEM_LHU),
+    LW    -> List(SRC1_RS1,SRC2_IMM ,IMM_I ,ALU_ADD ,MEM_WRITE ,BRANCH_X,MEM_LW),
+    SB    -> List(SRC1_RS1,SRC2_IMM ,IMM_S ,ALU_ADD ,NOT_WRITE ,BRANCH_X,MEM_SB),
+    SH    -> List(SRC1_RS1,SRC2_IMM ,IMM_S ,ALU_ADD ,NOT_WRITE ,BRANCH_X,MEM_SH),
+    SW    -> List(SRC1_RS1,SRC2_IMM ,IMM_S ,ALU_ADD ,NOT_WRITE ,BRANCH_X,MEM_SW)
   )
 
 
@@ -108,7 +117,7 @@ class ControlSignals extends  Bundle{
     val src2_sel  = Output(UInt(2.W))
     val imm_type  = Output(UInt(3.W))
     val alu_op    = Output(UInt(4.W))
-    val reg_write = Output(UInt(1.W))
+    val reg_write = Output(UInt(2.W))
     val branch    = Output(UInt(3.W))
     val memop     = Output(UInt(4.W))
 

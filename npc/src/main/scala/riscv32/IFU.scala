@@ -23,10 +23,12 @@ class IFU extends BlackBox with HasBlackBoxInline {
        |    output reg [31:0] instruction
        |);
        |import "DPI-C" function int unsigned pmem_read(input int unsigned raddr, int len);
-       |always @(posedge clock) begin
+       |
+       |always @(*) begin
        |    if (!reset) begin
-       |        instruction <= pmem_read(pc,4);
+       |        instruction = pmem_read(pc,4);
        |    end
+       |    else instruction = 0;
        |end
        |endmodule
      """.stripMargin)
