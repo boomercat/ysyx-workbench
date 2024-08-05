@@ -9,6 +9,8 @@ class BranchCondIO extends Bundle{
     val pc         = Input(UInt(32.W))
     val imm        = Input(UInt(32.W))
     val rs1        = Input(UInt(32.W))
+    val mtvec      = Input(UInt(32.W))
+    val mepc       = Input(UInt(32.W))
     val nextpc     = Output(UInt(32.W))
 }
 
@@ -23,6 +25,8 @@ class BranchCond extends Module{
         is(BRANCH_JAL)  { io.nextpc := io.pc + io.imm}
         is(BRANCH_JALR) { io.nextpc := io.imm + io.rs1}
         is(BRANCH_BEQ)  { io.nextpc := Mux(io.alu_result === 1.U,io.pc+io.imm,io.pc+4.U)}
-        
+        is(BRANCH_ECALL){ io.nextpc := io.mtvec}
+        is(BRANCH_MRET) { io.nextpc := io.mepc}
+
     }
 }

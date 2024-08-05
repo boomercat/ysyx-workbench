@@ -16,7 +16,7 @@
 #define CONFIG_ISA_riscv 1
 // #define CONFIG_NPC_WATCHPOINT 1
 // #define CONFIG_NPC_TRACE 1
-#define CONFIG_DIFF_NEMU 0
+// #define CONFIG_DIFF_NEMU 0
 
 
 #define FMT_WORD "0x%08x"

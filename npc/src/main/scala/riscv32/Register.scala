@@ -7,8 +7,9 @@ import config.Configs._
 
 class RegisterIO extends Bundle {
   val reg_write = Input(UInt(2.W))
-  val alu_result = Input(UInt(32.W))
+  val alu_result= Input(UInt(32.W))
   val memData   = Input(UInt(32.W))
+  val csr_odata = Input(UInt(32.W))
   val rs1       = Input(UInt(5.W))
   val rs2       = Input(UInt(5.W))
   val rd        = Input(UInt(5.W))
@@ -23,6 +24,7 @@ class Register extends Module {
   switch(io.reg_write){
     is(1.U) {writedata := io.alu_result}
     is(2.U) {writedata := io.memData}
+    is(3.U) {writedata := io.csr_odata}
   }  
   
   val regs = Mem(32, UInt(32.W))

@@ -31,9 +31,10 @@ class AluIO extends Bundle {
   val rs1_data         = Input(UInt(32.W))
   val src1_sel         = Input(UInt(2.W))
   val rs2_data         = Input(UInt(32.W))
-  val src2_sel         = Input(UInt(2.W))
+  val src2_sel         = Input(UInt(3.W))
   val imm              = Input(UInt(32.W))
   val pc               = Input(UInt(32.W))
+  val csr_odata        = Input(UInt(32.W))
   val alu_op           = Input(UInt(4.W))
   val alu_result       = Output(UInt(32.W))
   
@@ -59,6 +60,7 @@ class ALU extends Module {
     is(SRC2_RS2) { src2 := io.rs2_data}
     is(SRC2_IMM) { src2 := io.imm}
     is(SRC2_4)   { src2 := 4.U}
+    is(SRC2_CSR) { src2 := io.csr_odata}
   }
   
   switch(io.alu_op) {

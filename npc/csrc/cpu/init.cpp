@@ -1,6 +1,6 @@
 #include <cpu.h>
 #include <memory/paddr.h>
-#define WAVE_TRACE
+// #define WAVE_TRACE
 extern CPU_state npc_cpu ;
 extern uint64_t sim_time;
 

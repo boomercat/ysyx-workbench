@@ -83,7 +83,7 @@ static void npc_isa_exec_once(){
 
 static void npc_exec_once(){
     pre_pc = npc_cpu.pc;
-    printf("io_pc is 0x%x\n",top->io_pc);
+    // printf("io_pc is 0x%x\n",top->io_pc);
     npc_isa_exec_once();
     npc_cpu.pc = top->io_pc;
 
@@ -126,8 +126,7 @@ void npc_cpu_exec(uint64_t n){
     }
 
     uint64_t timer_start = get_time();
-    printf("this is a test to test execute\n");
-    printf("time start is %d\n",timer_start);
+
     npc_execute(n);
 
     uint64_t timer_end = get_time();

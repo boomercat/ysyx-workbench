@@ -25,10 +25,11 @@ void npc_reg_update(){
   {
      npc_cpu.gpr[j] = top->rootp->top__DOT__register__DOT__regs_ext__DOT__Memory[j];      
   }
-    // npc_cpu.mstatus = top->rootp->top__DOT__csrregister__DOT__csr_register[0];   
-    // npc_cpu.mtvec = top->rootp->top__DOT__csrregister__DOT__csr_register[1];
-    // npc_cpu.mcause = top->rootp->top__DOT__csrregister__DOT__csr_register[2];
-    // npc_cpu.mepc = top->rootp->top__DOT__csrregister__DOT__csr_register[3];
+    npc_cpu.mstatus = top->rootp->top__DOT__csr__DOT__csr_reg_0; 
+    npc_cpu.mtvec = top->rootp->top__DOT__csr__DOT__csr_reg_1;
+    npc_cpu.mcause = top->rootp->top__DOT__csr__DOT__csr_reg_2;
+    npc_cpu.mepc = top->rootp->top__DOT__csr__DOT__csr_reg_3;
+
 }
 
 
