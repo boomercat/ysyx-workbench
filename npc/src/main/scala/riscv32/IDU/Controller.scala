@@ -1,9 +1,10 @@
-package riscv32
+package riscv32.idu
 
 import chisel3._
 import chisel3.util._
-import riscv32.Alu_OP._
+import riscv32.exu.Alu_OP._
 import Instructions._
+import riscv32._
 
 object Control{
     val Y = true.B
@@ -137,6 +138,7 @@ class ControlSignals extends  Bundle{
     val branch    = Output(UInt(3.W))
     val memop     = Output(UInt(4.W))
     val csr_type  = Output(UInt(2.W))
+    
 
 }
 

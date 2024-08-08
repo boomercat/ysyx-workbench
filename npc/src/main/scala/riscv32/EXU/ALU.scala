@@ -1,8 +1,8 @@
-package riscv32
+package riscv32.exu
 
 import chisel3._
 import chisel3.util._
-import riscv32.Control._
+import riscv32.idu.Control._
 import config.Configs._
 
 
@@ -40,7 +40,7 @@ class AluIO extends Bundle {
   
 
 }
-import riscv32.Alu_OP._
+import riscv32.exu.Alu_OP._
 class ALU extends Module {
   val io = IO(new AluIO()) // 确保 IO 正确初始化
   

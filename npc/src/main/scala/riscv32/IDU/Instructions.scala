@@ -1,4 +1,4 @@
-package riscv32
+package riscv32.idu
 
 import chisel3.util.BitPat
 

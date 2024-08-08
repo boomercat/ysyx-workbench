@@ -1,4 +1,4 @@
-package riscv32
+package riscv32.ifu
 
 import chisel3._
 import chisel3.util._
