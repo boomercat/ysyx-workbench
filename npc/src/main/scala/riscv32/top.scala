@@ -22,12 +22,12 @@ class top extends Module {
   val wbu   = Module(new WBU())
   //ifu
   ifu.io.nextpc := exu.io.nextpc
-  ifu.io.clock := clock
+  // ifu.io.clock := C
   ifu.io.reset := reset
 
   //idu
   idu.io.instruction := ifu.io.instruction
-  idu.io.clock := clock
+  // idu.io.clock := clock
 
   //exu
   exu.io.rs1_data := register.io.rs1_rdata
